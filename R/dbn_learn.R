@@ -67,6 +67,7 @@ merge_nets <- function(net0, netCP1, size, acc = NULL, slice = 1){
 #' @param dt the data.frame or data.table to be used
 #' @param size number of time slices of the net. Markovian 1 would be size 2
 #' @return the folded data.table and the structure of the net
+#' @import data.table
 #' @export
 learn_dbn_struc <- function(dt, size = 2){
   if(size < 2)

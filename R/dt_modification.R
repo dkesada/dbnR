@@ -11,7 +11,7 @@ check_time_formatted <- function(dt){
 
 #' Renames the columns in a data.table so that they end in "_t_0"
 #'
-#' \code{time_rename_dt} This will rename the columns in a data.table so that
+#' \code{time_rename} This will rename the columns in a data.table so that
 #' they end in \"_t_0\", which will be needed when folding the data.table. If
 #' any of the columns already ends in "_t_0", a warning will be issued and
 #' no further operation will be done.
