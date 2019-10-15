@@ -1,7 +1,7 @@
 Package: rdbn
 Type: Package
 Title: Dynamic Bayesian network learning and inference
-Version: 0.0.0.9001
+Version: 0.0.0.9002
 Authors@R: c(
     person("David", "Quesada", email = "dkesada@gmail.com", role = c("aut", "cre")),
     person("Gabriel", "Valverde", email = "gabrielvalverdecastilla@gmail.com", role = "ctb"))
@@ -17,7 +17,8 @@ Imports:
     bnlearn (>= 4.5),
     data.table (>= 1.12.4)
 Suggests:
-    visNetwork (>= 2.0.8)
+    visNetwork (>= 2.0.8),
+    magrittr (>= 1.5)
 URL: https://github.com/dkesada/rdbn
 License: GPL-3
 Encoding: UTF-8
