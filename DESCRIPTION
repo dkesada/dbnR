@@ -1,9 +1,10 @@
 Package: rdbn
 Type: Package
 Title: Dynamic Bayesian network learning and inference
-Version: 0.1.0
-Author: David Quesada [aut, cre], Gabriel Valverde [ctb]
-Maintainer: David Quesada <dkesada@gmail.com>
+Version: 0.0.0.9001
+Authors@R: c(
+    person("David", "Quesada", email = "dkesada@gmail.com", role = c("aut", "cre")),
+    person("Gabriel", "Valverde", email = "gabrielvalverdecastilla@gmail.com", role = "ctb"))
 Description: The package extends the functionality offered by bnlearn to 
     perform learning and inference over dynamic Bayesian networks of arbitrary 
     Markovian order. It offers a modification over Trabelsi's dynamic max-min 
@@ -13,7 +14,8 @@ Description: The package extends the functionality offered by bnlearn to
     structure of the net is also provided via the visNetwork package.
 Depends: R (>= 3.6.1)
 Imports:
-    bnlearn (>= 4.5)
+    bnlearn (>= 4.5),
+    data.table (>= 1.12.4)
 Suggests:
     visNetwork (>= 2.0.8)
 URL: https://github.com/dkesada/rdbn
