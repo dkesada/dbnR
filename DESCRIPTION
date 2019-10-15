@@ -1,11 +1,22 @@
 Package: rdbn
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Dynamic Bayesian network learning and inference
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: David Quesada [aut, cre], Gabriel Valverde [ctb]
+Maintainer: David Quesada <dkesada@gmail.com>
+Description: The package extends the functionality offered by bnlearn to 
+    perform learning and inference over dynamic Bayesian networks of arbitrary 
+    Markovian order. It offers a modification over Trabelsi's dynamic max-min 
+    hill climbing (DMMHC) algorithm for structure learning and the possibility 
+    to perform forecasts of arbitrary length. At the moment, smoothing and 
+    filtering operations are not supported. A tool for visualizating the 
+    structure of the net is also provided via the visNetwork package.
+Depends: R (>= 3.6.1)
+Imports:
+    bnlearn (>= 4.5)
+Suggests:
+    visNetwork (>= 2.0.8)
+URL: https://github.com/dkesada/rdbn
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
