@@ -1,6 +1,6 @@
 #' Checks if the column names of a data.table are time formatted
 #'
-#' \code{check_time_formatted} This will check if the data.table is properly
+#' This will check if the data.table is properly
 #' time formatted to be folded into more time slices. A data.table is well
 #' formatted when all of its column names end in "_t_0".
 #' @param dt the data.table to be treated
@@ -11,7 +11,7 @@ check_time_formatted <- function(dt){
 
 #' Renames the columns in a data.table so that they end in "_t_0"
 #'
-#' \code{time_rename} This will rename the columns in a data.table so that
+#' This will rename the columns in a data.table so that
 #' they end in \"_t_0\", which will be needed when folding the data.table. If
 #' any of the columns already ends in "_t_0", a warning will be issued and
 #' no further operation will be done.
@@ -36,7 +36,7 @@ time_rename <- function(dt){
 
 #' Widens the dataset to take into account the t previous time slices
 #'
-#' \code{fold_dt} This will widen the dataset to put the t previous time slices
+#' This will widen the dataset to put the t previous time slices
 #' in each row, so that it can be used to learn temporal arcs in the second
 #' phase of the dmmhc.
 #' @param dt the data.table to be treated

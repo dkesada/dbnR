@@ -1,6 +1,6 @@
 #' Creates the blacklist of arcs from a folded data.table
 #'
-#' \code{create_blacklist} This will create the blacklist of arcs that are not
+#' This will create the blacklist of arcs that are not
 #' to be learned in the second phase of the dmmhc. This includes arcs
 #' backwards in time or inside time-slices.
 #' @param name the names of the first time slice, ended in _t_0
@@ -37,7 +37,7 @@ create_blacklist <- function(name, size, acc = NULL, slice = 1){
 #' Merges and replicates the arcs in the static BN into all the time-slices
 #' in the DBN
 #'
-#' \code{merge_nets} This will join the static net and the state transition
+#' This will join the static net and the state transition
 #' net by replicating the arcs in the static net in all the time slices.
 #' @param net0 the structure of the static net
 #' @param netCP1 the state transition net
@@ -61,7 +61,7 @@ merge_nets <- function(net0, netCP1, size, acc = NULL, slice = 1){
 
 #' Learns the structure of a markovian n DBN model from data
 #'
-#' \code{learn_dbn_struc} Learns a gaussian dynamic bayesian network from a
+#' Learns a gaussian dynamic bayesian network from a
 #' dataset. It allows the creation of markovian n nets rather than only markov
 #' 1.
 #' @param dt the data.frame or data.table to be used
@@ -91,7 +91,7 @@ learn_dbn_struc <- function(dt, size = 2){
 
 #' Fits a markovian n DBN model
 #'
-#' \code{fit_dbn_params} Fits the parameters of the DBN via MLE or BGE.
+#' Fits the parameters of the DBN via MLE or BGE.
 #' @param f_dt a folded data.table
 #' @param net the structure of the DBN
 #' @return the fitted net
