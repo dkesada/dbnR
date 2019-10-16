@@ -1,26 +1,15 @@
-#' Checks if the column names of a data.table are time formatted
-#'
-#' This will check if the data.table is properly
-#' time formatted to be folded into more time slices. A data.table is well
-#' formatted when all of its column names end in "_t_0".
-#' @param dt the data.table to be treated
-#' @return TRUE if it is well formatted. FALSE in other case.
-check_time_formatted <- function(dt){
-  sum(grepl("*._t_0", names(dt))) == length(names(dt))
-}
-
-#' Renames the columns in a data.table so that they end in "_t_0"
+#' Renames the columns in a data.table so that they end in '_t_0'
 #'
 #' This will rename the columns in a data.table so that
-#' they end in \"_t_0\", which will be needed when folding the data.table. If
-#' any of the columns already ends in "_t_0", a warning will be issued and
+#' they end in '_t_0', which will be needed when folding the data.table. If
+#' any of the columns already ends in '_t_0', a warning will be issued and
 #' no further operation will be done.
 #' @param dt the data.table to be treated
 #' @return the renamed data.table
 #' @export
 time_rename <- function(dt){
   if(sum(grepl("*._t_0", names(dt))) > 0)
-    warning("One or more of the column names already ends in \"_t_0\". No more suffixes will be added.")
+    warning("One or more of the column names already ends in '_t_0'. No more suffixes will be added.")
 
   else{
     # If the data.table is not copied, the original one will be renamed. Can be unexpected behaviour
@@ -46,6 +35,9 @@ time_rename <- function(dt){
 #' @return the extended data.table
 #' @export
 fold_dt = function(dt, n_prev, size, slice = 1){
+  initial_dt_check(dt)
+  if(!is_dt(dt))
+    dt <- data.table::as.data.table(dt)
   if(size > slice){
     n <- sapply(n_prev,sub, pattern = paste0("_t_", slice-1),
                 replacement = paste0("_t_",slice), simplify=T)

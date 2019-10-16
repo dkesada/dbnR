@@ -23,7 +23,7 @@ node_levels <- function(net, order, lvl = 1, acc = NULL){
   return(ret)
 }
 
-#' Plots a Bayesian network in a hierarchical way
+#' Plots a Bayesian networks in a hierarchical way
 #'
 #' Calculates the levels of each node and then plots them in a hierarchical
 #' layout in visNetwork.
@@ -35,6 +35,11 @@ node_levels <- function(net, order, lvl = 1, acc = NULL){
 #' @importFrom magrittr "%>%"
 #' @export
 plot_network <- function(structure){
+  check_opt_pkgs_available()
+  initial_bn_check(structure)
+  if(is_dbn_or_dbnfit(structure))
+    warning("this function is for static networks. For DBNs, 'plot_dynamic_network' is the correct one")
+
   nodes_uniq <- bnlearn::node.ordering(structure)
   nodes <- data.frame(id = nodes_uniq,
                       label = nodes_uniq,
@@ -135,6 +140,10 @@ expand_time_nodes <- function(name, acc, max, i){
 #' @importFrom magrittr "%>%"
 #' @export
 plot_dynamic_network <- function(structure, offset = 200){
+  check_opt_pkgs_available()
+  initial_dbn_check(structure)
+  numeric_arg_check(offset)
+
   # Static net positioning
   nodes_uniq <- dynamic_ordering(structure)
   levels <- node_levels(structure, nodes_uniq)

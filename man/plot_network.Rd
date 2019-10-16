@@ -2,7 +2,7 @@
 % Please edit documentation in R/dbn_visualization.R
 \name{plot_network}
 \alias{plot_network}
-\title{Plots a Bayesian network in a hierarchical way}
+\title{Plots a Bayesian networks in a hierarchical way}
 \usage{
 plot_network(structure)
 }

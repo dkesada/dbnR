@@ -2,7 +2,7 @@
 % Please edit documentation in R/dt_modification.R
 \name{time_rename}
 \alias{time_rename}
-\title{Renames the columns in a data.table so that they end in "_t_0"}
+\title{Renames the columns in a data.table so that they end in '_t_0'}
 \usage{
 time_rename(dt)
 }
@@ -14,7 +14,7 @@ the renamed data.table
 }
 \description{
 This will rename the columns in a data.table so that
-they end in \"_t_0\", which will be needed when folding the data.table. If
-any of the columns already ends in "_t_0", a warning will be issued and
+they end in '_t_0', which will be needed when folding the data.table. If
+any of the columns already ends in '_t_0', a warning will be issued and
 no further operation will be done.
 }

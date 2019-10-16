@@ -70,9 +70,11 @@ merge_nets <- function(net0, netCP1, size, acc = NULL, slice = 1){
 #' @import data.table
 #' @export
 learn_dbn_struc <- function(dt, size = 2){
-  if(size < 2)
-    stop("The size of the DBN cannot be lesser than 2")
-  dt <- data.table::as.data.table(dt)
+  initial_size_check(size)
+  initial_dt_check(dt)
+  if(!is.data.table(dt))
+    dt <- as.data.table(dt)
+
   dt <- time_rename(dt)
 
   dt_copy <- data.table::copy(dt)
@@ -103,5 +105,9 @@ learn_dbn_struc <- function(dt, size = 2){
 #' @return the fitted net
 #' @export
 fit_dbn_params <- function(f_dt, net){
+  initial_folded_dt_check(f_dt)
+  initial_dbn_check(net)
+
   fit <- bnlearn::bn.fit(net, f_dt)
+  class(fit)[grep("dbn", class(fit))] <- "dbn.fit"
 }
