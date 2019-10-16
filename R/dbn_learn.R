@@ -79,14 +79,14 @@ learn_dbn_struc <- function(dt, size = 2){
 
   net0 <- bnlearn::rsmax2(x = dt_copy, restrict="mmpc", maximize = "hc",
                           restrict.args = list(test = "cor"),
-                          maximize.args = list(score = "bic")) # Static network. hc(..., maxp = 3)
+                          maximize.args = list(score = "bic-g")) # Static network. hc(..., maxp = 3)
 
   f_dt <- fold_dt(dt, names(dt), size)
   blacklist <- create_blacklist(names(f_dt), size)
 
-  net <- bnlearn::rsmax2(x = dt_copy, restrict="mmpc", maximize = "hc",
+  net <- bnlearn::rsmax2(x = f_dt, restrict="mmpc", maximize = "hc",
                          restrict.args = list(test = "cor"),
-                         maximize.args = list(score = "bic"),
+                         maximize.args = list(score = "bic-g"),
                          blacklist = blacklist) # kTBN
 
   bnlearn::arcs(net) <- merge_nets(net0, net, size)
