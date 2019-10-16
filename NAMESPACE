@@ -3,5 +3,8 @@
 export(fit_dbn_params)
 export(fold_dt)
 export(learn_dbn_struc)
+export(plot_dynamic_network)
+export(plot_network)
 export(time_rename)
 import(data.table)
+importFrom(magrittr,"%>%")
