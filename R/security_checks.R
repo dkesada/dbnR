@@ -87,7 +87,7 @@ check_pkg_available <- function(pkg){
 
 check_opt_pkgs_available <- function(){
   pkgs <- optional_packages()
-  sapply(pkgs, check_lib_available)
+  sapply(pkgs, check_pkg_available)
 }
 
 optional_packages <- function(){
