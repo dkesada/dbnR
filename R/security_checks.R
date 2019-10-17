@@ -3,8 +3,12 @@ missing_check <- function(obj){
     stop(sprintf("%s has to be valid.", deparse(substitute(obj))))
 }
 
+is_bnfit <- function(obj){
+  return(is(obj, "bn.fit"))
+}
+
 is_bn_or_bnfit <- function(obj){
-  return(is(obj, "bn") || is(obj, "bn.fit"))
+  return(is(obj, "bn") || is_bnfit(obj))
 }
 
 is_dbn_or_dbnfit <- function(obj){
@@ -15,17 +19,24 @@ initial_bn_check <- function(obj){
   missing_check(obj)
   if(!is_bn_or_bnfit(obj))
     stop(sprintf("%s must be of class 'bn' or 'bn.fit'.",
-                 deparse(substitute(obj)) ))
+                 deparse(substitute(obj))))
+}
+
+initial_fit_check <- function(obj){
+  missing_check(obj)
+  if(!is_bnfit(obj))
+    stop(sprintf("%s must be of class 'bn.fit'.",
+                 deparse(substitute(obj))))
 }
 
 initial_dbn_check <- function(obj){
   missing_check(obj)
   if(!is_dbn_or_dbnfit(obj))
     stop(sprintf("%s must be of class 'dbn' or 'dbn.fit'.",
-                 deparse(substitute(obj)) ))
+                 deparse(substitute(obj))))
 }
 
-initial_dt_check <- function(obj){
+initial_df_check <- function(obj){
   missing_check(obj)
   if(!is.data.frame(obj))
     stop(sprintf("%s must be of class 'data.frame' or 'data.table'.",
@@ -74,7 +85,7 @@ check_time_formatted <- function(obj){
 
 initial_folded_dt_check <- function(obj){
   missing_check(obj)
-  initial_dt_check(obj)
+  initial_df_check(obj)
   if(!check_time_formatted(names(obj)))
     stop(sprintf("%s is not properly time formatted.",
                  deparse(substitute(obj))))

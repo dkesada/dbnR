@@ -35,7 +35,7 @@ time_rename <- function(dt){
 #' @return the extended data.table
 #' @export
 fold_dt = function(dt, n_prev, size, slice = 1){
-  initial_dt_check(dt)
+  initial_df_check(dt)
   if(!is.data.table(dt))
     dt <- data.table::as.data.table(dt)
   if(size > slice){

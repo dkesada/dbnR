@@ -71,7 +71,7 @@ merge_nets <- function(net0, netCP1, size, acc = NULL, slice = 1){
 #' @export
 learn_dbn_struc <- function(dt, size = 2){
   initial_size_check(size)
-  initial_dt_check(dt)
+  initial_df_check(dt)
   if(!is.data.table(dt))
     dt <- as.data.table(dt)
 
@@ -84,7 +84,7 @@ learn_dbn_struc <- function(dt, size = 2){
                           maximize.args = list(score = "bic-g")) # Static network. hc(..., maxp = 3)
 
   f_dt <- fold_dt(dt, names(dt), size)
-  blacklist <- create_blacklist(names(f_dt), size)
+  blacklist <- create_blacklist(names(f_dt), size) #TODO: bug when size = 20
 
   net <- bnlearn::rsmax2(x = f_dt, restrict="mmpc", maximize = "hc",
                          restrict.args = list(test = "cor"),
@@ -104,7 +104,7 @@ learn_dbn_struc <- function(dt, size = 2){
 #' @param net the structure of the DBN
 #' @return the fitted net
 #' @export
-fit_dbn_params <- function(f_dt, net){
+fit_dbn_params <- function(net, f_dt){
   initial_folded_dt_check(f_dt)
   initial_dbn_check(net)
 
