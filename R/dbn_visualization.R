@@ -6,7 +6,7 @@
 #' will be one more of the maximum level of his parents.
 #' @param net the structure of the network.
 #' @param order a topological order of the nodes, with the orphan nodes
-#' in the first place. See \link[bnlearn]{node.ordering}
+#' in the first place. See \code{\link[bnlearn]{node.ordering}}
 #' @param lvl current level being processed
 #' @param acc accumulator of the nodes already processed
 #' @return a matrix with the names of the nodes in the first row and their
@@ -151,7 +151,7 @@ plot_dynamic_network <- function(structure, offset = 200){
   n_nodes_slice <- length(nodes_uniq)
 
   max_consec <- max(positions)
-  ord <- length(bnlearn::nodes(structure)) / n_nodes_slice
+  ord <- bnlearn::nnodes(structure) / n_nodes_slice
 
   # Relative position of the nodes
   nodes_uniq <- expand_time_nodes(nodes_uniq, nodes_uniq, ord, 1)
@@ -194,4 +194,8 @@ plot_dynamic_network <- function(structure, offset = 200){
                            nodesIdSelection = T)
 
   eval(ret)
+}
+
+nodes.dbn <- function(dbn){
+  return(names(dbn$nodes))
 }

@@ -110,4 +110,6 @@ fit_dbn_params <- function(f_dt, net){
 
   fit <- bnlearn::bn.fit(net, f_dt)
   class(fit)[grep("dbn", class(fit))] <- "dbn.fit"
+
+  return(fit)
 }

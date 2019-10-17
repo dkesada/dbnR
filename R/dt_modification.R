@@ -36,7 +36,7 @@ time_rename <- function(dt){
 #' @export
 fold_dt = function(dt, n_prev, size, slice = 1){
   initial_dt_check(dt)
-  if(!is_dt(dt))
+  if(!is.data.table(dt))
     dt <- data.table::as.data.table(dt)
   if(size > slice){
     n <- sapply(n_prev,sub, pattern = paste0("_t_", slice-1),
