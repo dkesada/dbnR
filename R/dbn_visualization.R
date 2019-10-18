@@ -160,9 +160,7 @@ plot_dynamic_network <- function(structure, offset = 200){
   for(i in (0:(ord-1)))
     all_pos <- c(all_pos, (positions * 100 + i * 100 * max_consec + i * offset))
 
-  color <- grep('*black|*white', grDevices::colors(distinct = T),
-                invert = T, value = T)
-  color <- grDevices::col2rgb(sample(color, ord)) / 255
+  color <- grDevices::col2rgb(grDevices::hcl.colors(ord, palette = "RdYlBu")) / 255
   color <- apply(color, 2, function(x){do.call(grDevices::rgb,as.list(x))})
 
   all_colors <- NULL
