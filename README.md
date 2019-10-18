@@ -4,8 +4,6 @@ An implementation of Gaussian dynamic Bayesian networks (GDBN) structure learnin
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
 ### Prerequisites
 
 This package requires R ≥ 3.6.1 to work properly. It's possible to make it work for older versions of R and of each of the packages by fiddling with the [NAMESPACE](NAMESPACE) file, although this is not recommended.
@@ -22,17 +20,17 @@ The packages __visNetwork__, __magrittr__ and __grDevices__ are optional for the
 
 ## Basic examples
 
-To get the structure of a GDBN from a dataset, you need to use the function
+To get the structure of a GDBN from a dataset, you need to use the function _learn_dbn_struc_
 
 ```{r quick usage, echo=TRUE, message=FALSE, warning=FALSE}
 dt <- data.table::fread("data/pmsm_temperature_data_reduced.csv")
 l_res <- learn_dbn_struc(dt, 2)
 ```
-The dt argument has to be either a data.frame or a data.table of numeric columns. The size argument determines the number of time slices that your net is gona have, that is, the Markovian order of the net. A Markovian order of 2 means that your data in the present is independent of the past given the previous time slice. If your case doesn't meet this criteria, the size of the net can be increased, to take into account more past time slices in the inference. In our function, Markovian order = size - 1. The function returns a list with the learned structure and the folded dataset with the extended rows.
+The dt argument has to be either a data.frame or a data.table of numeric columns, in the example we use the sample data set provided for the tests. The size argument determines the number of time slices that your net is gona have, that is, the Markovian order of the net. A Markovian order of 2 means that your data in the present is independent of the past given the previous time slice. If your case doesn't meet this criteria, the size of the net can be increased, to take into account more past time slices in the inference. In our function, Markovian order = size - 1. The function returns a list with the learned structure and the folded dataset with the extended rows.
 
 Once the structure is learnt, it can be ploted and used to learn the parameters
 ```{r quick usage, echo=TRUE, message=FALSE, warning=FALSE}
-rdbn::plot_dynamic_network(l_res$net)
+plot_dynamic_network(l_res$net)
 ```
 ![alt text](media/dbn_plot.png)
 
@@ -43,4 +41,4 @@ This project is licensed under the GPL-3 License, following on bnlearn's GPL(≥
 ## References
 
 * The bnlearn package (http://www.bnlearn.com/).
-* 
+* The visNetwork package (https://datastorm-open.github.io/visNetwork/)
