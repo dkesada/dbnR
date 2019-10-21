@@ -28,7 +28,8 @@ To get the structure of a GDBN from a dataset, you need to use the function _lea
 
 ```
 library(dbnR)
-l_res <- learn_dbn_struc(pmsm_temperature_data_red, 3)
+data(motor)
+l_res <- learn_dbn_struc(motor, 3)
 ```
 The dt argument has to be either a data.frame or a data.table of numeric columns, in the example we use the sample dataset included in the package. The size argument determines the number of time slices that your net is gona have, that is, the Markovian order of the net. A Markovian order of 2 means that your data in the present is independent of the past given the previous time slice. If your case doesn't meet this criteria, the size of the net can be increased, to take into account more past time slices in the inference. In our function, Markovian order = size - 1. The function returns a list with the learned structure and the folded dataset with the extended rows.
 
