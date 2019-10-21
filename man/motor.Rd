@@ -4,6 +4,7 @@
 \name{motor}
 \alias{motor}
 \title{Multivariate time series dataset on the temperature of an electric motor}
+\format{An object of class \code{data.table} (inherits from \code{data.frame}) with 3000 rows and 12 columns.}
 \source{
 Kaggle, <https://www.kaggle.com/wkirgsn/electric-motor-temperature>
 }

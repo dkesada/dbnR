@@ -83,7 +83,7 @@ learn_dbn_struc <- function(dt, size = 2){
                           restrict.args = list(test = "cor"),
                           maximize.args = list(score = "bic-g")) # Static network. hc(..., maxp = 3)
 
-  f_dt <- fold_dt(dt, names(dt), size)
+  f_dt <- fold_dt_rec(dt, names(dt), size)
   blacklist <- create_blacklist(names(f_dt), size) #TODO: bug when size = 20
 
   net <- bnlearn::rsmax2(x = f_dt, restrict="mmpc", maximize = "hc",
