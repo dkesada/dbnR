@@ -1,4 +1,4 @@
-Package: rdbn
+Package: dbnR
 Type: Package
 Title: Dynamic Bayesian network learning and inference
 Version: 0.0.0.9003
@@ -20,7 +20,7 @@ Suggests:
     visNetwork (>= 2.0.8),
     magrittr (>= 1.5),
     grDevices (>= 3.6.1)
-URL: https://github.com/dkesada/rdbn
+URL: https://github.com/dkesada/dbnR
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
