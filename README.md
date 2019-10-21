@@ -16,7 +16,7 @@ install.packages(c("bnlearn", "data.table"))
 The packages __visNetwork__, __magrittr__ and __grDevices__ are optional for the visualization tool. They will only be required if you want to use it.
 
 ### Installing
-As of today, the easiest way of installing rdbn is via the _install_github_ function in the devtools package. The command you need to run is
+As of today, the easiest way of installing rdbn is via the _install_github_ function in the __devtools__ package. The command you need to run is
 ```
 devtools::install_github("dkesada/rdbn")
 ```
