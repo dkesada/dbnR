@@ -76,8 +76,7 @@ check_time_formatted <- function(obj){
 initial_folded_dt_check <- function(obj){
   initial_df_check(obj)
   if(!check_time_formatted(names(obj)))
-    stop(sprintf("%s is not properly time formatted.",
-                 deparse(substitute(obj))))
+    stop("the data.frame is not properly time formatted.")
 }
 
 check_pkg_available <- function(pkg){

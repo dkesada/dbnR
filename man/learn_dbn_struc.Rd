@@ -12,7 +12,7 @@ learn_dbn_struc(dt, size = 2)
 \item{size}{number of time slices of the net. Markovian 1 would be size 2}
 }
 \value{
-the folded data.table and the structure of the net
+the structure of the net
 }
 \description{
 Learns a gaussian dynamic bayesian network from a

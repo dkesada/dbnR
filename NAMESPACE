@@ -2,6 +2,7 @@
 
 export(fit_dbn_params)
 export(fold_dt)
+export(forecast_ts)
 export(learn_dbn_struc)
 export(plot_dynamic_network)
 export(plot_network)

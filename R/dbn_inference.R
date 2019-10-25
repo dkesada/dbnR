@@ -69,74 +69,100 @@ predict_dt <- function(fit, dt, obj_nodes, verbose = T){
 #' particle inference over such variables in the net for a given time slice.
 #' @param fit bn.fit object
 #' @param variables variables to be predicted
-#' @param particles evidence provided
+#' @param particles a list with the provided provided
 #' @return the inferred particles
-predictionStep <- function(fit, variables, particles = NULL, n = 50){
-  if(is.null(particles))
-    particles <- cpdist(fit, nodes = variables, evidence = TRUE, method = "lw", n = n)
+predictionStep <- function(fit, variables, particles, n = 50){
+  if(length(particles) == 0)
+    particles <- bnlearn::cpdist(fit, nodes = variables, evidence = TRUE, method = "lw", n = n)
   else
-    particles <- cpdist(fit, nodes = variables, evidence = as.list(particles), method = "lw", n = n)
-  particles <- apply(particles, 2, mean)
+    particles <- bnlearn::cpdist(fit, nodes = variables, evidence = particles, method = "lw", n = n)
+  particles <- as.list(apply(particles, 2, mean))
 
   return(particles)
-}
-
-#' Gets a vector with the names of the variables in the wanted slices.
-#'
-#' Recursive function that returns the names of the
-#' variables in all the slices between "slice" and "size".
-#' @param variables variables in the time slice t0
-#' @param acu accumulated vector of names
-#' @param size number of time slices
-#' @param slice current time slice
-#' @return the vector of variable names
-name_variables <- function(variables, acu, size, slice){
-  if(size > slice){
-    tmp <- sapply(variables, sub, pattern = "_t_0",
-                  replacement = paste0("_t_", slice), simplify=T, USE.NAMES = F)
-    acu <- name_variables(variables, c(acu, tmp), size, slice + 1)
-  }
-
-  return(acu)
-}
-
-#' Assign the evidence of the initial time slices in the GDBN
-#'
-#' Recursive function that returns a data.table
-#' with each variable of the GDBN and its given evidence.
-#' @param dt original data.table with "size" rows of initial values
-#' @param name names of the variables to be evidenced
-#' @param acu the accumulated evidence to this point in the recursion
-#' @param size number of time slices
-#' @param slice current time slice
-#' @return the data.table with the evidence and the names
-#' in the first row
-assign_evidence <- function(dt, name, acu, size, slice){
-  if(size > slice)
-    acu <- assign_evidence(dt, name, data.table(acu, dt[slice]), size, slice + 1)
-  else
-    names(acu) <- name
-
-  return(acu)
 }
 
 #' Performs forecasting with the GDBN over a data set
 #'
 #' Given a bn.fit object, the size of the net and a data.set,
 #' performs a forecast over the initial evidence taken from the data set.
-#' @param dt.test data.table object with the TS data
+#' @param dt data.table object with the TS data
+#' @param fit bn.fit object
+#' @param size number of time slices of the net
+#' @param ini starting point in the data set to forecast.
+#' @param len number of points of the TS to forecast
+#' @param rep number of times to repeat the forecasting
+#' @return the results of the forecast
+#' @export
+forecast_ts <- function(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1]-1, rep = 1, num_p = 50){
+  # TODO: add security checks for the arguments
+  exec_time <- Sys.time()
+  var_names <- names(dt)
+  vars_pred_idx <- grep("t_0", var_names)
+  vars_subs_idx <- grep("t_1", var_names)
+  vars_last_idx <- grep(paste0("t_", size-1), var_names)
+  vars_pred <- var_names[vars_pred_idx]
+  vars_subs <- var_names[vars_subs_idx]
+  vars_prev <- var_names[-c(vars_pred_idx, vars_subs_idx)]
+  vars_post <- var_names[-c(vars_pred_idx, vars_last_idx)]
+  vars_ev <- var_names[-vars_pred_idx]
+
+  evidence <- dt[ini, .SD, .SDcols = vars_ev]
+
+  test <- NULL
+
+  for(i in 1:rep){
+    # First query
+    particles <- predictionStep(fit, vars_pred, as.list(evidence), num_p)
+    if(!is.null(vars_post))
+      evidence[, (vars_prev) := .SD, .SDcols = vars_post]
+    evidence[, (vars_subs) := particles]
+
+    temp <- particles[obj_vars]
+    temp["exec"] <- 1
+    test <- rbindlist(list(test, temp))
+
+    # Subsequent queries
+    for(j in 1:len){
+      particles <- predictionStep(fit, vars_pred, as.list(evidence), num_p)
+      if(!is.null(vars_post))
+        evidence[, (vars_prev) := .SD, .SDcols = vars_post]
+      evidence[, (vars_subs) := particles]
+      temp <- particles[obj_vars]
+      temp["exec"] <- i
+      test <- rbindlist(list(test, temp))
+    }
+  }
+
+  metrics <- apply(test, 2, forecast::accuracy, x = dt[ini:len+1, t_promedio_p1_t_0])
+  metrics <- apply(metrics, 1, mean)
+  names(metrics) <- c("ME", "RMSE", "MAE", "MPE", "MAPE")
+  print(metrics)
+  print(exec_time - Sys.time())
+
+  plot(ts(dt[ini:dim(dt)[1],t_promedio_p1_t_0]))
+  apply(test,2,function(colu){lines(ts(colu),col="red")})
+  lines(ts(dt[ini:dim(dt)[1],t_promedio_p1_t_0]))
+
+  return(as.list(metrics))
+}
+
+#' Performs forecasting with the GDBN over a data set (WIP)
+#'
+#' Given a bn.fit object, the size of the net and a data.set,
+#' performs a forecast over the initial evidence taken from the data set.
+#' @param dt data.table object with the TS data
 #' @param fit bn.fit object
 #' @param size number of time slices of the net
 #' @param ini starting point in the data set
 #' @param len number of points of the TS to forecast
 #' @param rep number of times to repeat the forecasting
 #' @return the results of the forecast
-forecastTs <- function(dt.test, fit, size, ini = 1, len = dim(dt.test)[1], rep = 1){
+forecast_ts_parallel <- function(dt, fit, size, ini = 1, len = dim(dt)[1], rep = 1){
   exec_time <- Sys.time()
-  variables <- name_variables(names(dt.test), NULL, size-1, 1)
-  variables <- c(names(dt.test), variables)
-  variables.prev <- name_variables(names(dt.test), NULL, size, 1)
-  evidence <- assign_evidence(dt.test[ini:dim(dt.test)[1]], variables.prev, dt.test[ini:dim(dt.test)[1]][1], size, 2)
+  variables <- name_variables(names(dt), NULL, size-1, 1)
+  variables <- c(names(dt), variables)
+  variables.prev <- name_variables(names(dt), NULL, size, 1)
+  evidence <- assign_evidence(dt[ini:dim(dt)[1]], variables.prev, dt[ini:dim(dt)[1]][1], size, 2)
   test <- NULL
   registerDoParallel(cores = 4)
 
@@ -156,15 +182,15 @@ forecastTs <- function(dt.test, fit, size, ini = 1, len = dim(dt.test)[1], rep =
     temp
   }
 
-  metrics <- apply(test, 2, forecast::accuracy, x = dt.test[ini:len+1, t_promedio_p1_t_0])
+  metrics <- apply(test, 2, forecast::accuracy, x = dt[ini:len+1, t_promedio_p1_t_0])
   metrics <- apply(metrics, 1, mean)
   names(metrics) <- c("ME", "RMSE", "MAE", "MPE", "MAPE")
   print(metrics)
   print(exec_time - Sys.time())
 
-  plot(ts(dt.test[ini:dim(dt.test)[1],t_promedio_p1_t_0]))
+  plot(ts(dt[ini:dim(dt)[1],t_promedio_p1_t_0]))
   apply(test,2,function(colu){lines(ts(colu),col="red")})
-  lines(ts(dt.test[ini:dim(dt.test)[1],t_promedio_p1_t_0]))
+  lines(ts(dt[ini:dim(dt)[1],t_promedio_p1_t_0]))
 
   return(as.list(metrics))
 }

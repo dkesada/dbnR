@@ -191,7 +191,7 @@ plot_dynamic_network <- function(structure, offset = 200){
     visNetwork::visOptions(highlightNearest = list(enabled = T, hover = T),
                            nodesIdSelection = T)
 
-  eval(ret)
+  return(ret)
 }
 
 nodes.dbn <- function(dbn){

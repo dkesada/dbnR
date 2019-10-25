@@ -4,14 +4,14 @@
 \alias{predictionStep}
 \title{Performs inference in a time slice of the dbn}
 \usage{
-predictionStep(fit, variables, particles = NULL, n = 50)
+predictionStep(fit, variables, particles, n = 50)
 }
 \arguments{
 \item{fit}{bn.fit object}
 
 \item{variables}{variables to be predicted}
 
-\item{particles}{evidence provided}
+\item{particles}{a list with the provided provided}
 }
 \value{
 the inferred particles
