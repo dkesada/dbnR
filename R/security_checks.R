@@ -2,12 +2,16 @@ is_bnfit <- function(obj){
   return(is(obj, "bn.fit"))
 }
 
+is_dbnfit <- function(obj){
+  return(is(obj, "dbn.fit"))
+}
+
 is_bn_or_bnfit <- function(obj){
   return(is(obj, "bn") || is_bnfit(obj))
 }
 
 is_dbn_or_dbnfit <- function(obj){
-  return(is(obj, "dbn") || is(obj, "dbn.fit"))
+  return(is(obj, "dbn") || is_dbnfit(obj))
 }
 
 initial_bn_check <- function(obj){
@@ -19,6 +23,12 @@ initial_bn_check <- function(obj){
 initial_fit_check <- function(obj){
   if(!is_bnfit(obj))
     stop(sprintf("%s must be of class 'bn.fit'.",
+                 deparse(substitute(obj))))
+}
+
+initial_dbnfit_check <- function(obj){
+  if(!is_dbnfit(obj))
+    stop(sprintf("%s must be of class 'dbn.fit'.",
                  deparse(substitute(obj))))
 }
 
@@ -34,11 +44,29 @@ initial_df_check <- function(obj){
                  deparse(substitute(obj))))
 }
 
-numeric_arg_check <- function(obj){
-  if(!is.numeric(obj))
-    stop(sprintf("%s has to be numeric.", deparse(substitute(obj))))
-  if(length(obj) > 1)
-    stop(sprintf("%s can not be a vector.", deparse(substitute(obj))))
+numeric_arg_check <- function(...){
+  invisible(sapply(list(...), function(x){
+    if(!is.numeric(x))
+      stop(sprintf("%s has to be numeric.", deparse(substitute(x))))
+    if(length(x) > 1)
+      stop(sprintf("%s can not be a vector.", deparse(substitute(x))))
+  }))
+}
+
+logical_arg_check <- function(...){
+  invisible(sapply(list(...), function(x){
+    if(!is.logical(x))
+      stop(sprintf("%s has to be logical", deparse(substitute(x))))
+    if(length(x) > 1)
+      stop(sprintf("%s can not be a vector.", deparse(substitute(x))))
+  }))
+}
+
+character_arg_check <- function(...){
+  invisible(sapply(list(...), function(x){
+    if(!is.character(x))
+      stop(sprintf("%s has to be numeric.", deparse(substitute(x))))
+  }))
 }
 
 initial_size_check <- function(size){
