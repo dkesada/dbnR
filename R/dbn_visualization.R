@@ -38,14 +38,14 @@ plot_network <- function(structure){
   check_opt_pkgs_available()
   initial_bn_check(structure)
   if(is_dbn_or_dbnfit(structure))
-    warning("this function is for static networks. For DBNs, 'plot_dynamic_network' is the correct one")
+    warning("this function is for static networks. For DBNs, please use 'plot_dynamic_network'")
 
   nodes_uniq <- bnlearn::node.ordering(structure)
   nodes <- data.frame(id = nodes_uniq,
                       label = nodes_uniq,
                       level = node_levels(structure, nodes_uniq)[2,],
-                      color.background = rgb(red = 0.6, blue = 0.33,
-                                             green = 0.200, alpha = 0.5),
+                      color.background = rgb(red = 0.196, blue = 0.627,
+                                             green = 0.302, alpha = 0.8),
                       color.border = "black",
                       borderWidth = 2,
                       shadow = FALSE,
