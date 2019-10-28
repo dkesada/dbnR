@@ -5,7 +5,7 @@
 \title{Performs forecasting with the GDBN over a data set}
 \usage{
 forecast_ts(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1] - 1,
-  rep = 1, num_p = 50)
+  rep = 1, num_p = 50, print_res = TRUE, plot_res = TRUE)
 }
 \arguments{
 \item{dt}{data.table object with the TS data}

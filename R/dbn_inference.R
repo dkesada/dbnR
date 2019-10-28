@@ -93,8 +93,14 @@ predictionStep <- function(fit, variables, particles, n = 50){
 #' @param rep number of times to repeat the forecasting
 #' @return the results of the forecast
 #' @export
-forecast_ts <- function(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1]-1, rep = 1, num_p = 50){
-  # TODO: add security checks for the arguments
+forecast_ts <- function(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1]-1,
+                        rep = 1, num_p = 50, print_res = TRUE, plot_res = TRUE){
+  initial_folded_dt_check(dt)
+  initial_dbnfit_check(fit)
+  numeric_arg_check(size, ini, len, rep, num_p)
+  character_arg_check(obj_vars)
+  logical_arg_check(print_res, plot_res)
+
   exec_time <- Sys.time()
   var_names <- names(dt)
   vars_pred_idx <- grep("t_0", var_names)
@@ -106,12 +112,11 @@ forecast_ts <- function(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1]-1, re
   vars_post <- var_names[-c(vars_pred_idx, vars_last_idx)]
   vars_ev <- var_names[-vars_pred_idx]
 
-  evidence <- dt[ini, .SD, .SDcols = vars_ev]
-
   test <- NULL
 
   for(i in 1:rep){
     # First query
+    evidence <- dt[ini, .SD, .SDcols = vars_ev]
     particles <- predictionStep(fit, vars_pred, as.list(evidence), num_p)
     if(!is.null(vars_post))
       evidence[, (vars_prev) := .SD, .SDcols = vars_post]
@@ -133,64 +138,16 @@ forecast_ts <- function(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1]-1, re
     }
   }
 
-  metrics <- apply(test, 2, forecast::accuracy, x = dt[ini:len+1, t_promedio_p1_t_0])
-  metrics <- apply(metrics, 1, mean)
-  names(metrics) <- c("ME", "RMSE", "MAE", "MPE", "MAPE")
-  print(metrics)
   print(exec_time - Sys.time())
 
-  plot(ts(dt[ini:dim(dt)[1],t_promedio_p1_t_0]))
-  apply(test,2,function(colu){lines(ts(colu),col="red")})
-  lines(ts(dt[ini:dim(dt)[1],t_promedio_p1_t_0]))
+  metrics <- lapply(obj_vars, function(x){test[, mae_by_col(dt, .SD), .SDcols = x, by = exec]})
+  metrics <- sapply(metrics, function(x){mean(x$V1)})
+  names(metrics) <- obj_vars
 
-  return(as.list(metrics))
-}
+  if(print_res)
+    print_metrics(metrics, obj_vars)
+  if(plot_res)
+    plot_results(dt, test, obj_vars)
 
-#' Performs forecasting with the GDBN over a data set (WIP)
-#'
-#' Given a bn.fit object, the size of the net and a data.set,
-#' performs a forecast over the initial evidence taken from the data set.
-#' @param dt data.table object with the TS data
-#' @param fit bn.fit object
-#' @param size number of time slices of the net
-#' @param ini starting point in the data set
-#' @param len number of points of the TS to forecast
-#' @param rep number of times to repeat the forecasting
-#' @return the results of the forecast
-forecast_ts_parallel <- function(dt, fit, size, ini = 1, len = dim(dt)[1], rep = 1){
-  exec_time <- Sys.time()
-  variables <- name_variables(names(dt), NULL, size-1, 1)
-  variables <- c(names(dt), variables)
-  variables.prev <- name_variables(names(dt), NULL, size, 1)
-  evidence <- assign_evidence(dt[ini:dim(dt)[1]], variables.prev, dt[ini:dim(dt)[1]][1], size, 2)
-  test <- NULL
-  registerDoParallel(cores = 4)
-
-  test <- foreach(i = 1:rep, .combine = "cbind", .packages = "bnlearn", .export = "predictionStep") %dopar%{
-    # First query
-    particles <- predictionStep(fit, variables, particles = evidence)
-    names(particles) <- variables.prev
-    temp <- c(particles["t_promedio_p1_t_1"])
-
-    # Subsequent queries
-    for(i in 1:len){
-      particles <- predictionStep(fit, variables,  particles = particles)
-      names(particles) <- variables.prev
-      temp = c(temp, particles["t_promedio_p1_t_1"])
-    }
-
-    temp
-  }
-
-  metrics <- apply(test, 2, forecast::accuracy, x = dt[ini:len+1, t_promedio_p1_t_0])
-  metrics <- apply(metrics, 1, mean)
-  names(metrics) <- c("ME", "RMSE", "MAE", "MPE", "MAPE")
-  print(metrics)
-  print(exec_time - Sys.time())
-
-  plot(ts(dt[ini:dim(dt)[1],t_promedio_p1_t_0]))
-  apply(test,2,function(colu){lines(ts(colu),col="red")})
-  lines(ts(dt[ini:dim(dt)[1],t_promedio_p1_t_0]))
-
-  return(as.list(metrics))
+  return(metrics)
 }
