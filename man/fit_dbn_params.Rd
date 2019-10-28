@@ -4,12 +4,14 @@
 \alias{fit_dbn_params}
 \title{Fits a markovian n DBN model}
 \usage{
-fit_dbn_params(net, f_dt)
+fit_dbn_params(net, f_dt, ...)
 }
 \arguments{
 \item{net}{the structure of the DBN}
 
 \item{f_dt}{a folded data.table}
+
+\item{...}{aditional parameters for bnlearn's bn.fit function}
 }
 \value{
 the fitted net

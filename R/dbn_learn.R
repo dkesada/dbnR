@@ -66,10 +66,15 @@ merge_nets <- function(net0, netCP1, size, acc = NULL, slice = 1){
 #' 1.
 #' @param dt the data.frame or data.table to be used
 #' @param size number of time slices of the net. Markovian 1 would be size 2
+#' @param ... aditional parameters for bnlearn's rsmax2 function
 #' @return the structure of the net
 #' @import data.table
+#' @examples
+#' net <- learn_dbn_struc(dt, size = 3, restrict = "mmpc", maximize = "hc",
+#'                        restrict.args = list(test = "cor"),
+#'                        maximize.args = list(score = "bic-g", maxp = 6))
 #' @export
-learn_dbn_struc <- function(dt, size = 2){
+learn_dbn_struc <- function(dt, size = 2, ...){
   initial_size_check(size)
   initial_df_check(dt)
   if(!is.data.table(dt))
@@ -79,17 +84,12 @@ learn_dbn_struc <- function(dt, size = 2){
 
   dt_copy <- data.table::copy(dt)
 
-  net0 <- bnlearn::rsmax2(x = dt_copy, restrict="mmpc", maximize = "hc",
-                          restrict.args = list(test = "cor"),
-                          maximize.args = list(score = "bic-g")) # Static network. hc(..., maxp = 3)
+  net0 <- bnlearn::rsmax2(x = dt_copy, ...) # Static network
 
   f_dt <- fold_dt_rec(dt, names(dt), size)
-  blacklist <- create_blacklist(names(f_dt), size) #TODO: bug when size = 20
+  blacklist <- create_blacklist(names(f_dt), size)
 
-  net <- bnlearn::rsmax2(x = f_dt, restrict="mmpc", maximize = "hc",
-                         restrict.args = list(test = "cor"),
-                         maximize.args = list(score = "bic-g"),
-                         blacklist = blacklist) # kTBN
+  net <- bnlearn::rsmax2(x = f_dt, blacklist = blacklist, ...) # kTBN
 
   bnlearn::arcs(net) <- merge_nets(net0, net, size)
   class(net) <- c("dbn", class(net))
@@ -102,13 +102,14 @@ learn_dbn_struc <- function(dt, size = 2){
 #' Fits the parameters of the DBN via MLE or BGE.
 #' @param f_dt a folded data.table
 #' @param net the structure of the DBN
+#' @param ... aditional parameters for bnlearn's bn.fit function
 #' @return the fitted net
 #' @export
-fit_dbn_params <- function(net, f_dt){
+fit_dbn_params <- function(net, f_dt, ...){
   initial_folded_dt_check(f_dt)
   initial_dbn_check(net)
 
-  fit <- bnlearn::bn.fit(net, f_dt)
+  fit <- bnlearn::bn.fit(net, f_dt, ...)
   class(fit)[grep("dbn", class(fit))] <- "dbn.fit"
 
   return(fit)
