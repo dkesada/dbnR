@@ -94,16 +94,16 @@ initial_size_slice_check <- function(size, slice){
 #' @param obj the vector of names
 #' @return TRUE if it is well formatted. FALSE in other case.
 check_time0_formatted <- function(obj){
-  return(sum(grepl(".*_t_0$", obj)) == length(obj))
+  return(sum(grepl(".*_t_0$", names(obj))) == length(obj))
 }
 
 check_time_formatted <- function(obj){
-  return(sum(grepl(".*_t_[0-9]*$", obj)) == length(obj))
+  return(sum(grepl(".*_t_[0-9]*$", names(obj))) == length(obj))
 }
 
 initial_folded_dt_check <- function(obj){
   initial_df_check(obj)
-  if(!check_time_formatted(names(obj)))
+  if(!check_time_formatted(obj))
     stop("the data.frame is not properly time formatted.")
 }
 
