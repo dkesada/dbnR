@@ -118,7 +118,7 @@ forecast_ts <- function(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1]-1,
     # First query
     evidence <- dt[ini, .SD, .SDcols = vars_ev]
     particles <- predictionStep(fit, vars_pred, as.list(evidence), num_p)
-    if(!is.null(vars_post))
+    if(length(vars_post) > 0)
       evidence[, (vars_prev) := .SD, .SDcols = vars_post]
     evidence[, (vars_subs) := particles]
 
@@ -129,7 +129,7 @@ forecast_ts <- function(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1]-1,
     # Subsequent queries
     for(j in 1:len){
       particles <- predictionStep(fit, vars_pred, as.list(evidence), num_p)
-      if(!is.null(vars_post))
+      if(length(vars_post) > 0)
         evidence[, (vars_prev) := .SD, .SDcols = vars_post]
       evidence[, (vars_subs) := particles]
       temp <- particles[obj_vars]
@@ -140,14 +140,15 @@ forecast_ts <- function(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1]-1,
 
   print(exec_time - Sys.time())
 
-  metrics <- lapply(obj_vars, function(x){test[, mae_by_col(dt, .SD), .SDcols = x, by = exec]})
+  metrics <- lapply(obj_vars, function(x){test[, mae_by_col(dt[ini:(ini+len)], .SD),
+                                               .SDcols = x, by = exec]})
   metrics <- sapply(metrics, function(x){mean(x$V1)})
   names(metrics) <- obj_vars
 
   if(print_res)
     print_metrics(metrics, obj_vars)
   if(plot_res)
-    plot_results(dt, test, obj_vars)
+    plot_results(dt[ini:(ini+len)], test, obj_vars)
 
-  return(metrics)
+  return(list(orig = dt[ini:(ini+len)], pred = test))
 }
