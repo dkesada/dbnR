@@ -123,7 +123,7 @@ forecast_ts <- function(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1]-1,
     evidence[, (vars_subs) := particles]
 
     temp <- particles[obj_vars]
-    temp["exec"] <- 1
+    temp["exec"] <- i
     test <- rbindlist(list(test, temp))
 
     # Subsequent queries

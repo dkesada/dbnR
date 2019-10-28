@@ -1,7 +1,7 @@
 Package: dbnR
 Type: Package
 Title: Dynamic Bayesian network learning and inference
-Version: 0.0.0.9003
+Version: 0.1.0
 Authors@R: c(
     person("David", "Quesada", email = "dkesada@gmail.com", role = c("aut", "cre")),
     person("Gabriel", "Valverde", email = "gabrielvalverdecastilla@gmail.com", role = "ctb"))
