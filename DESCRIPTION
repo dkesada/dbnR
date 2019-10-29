@@ -15,11 +15,14 @@ Description: The package extends the functionality offered by bnlearn to
 Depends: R (>= 3.6.1)
 Imports:
     bnlearn (>= 4.5),
-    data.table (>= 1.12.4)
+    data.table (>= 1.12.4),
+    Rcpp (>= 1.0.2),
+    magrittr (>= 1.5)
 Suggests:
     visNetwork (>= 2.0.8),
-    magrittr (>= 1.5),
     grDevices (>= 3.6.1)
+LinkingTo:
+    Rcpp
 URL: https://github.com/dkesada/dbnR
 License: GPL-3
 Encoding: UTF-8
