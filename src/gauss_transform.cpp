@@ -18,15 +18,15 @@ std::map<std::string, float> calc_mu_cpp(Rcpp::List &fit, std::vector<std::strin
   for(unsigned int i = 0; i < order.size(); i++){
     // Extract the relevant elements from the lists
     node = fit[order[i]]; // Doesn't work on linux when building
-    parents = node["parents"];
-    coefs = node["coefficients"];
-    
+    parents = as<std::vector<std::string>>(node["parents"]);
+    coefs = as<std::vector<float>>(node["coefficients"]);
+
     mu[order[i]] = coefs[0];
     for(unsigned int j = 1; j < coefs.size(); j++){
       mu[order[i]] += coefs[j] * mu[parents[j-1]];
     }
   }
-  
+
   return mu;
 }
 
@@ -48,15 +48,15 @@ Rcpp::NumericMatrix calc_sigma_cpp(Rcpp::List &fit, std::vector<std::string> &or
   for(unsigned int i = 0; i < order.size(); i++){
     idx[order[i]] = i;
   }
-  
+
   // Calculate variances diagonal
   for(unsigned int i = 0; i < order.size(); i++){
     // Extract the relevant elements from the lists
     node = fit[order[i]];
     sd = node["sd"];
-    parents = node["parents"];
-    coefs = node["coefficients"];
-    
+    parents =  as<std::vector<std::string>>(node["parents"]);
+    coefs = as<std::vector<float>>(node["coefficients"]);
+
     sigma(i,i) = sd * sd;
     for(unsigned int j = 1; j < coefs.size(); j++){
       sigma(i,i) += coefs[j] * sigma(idx[parents[j-1]], idx[parents[j-1]]) * coefs[j];
