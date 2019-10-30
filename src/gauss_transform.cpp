@@ -2,14 +2,14 @@
 using namespace Rcpp;
 #include <map>
 
-//' Calculate the mu vector of means of a Gaussian linear network
+//' Calculate the mu vector of means of a Gaussian linear network. This is 
+//' the C++ backend of the function.
 //' 
-//' @param fit a bn.fit object
-//' @param order a topological ordering of the nodes
-//' @return the numeric named vector of means
-//' @export
+//' @param fit a bn.fit object as a Rcpp::List
+//' @param order a topological ordering of the nodes as a vector of strings
+//' @return the map with the nodes and their mu. Returns as a named numeric vec
 // [[Rcpp::export]]
-std::map<std::string, float> calc_mu(Rcpp::List fit, std::vector<std::string> order){
+std::map<std::string, float> calc_mu_cpp(Rcpp::List &fit, std::vector<std::string> order){
   std::map<std::string, float> mu;
   Rcpp::List node;
   std::vector<std::string> parents;
