@@ -11,3 +11,13 @@ calc_mu_cpp <- function(fit, order) {
     .Call('_dbnR_calc_mu_cpp', PACKAGE = 'dbnR', fit, order)
 }
 
+#' Calculate the sigma covariance matrix of a Gaussian linear network. 
+#' This is the C++ backend of the function.
+#' 
+#' @param fit a bn.fit object as a Rcpp::List
+#' @param order a topological ordering of the nodes as a vector of strings
+#' @return the covariance matrix
+calc_sigma_cpp <- function(fit, order) {
+    .Call('_dbnR_calc_sigma_cpp', PACKAGE = 'dbnR', fit, order)
+}
+

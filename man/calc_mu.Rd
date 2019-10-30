@@ -3,19 +3,17 @@
 \name{calc_mu}
 \alias{calc_mu}
 \title{Calculate the mu vector of means of a Gaussian linear network. Front end
-of a C++ function}
+of a C++ function.}
 \usage{
-calc_mu(fit, node)
+calc_mu(fit)
 }
 \arguments{
 \item{fit}{a bn.fit object}
-
-\item{order}{a topological ordering of the nodes}
 }
 \value{
 a named numeric vector of the means of each variable
 }
 \description{
 Calculate the mu vector of means of a Gaussian linear network. Front end
-of a C++ function
+of a C++ function.
 }
