@@ -18,8 +18,8 @@ std::map<std::string, float> calc_mu_cpp(Rcpp::List &fit, std::vector<std::strin
   for(unsigned int i = 0; i < order.size(); i++){
     // Extract the relevant elements from the lists
     node = fit[order[i]]; // Doesn't work on linux when building
-    parents = as<std::vector<std::string>>(node["parents"]);
-    coefs = as<std::vector<float>>(node["coefficients"]);
+    parents = as<std::vector<std::string> >(node["parents"]);
+    coefs = as<std::vector<float> >(node["coefficients"]);
 
     mu[order[i]] = coefs[0];
     for(unsigned int j = 1; j < coefs.size(); j++){
@@ -54,8 +54,8 @@ Rcpp::NumericMatrix calc_sigma_cpp(Rcpp::List &fit, std::vector<std::string> &or
     // Extract the relevant elements from the lists
     node = fit[order[i]];
     sd = node["sd"];
-    parents =  as<std::vector<std::string>>(node["parents"]);
-    coefs = as<std::vector<float>>(node["coefficients"]);
+    parents =  as<std::vector<std::string> >(node["parents"]);
+    coefs = as<std::vector<float> >(node["coefficients"]);
 
     sigma(i,i) = sd * sd;
     for(unsigned int j = 1; j < coefs.size(); j++){
