@@ -155,17 +155,15 @@ plot_dynamic_network <- function(structure, offset = 200){
 
   # Relative position of the nodes
   nodes_uniq <- expand_time_nodes(nodes_uniq, nodes_uniq, ord, 1)
-  all_pos <- NULL
-
-  for(i in (0:(ord-1)))
-    all_pos <- c(all_pos, (positions * 100 + i * 100 * max_consec + i * offset))
+  
+  all_pos <- Reduce(function(acu, x){
+    c(acu, (positions * 100 + x * 100 * max_consec + x * offset))}, 
+    0:(ord-1), NULL)
 
   color <- grDevices::col2rgb(grDevices::hcl.colors(ord, palette = "RdYlBu")) / 255
   color <- apply(color, 2, function(x){do.call(grDevices::rgb,as.list(x))})
 
-  all_colors <- NULL
-  for(c in color)
-    all_colors <- c(all_colors, rep(c, n_nodes_slice)) # TODO: Check for an equivalent with sapply
+  all_colors <- Reduce(function(acu, x){c(acu, rep(x, n_nodes_slice))}, color, NULL)
 
   nodes <- data.frame(id = nodes_uniq,
                       label = nodes_uniq,
