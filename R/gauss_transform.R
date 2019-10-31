@@ -19,5 +19,10 @@ calc_mu <- function(fit){
 calc_sigma <- function(fit){
   initial_fit_check(fit)
   
-  return(calc_sigma_cpp(fit, bnlearn::node.ordering(fit)))
+  ord <- bnlearn::node.ordering(fit)
+  res <- calc_sigma_cpp(fit, ord)
+  colnames(res) <- ord
+  rownames(res) <- ord
+  
+  return(res)
 }
