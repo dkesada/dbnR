@@ -1,6 +1,6 @@
 #include <Rcpp.h>
 using namespace Rcpp;
-#include "include/gaus_transform.h"
+#include "include/gauss_transform.h"
 
 //' Calculate the mu vector of means of a Gaussian linear network. This is 
 //' the C++ backend of the function.
