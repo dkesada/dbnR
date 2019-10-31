@@ -19,7 +19,10 @@ Imports:
     magrittr (>= 1.5)
 Suggests:
     visNetwork (>= 2.0.8),
-    grDevices (>= 3.6.1)
+    grDevices (>= 3.6.1),
+    testthat (>= 2.1.0)
+LinkingTo:
+    Rcpp
 URL: https://github.com/dkesada/dbnR
 License: GPL-3
 Encoding: UTF-8
