@@ -65,17 +65,20 @@ Rcpp::NumericMatrix calc_sigma_cpp(Rcpp::List &fit, std::vector<std::string> &or
   
   // Calculate covariances
   
-  // for(unsigned int i = 0; i < order.size(); i++){
-  //   // Extract the relevant elements from the lists
-  //   node = fit[order[i]];
-  //   parents = node["parents"];
-  //   coefs = node["coefficients"];
-  // 
-  //   mu[order[i]] = coefs[0];
-  //   for(unsigned int j = 1; j < coefs.size(); j++){
-  //     mu[order[i]] += coefs[j] * mu[parents[j-1]];
-  //   }
-  // }
+  for(unsigned int i = 0; i < order.size(); i++){
+    for(unsigned int j = i + 1; j < order.size(); j++){
+      // Extract the relevant elements from the lists
+      node = fit[order[j]];
+      coefs = as<std::vector<float> >(node["coefficients"]);
+      parents =  as<std::vector<std::string> >(node["parents"]);
+      
+      for(unsigned int k = 1; k < coefs.size(); k++){
+        sigma(i,j) += coefs[k] * sigma(i,idx[parents[k-1]]);  
+      }
+      
+      sigma(j,i) = sigma(i,j);
+    }
+  }
   
   return sigma;
 }
