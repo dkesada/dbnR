@@ -6,7 +6,7 @@
 #' @param sigma the covariance matrix
 #' @param mu the mean vector
 #' @param evidence values and names of the variables given as evidence
-#' @return the inferred value of the rest of the variables in the net
+#' @return the posterior mean and covariance matrix
 #' @export
 mvn_inference <- function(sigma, mu, evidence){
   initial_mu_sigma_check(mu, sigma)

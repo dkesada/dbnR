@@ -14,7 +14,7 @@ mvn_inference(sigma, mu, evidence)
 \item{evidence}{values and names of the variables given as evidence}
 }
 \value{
-the inferred value of the rest of the variables in the net
+the posterior mean and covariance matrix
 }
 \description{
 Performs inference over a multivariate normal distribution given some 
