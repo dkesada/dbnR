@@ -138,15 +138,18 @@ forecast_ts <- function(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1]-1,
     }
   }
 
-  print(exec_time - Sys.time())
+  exec_time <- exec_time - Sys.time()
 
   metrics <- lapply(obj_vars, function(x){test[, mae_by_col(dt[ini:(ini+len)], .SD),
                                                .SDcols = x, by = exec]})
   metrics <- sapply(metrics, function(x){mean(x$V1)})
   names(metrics) <- obj_vars
 
-  if(print_res)
+  if(print_res){
+    print(exec_time)
     print_metrics(metrics, obj_vars)
+  }
+    
   if(plot_res)
     plot_results(dt[ini:(ini+len)], test, obj_vars)
 
