@@ -69,6 +69,11 @@ character_arg_check <- function(...){
   }))
 }
 
+numeric_vector_check <- function(obj){
+  if(!is.numeric(obj))
+    stop(sprintf("%s has to be numeric.", deparse(substitute(obj))))
+}
+
 initial_size_check <- function(size){
   numeric_arg_check(size)
   if(size < 2)
@@ -122,4 +127,46 @@ optional_packages <- function(){
            "magrittr",
            "grDevices")
   return(ret)
+}
+
+check_named_vector <- function(obj){
+  numeric_vector_check(obj)
+  if(is.null(names(obj)))
+    stop(sprintf("%s has to be a named vector.", deparse(substitute(obj))))
+}
+
+check_named_symmetric_matrix <- function(obj){
+  if(!is.matrix(obj))
+    stop(sprintf("%s has to be a matrix.", deparse(substitute(obj))))
+  if(any(dim(obj) <= 0))
+    stop(sprintf("%s has to be at least a 1x1 matrix.", deparse(substitute(obj))))
+  if(!is.numeric(obj[1,1]))
+    stop(sprintf("%s has to be a numeric matrix.", deparse(substitute(obj))))
+  if(is.null(rownames(obj)))
+    stop(sprintf("%s has to be a named matrix.", deparse(substitute(obj))))
+  if(is.null(colnames(obj)))
+    stop(sprintf("%s has to be a named matrix.", deparse(substitute(obj))))
+  if(!isSymmetric.matrix(obj))
+    stop(sprintf("%s has to be symmetric, including row and column names.", deparse(substitute(obj))))
+}
+
+initial_mu_sigma_check <- function(mu, sigma){
+  check_named_vector(mu)
+  check_named_symmetric_matrix(sigma)
+  
+  if(!all(names(mu) %in% colnames(sigma)))
+    stop(sprintf("the mu and sigma names do not match."))
+}
+
+check_duplicated_elements <- function(obj){
+  if(anyDuplicated(obj) > 0)
+    stop(sprintf("duplicated elements in %s.", deparse(substitute(obj))))
+}
+
+initial_evidence_check <- function(evidence, variables){
+  check_named_vector(evidence)
+  check_duplicated_elements(names(evidence))
+  
+  if(!all(names(evidence) %in% variables))
+    stop(sprintf("some variables of the evidence are not part of the model."))
 }
