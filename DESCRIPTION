@@ -10,7 +10,8 @@ Description: The package extends the functionality offered by bnlearn to
     Markovian order. It offers a modification over Trabelsi's dynamic max-min 
     hill climbing (DMMHC) algorithm for structure learning and the possibility 
     to perform forecasts of arbitrary length. At the moment, smoothing and 
-    filtering operations are not supported. A tool for visualizating the 
+    filtering operations are not supported. Exact inference over the multivariate
+    Gaussian is implemented. A tool for visualizating the 
     structure of the net is also provided via the visNetwork package.
 Depends: R (>= 3.6.1)
 Imports:
