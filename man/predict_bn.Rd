@@ -10,8 +10,6 @@ predict_bn(fit, evidence)
 \item{fit}{the fitted bn}
 
 \item{evidence}{values of the variables used as evidence for the net}
-
-\item{cols}{names of the columns used as evidence}
 }
 \value{
 the mean of the particles for each row
@@ -21,6 +19,6 @@ Performs inference over a Gaussian BN. It's thought to be used in a map for
 a data.table, to use as evidence each separate row.
 }
 \examples{
-res <- dt_test[, predict(fit, names_cols, .SD), .SDcols = names_cols, by = 1:nrow(dt_test)]
+res <- dt_test[, predict_bn(fit, .SD), by = 1:nrow(dt_test)]
 
 }

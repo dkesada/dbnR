@@ -1,31 +1,21 @@
-get_obj_nodes <- function(fit, evidence){
-  n <- names(fit)
-  return(n[which(!(n %in% names(evidence)))])
-}
-
 #' Performs inference over a fitted GBN
 #'
 #' Performs inference over a Gaussian BN. It's thought to be used in a map for
 #' a data.table, to use as evidence each separate row.
 #' @param fit the fitted bn
-#' @param cols names of the columns used as evidence
 #' @param evidence values of the variables used as evidence for the net
 #' @examples
-#' res <- dt_test[, predict(fit, names_cols, .SD), .SDcols = names_cols, by = 1:nrow(dt_test)]
+#' res <- dt_test[, predict_bn(fit, .SD), by = 1:nrow(dt_test)]
 #'
 #' @return the mean of the particles for each row
 #' @export
 predict_bn <- function(fit, evidence){
-  initial_fit_check(fit)
-
-  obj_nodes <- get_obj_nodes(fit, evidence)
-
-  pred <- bnlearn::cpdist(fit, nodes = obj_nodes, evidence = as.list(evidence),
-                          method = "lw", n = 1000)
-
-  # w <- attributes(pred)$weights
-  # pred_w <- pred$Resultado[which(w > 0.8)]
-  pred <- as.data.table(pred)[, sapply(.SD,mean)]
+  
+  n <- names(fit)
+  obj_nodes <- n[which(!(n %in% names(evidence)))]
+  
+  pred <- mvn_inference(fit$mu, fit$sigma, as_named_vector(evidence))
+  pred <- as.data.table(t(pred$mu_p[,1]))
 
   return(pred)
 }
@@ -46,9 +36,9 @@ predict_dt <- function(fit, dt, obj_nodes, verbose = T){
   obj_dt <- dt[, .SD, .SDcols = obj_nodes]
   ev_dt <- copy(dt)
   ev_dt[, (obj_nodes) := NULL]
-
-  res <- ev_dt[, predict_bn(fit, .SD), by = 1:nrow(ev_dt)]
-  res <- as.data.table(t(apply(ev_dt, 1, predict_bn, fit=fit)))
+  fit_t <- transform_bnfit(fit)
+  
+  res <- ev_dt[, predict_bn(fit_t, .SD), by = 1:nrow(ev_dt)]
   mae <- sapply(obj_nodes, function(x){mae(obj_dt[, get(x)], res[, get(x)])})
   sd_e <- sapply(obj_nodes, function(x){sd_error(obj_dt[, get(x)], res[, get(x)])})
 
@@ -143,12 +133,12 @@ exact_inference <- function(dt, fit, size, obj_vars, ini, len){
   vars_post <- var_names[-c(vars_pred_idx, vars_last_idx)]
   vars_ev <- var_names[-vars_pred_idx]
   
-  fit <- list(bn = fit, mu = calc_mu(fit), sigma = calc_sigma(fit))
+  fit_t <- transform_bnfit(fit)
   test <- NULL
   evidence <- dt[ini, .SD, .SDcols = vars_ev]
   
   for(j in 1:len){
-    particles <- exact_prediction_step(fit, vars_pred, as_named_vector(evidence))
+    particles <- exact_prediction_step(fit_t, vars_pred, as_named_vector(evidence))
     if(length(vars_post) > 0)
       evidence[, (vars_prev) := .SD, .SDcols = vars_post]
     evidence[, (vars_subs) := particles$mu_p[vars_pred]]

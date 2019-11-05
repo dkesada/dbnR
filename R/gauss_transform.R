@@ -26,3 +26,15 @@ calc_sigma <- function(fit){
   
   return(res)
 }
+
+#' Calculate the mu mean vector and the sigma covariance matrix of a Gaussian 
+#' linear network and return a list with the original fit, mu and sigma.
+#' 
+#' @param fit a bn.fit object
+#' @return a list with the bnfit, mu and sigma
+#' @export
+transform_bnfit <- function(fit){
+  initial_fit_check(fit)
+  
+  return(list(bn = fit, mu = calc_mu(fit), sigma = calc_sigma(fit)))
+}
