@@ -8,7 +8,7 @@
 #' @param evidence values and names of the variables given as evidence
 #' @return the posterior mean and covariance matrix
 #' @export
-mvn_inference <- function(sigma, mu, evidence){
+mvn_inference <- function(mu, sigma, evidence){
   initial_mu_sigma_check(mu, sigma)
   initial_evidence_check(evidence, names(mu))
   

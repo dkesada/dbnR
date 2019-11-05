@@ -4,12 +4,12 @@
 \alias{mvn_inference}
 \title{Performs inference over a multivariate normal distribution}
 \usage{
-mvn_inference(sigma, mu, evidence)
+mvn_inference(mu, sigma, evidence)
 }
 \arguments{
-\item{sigma}{the covariance matrix}
-
 \item{mu}{the mean vector}
+
+\item{sigma}{the covariance matrix}
 
 \item{evidence}{values and names of the variables given as evidence}
 }

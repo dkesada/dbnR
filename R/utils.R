@@ -24,3 +24,10 @@ plot_single_result <- function(dt, results, var){
 plot_results <- function(dt, results, obj_vars){
   invisible(sapply(obj_vars, function(x){plot_single_result(dt, results, x)}))
 }
+
+as_named_vector <- function(dt){
+  res <- as.numeric(dt)
+  names(res) <- names(dt)
+  
+  return(res)
+}
