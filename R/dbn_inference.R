@@ -194,5 +194,5 @@ forecast_ts <- function(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1]-1,
   if(plot_res)
     plot_results(dt[ini:(ini+len)], test, obj_vars)
 
-  return(list(orig = dt[ini:(ini+len)], pred = test))
+  return(list(orig = dt[ini:(ini+len-1)], pred = test))
 }
