@@ -11,12 +11,13 @@
 #' @export
 predict_bn <- function(fit, evidence){
   
-  n <- names(fit)
+  n <- names(fit$bn)
   obj_nodes <- n[which(!(n %in% names(evidence)))]
   
   pred <- mvn_inference(fit$mu, fit$sigma, as_named_vector(evidence))
   pred <- as.data.table(t(pred$mu_p[,1]))
-
+  setnames(pred, names(pred), obj_nodes)
+  
   return(pred)
 }
 
@@ -39,8 +40,11 @@ predict_dt <- function(fit, dt, obj_nodes, verbose = T){
   fit_t <- transform_bnfit(fit)
   
   res <- ev_dt[, predict_bn(fit_t, .SD), by = 1:nrow(ev_dt)]
-  mae <- sapply(obj_nodes, function(x){mae(obj_dt[, get(x)], res[, get(x)])})
-  sd_e <- sapply(obj_nodes, function(x){sd_error(obj_dt[, get(x)], res[, get(x)])})
+  
+  mae <- sapply(obj_nodes, function(x){mae(obj_dt[, get(x)],
+                                           res[, get(x)])})
+  sd_e <- sapply(obj_nodes, function(x){sd_error(obj_dt[, get(x)], 
+                                                 res[, get(x)])})
 
   if(verbose){
     sapply(obj_nodes,
