@@ -159,14 +159,19 @@ exact_inference <- function(dt, fit, size, obj_vars, ini, len){
 #' Given a bn.fit object, the size of the net and a data.set,
 #' performs a forecast over the initial evidence taken from the data set.
 #' @param dt data.table object with the TS data
-#' @param fit bn.fit object
+#' @param fit dbn.fit object
 #' @param size number of time slices of the net
+#' @param obj_vars variables to be predicted
 #' @param ini starting point in the data set to forecast.
-#' @param len number of points of the TS to forecast
-#' @param rep number of times to repeat the forecasting
+#' @param len length of the forecast
+#' @param rep number of times to repeat the approximate forecasting
+#' @param num_p number of particles in the approximate forecasting
+#' @param print_res if TRUE prints the mae and sd metrics of the forecast
+#' @param plot_res if TRUE plots the results of the forecast
+#' @param mode "exact" for exact inference, "aprox" for approximate
 #' @return the results of the forecast
 #' @export
-forecast_ts <- function(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1]-1,
+forecast_ts <- function(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1]-ini,
                         rep = 1, num_p = 50, print_res = TRUE, plot_res = TRUE,
                         mode = "exact"){
   initial_folded_dt_check(dt)
@@ -174,6 +179,7 @@ forecast_ts <- function(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1]-1,
   numeric_arg_check(size, ini, len, rep, num_p)
   character_arg_check(obj_vars)
   logical_arg_check(print_res, plot_res)
+  initial_mode_check(mode)
 
   exec_time <- Sys.time()
   
@@ -184,7 +190,7 @@ forecast_ts <- function(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1]-1,
 
   exec_time <- exec_time - Sys.time()
 
-  metrics <- lapply(obj_vars, function(x){test[, mae_by_col(dt[ini:(ini+len)], .SD),
+  metrics <- lapply(obj_vars, function(x){test[, mae_by_col(dt[ini:(ini+len-1)], .SD),
                                                .SDcols = x, by = exec]})
   metrics <- sapply(metrics, function(x){mean(x$V1)})
   names(metrics) <- obj_vars

@@ -4,22 +4,32 @@
 \alias{forecast_ts}
 \title{Performs forecasting with the GDBN over a data set}
 \usage{
-forecast_ts(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1] - 1,
+forecast_ts(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1] - ini,
   rep = 1, num_p = 50, print_res = TRUE, plot_res = TRUE,
   mode = "exact")
 }
 \arguments{
 \item{dt}{data.table object with the TS data}
 
-\item{fit}{bn.fit object}
+\item{fit}{dbn.fit object}
 
 \item{size}{number of time slices of the net}
 
+\item{obj_vars}{variables to be predicted}
+
 \item{ini}{starting point in the data set to forecast.}
 
-\item{len}{number of points of the TS to forecast}
+\item{len}{length of the forecast}
 
-\item{rep}{number of times to repeat the forecasting}
+\item{rep}{number of times to repeat the approximate forecasting}
+
+\item{num_p}{number of particles in the approximate forecasting}
+
+\item{print_res}{if TRUE prints the mae and sd metrics of the forecast}
+
+\item{plot_res}{if TRUE plots the results of the forecast}
+
+\item{mode}{"exact" for exact inference, "aprox" for approximate}
 }
 \value{
 the results of the forecast

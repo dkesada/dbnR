@@ -187,3 +187,14 @@ warn_empty_net <- function(obj){
   
   return(ret)
 }
+
+modes <- function(){
+  ret <- c("exact",
+           "aprox")
+  return(ret)
+}
+
+initial_mode_check <- function(obj){
+  if(!obj %in% modes())
+    stop(paste("unknown mode. Valid modes are:", Reduce(function(acu,x){paste(acu, x, sep = ", ")}, modes())))
+}
