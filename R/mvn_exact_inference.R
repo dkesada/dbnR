@@ -13,9 +13,9 @@ mvn_inference <- function(mu, sigma, evidence){
   initial_evidence_check(evidence, names(mu))
   
   mu <- mu[rownames(sigma)] # Avoid positioning bugs
-  evidence <- evidence[names(mu)[which(names(mu) %in% names(evidence))]]
-  
   ev_pos <- which(names(mu) %in% names(evidence))
+  evidence <- evidence[names(mu)[ev_pos]]
+  
   sigma_22_inv <- solve(sigma[ev_pos, ev_pos])
   
   mu_post <- mu[-ev_pos] + sigma[-ev_pos, ev_pos] %*% 

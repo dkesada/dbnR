@@ -155,7 +155,7 @@ initial_mu_sigma_check <- function(mu, sigma){
   check_named_symmetric_matrix(sigma)
   
   if(!all(names(mu) %in% colnames(sigma)))
-    stop(sprintf("the mu and sigma names do not match."))
+    stop("the mu and sigma names do not match.")
 }
 
 check_duplicated_elements <- function(obj){
@@ -168,5 +168,22 @@ initial_evidence_check <- function(evidence, variables){
   check_duplicated_elements(names(evidence))
   
   if(!all(names(evidence) %in% variables))
-    stop(sprintf("some variables of the evidence are not part of the model."))
+    stop("some variables of the evidence are not part of the model.")
+}
+
+check_empty_net <- function(obj){
+  if(dim(bnlearn::arcs(obj))[1] == 0)
+    stop(sprintf("all nodes in %s are independent. The resulting net has no arcs.",
+                 deparse(substitute(obj))))
+}
+
+warn_empty_net <- function(obj){
+  ret = FALSE
+  if(dim(bnlearn::arcs(obj))[1] == 0){
+    warning(sprintf("all nodes in %s are independent. The resulting net has no arcs.",
+                    deparse(substitute(obj))))
+    ret = TRUE
+  }
+  
+  return(ret)
 }
