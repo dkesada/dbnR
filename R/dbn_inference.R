@@ -16,7 +16,6 @@ predict_bn <- function(fit, evidence){
   
   pred <- mvn_inference(fit$mu, fit$sigma, as_named_vector(evidence))
   pred <- as.data.table(t(pred$mu_p[,1]))
-  setnames(pred, names(pred), obj_nodes)
   
   return(pred)
 }
