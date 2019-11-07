@@ -27,11 +27,7 @@ node_levels <- function(net, order, lvl = 1, acc = NULL){
 #'
 #' Calculates the levels of each node and then plots them in a hierarchical
 #' layout in visNetwork.
-#' @param net the structure of the network.
-#' @param size the number of time slices of the net. Markovian 1 would be size 2
-#' @param acc accumulator of the results in the recursion
-#' @param slice current time slice that is being processed
-#' @return the visualzation of the net
+#' @param structure the structure of the network.
 #' @importFrom magrittr "%>%"
 #' @export
 plot_network <- function(structure){
@@ -190,8 +186,4 @@ plot_dynamic_network <- function(structure, offset = 200){
                            nodesIdSelection = T)
 
   return(ret)
-}
-
-nodes.dbn <- function(dbn){
-  return(names(dbn$nodes))
 }

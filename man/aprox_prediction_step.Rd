@@ -12,6 +12,8 @@ aprox_prediction_step(fit, variables, particles, n = 50)
 \item{variables}{variables to be predicted}
 
 \item{particles}{a list with the provided evidence}
+
+\item{n}{the number of particles to be used by bnlearn}
 }
 \value{
 the inferred particles

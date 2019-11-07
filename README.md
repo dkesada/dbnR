@@ -8,7 +8,7 @@ An implementation of Gaussian dynamic Bayesian networks (GDBN) structure learnin
 
 This package requires R ≥ 3.6.1 to work properly. It's possible to make it work for older versions of R and of each of the packages by fiddling with the [DESCRIPTION](DESCRIPTION) file, although this is not recommended.
 
-The __bnlearn__ and __data.table__ packages are required for this package to work. They will be installed automatically when installing this this package. They can also be installed manually via CRAN with the command
+The __bnlearn__ and __data.table__ packages, among others, are required for this package to work. They will be installed automatically when installing this package. They can also be installed manually via CRAN with the command
 
 ```
 install.packages(c("bnlearn", "data.table"))

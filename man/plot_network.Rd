@@ -7,16 +7,7 @@
 plot_network(structure)
 }
 \arguments{
-\item{net}{the structure of the network.}
-
-\item{size}{the number of time slices of the net. Markovian 1 would be size 2}
-
-\item{acc}{accumulator of the results in the recursion}
-
-\item{slice}{current time slice that is being processed}
-}
-\value{
-the visualzation of the net
+\item{structure}{the structure of the network.}
 }
 \description{
 Calculates the levels of each node and then plots them in a hierarchical

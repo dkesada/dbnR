@@ -9,6 +9,8 @@ predict_dt(fit, dt, obj_nodes, verbose = T)
 \arguments{
 \item{fit}{the fitted bn}
 
+\item{obj_nodes}{the nodes that are going to be predicted. They are all predicted at the same time}
+
 \item{verbose}{if TRUE, displays the metrics and plots the real values against the predictions}
 
 \item{dt_test}{the test data set}

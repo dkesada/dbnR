@@ -26,6 +26,7 @@ predict_bn <- function(fit, evidence){
 #' and gives metrics of the accuracy of the results.
 #' @param fit the fitted bn
 #' @param dt_test the test data set
+#' @param obj_nodes the nodes that are going to be predicted. They are all predicted at the same time
 #' @param verbose if TRUE, displays the metrics and plots the real values against the predictions
 #' @return the prediction results
 #' @export
@@ -63,6 +64,7 @@ predict_dt <- function(fit, dt, obj_nodes, verbose = T){
 #' @param fit bn.fit object
 #' @param variables variables to be predicted
 #' @param particles a list with the provided evidence
+#' @param n the number of particles to be used by bnlearn
 #' @return the inferred particles
 aprox_prediction_step <- function(fit, variables, particles, n = 50){
   if(length(particles) == 0)
@@ -93,6 +95,20 @@ exact_prediction_step <- function(fit, variables, evidence){
   return(res)
 }
 
+#' Performs aproximate inference forecasting with the GDBN over a data set
+#'
+#' Given a bn.fit object, the size of the net and a data.set,
+#' performs aproximate forecasting with bnlearns cpdist function over the 
+#' initial evidence taken from the data set.
+#' @param dt data.table object with the TS data
+#' @param fit dbn.fit object
+#' @param size number of time slices of the net
+#' @param obj_vars variables to be predicted
+#' @param ini starting point in the data set to forecast.
+#' @param rep number of repetitions to be performed of the aproximate inference
+#' @param len length of the forecast
+#' @param num_p number of particles to be used by bnlearn
+#' @return the results of the forecast
 aproximate_inference <- function(dt, fit, size, obj_vars, ini, rep, len, num_p){
   var_names <- names(dt)
   vars_pred_idx <- grep("t_0", var_names)
@@ -125,6 +141,17 @@ aproximate_inference <- function(dt, fit, size, obj_vars, ini, rep, len, num_p){
   return(test)
 }
 
+#' Performs exact inference forecasting with the GDBN over a data set
+#'
+#' Given a bn.fit object, the size of the net and a data.set,
+#' performs exact forecasting over the initial evidence taken from the data set.
+#' @param dt data.table object with the TS data
+#' @param fit dbn.fit object
+#' @param size number of time slices of the net
+#' @param obj_vars variables to be predicted
+#' @param ini starting point in the data set to forecast.
+#' @param len length of the forecast
+#' @return the results of the forecast
 exact_inference <- function(dt, fit, size, obj_vars, ini, len){
   var_names <- names(dt)
   vars_pred_idx <- grep("t_0", var_names)

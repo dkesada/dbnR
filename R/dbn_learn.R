@@ -102,8 +102,8 @@ learn_dbn_struc <- function(dt, size = 2, ...){
 #' Fits a markovian n DBN model
 #'
 #' Fits the parameters of the DBN via MLE or BGE.
-#' @param f_dt a folded data.table
 #' @param net the structure of the DBN
+#' @param f_dt a folded data.table
 #' @param ... aditional parameters for bnlearn's bn.fit function
 #' @return the fitted net
 #' @export
