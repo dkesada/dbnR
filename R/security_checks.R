@@ -180,7 +180,7 @@ check_empty_net <- function(obj){
 warn_empty_net <- function(obj){
   ret = FALSE
   if(dim(bnlearn::arcs(obj))[1] == 0){
-    warning(sprintf("all nodes in %s are independent. The resulting net has no arcs.",
+    warning(sprintf("all nodes in %s are independent. The resulting net has no arcs.\n",
                     deparse(substitute(obj))))
     ret = TRUE
   }

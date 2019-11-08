@@ -17,7 +17,7 @@ mvn_inference <- function(mu, sigma, evidence){
   evidence <- evidence[names(mu)[ev_pos]]
   
   sigma_22_inv <- tryCatch({solve(sigma[ev_pos, ev_pos], tol = sqrt(.Machine$double.eps))},
-                           error = function(cond){warning("The sigma matrix is computationally singular. Using the pseudo-inverse instead.")
+                           error = function(cond){warning("The sigma matrix is computationally singular. Using the pseudo-inverse instead.\n")
                              sigma_inv <- MASS::ginv(sigma[ev_pos, ev_pos])
                              return(sigma_inv)})
   
