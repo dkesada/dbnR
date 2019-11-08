@@ -10,7 +10,7 @@
 time_rename <- function(dt){
   initial_df_check(dt)
   if(sum(grepl("*._t_0", names(dt))) > 0)
-    warning("One or more of the column names already ends in '_t_0'. No more suffixes will be added.")
+    warning("One or more of the column names already ends in '_t_0'. No more suffixes will be added.\n")
 
   else{
     # If the data.table is not copied, the original one will be renamed. Can be unexpected behaviour

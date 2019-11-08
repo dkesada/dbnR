@@ -34,7 +34,7 @@ plot_network <- function(structure){
   check_opt_pkgs_available()
   initial_bn_check(structure)
   if(is_dbn_or_dbnfit(structure))
-    warning("this function is for static networks. For DBNs, please use 'plot_dynamic_network'")
+    warning("this function is for static networks. For DBNs, please use 'plot_dynamic_network'\n")
 
   nodes_uniq <- bnlearn::node.ordering(structure)
   nodes <- data.frame(id = nodes_uniq,
