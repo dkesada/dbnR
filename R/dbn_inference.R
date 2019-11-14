@@ -200,7 +200,7 @@ exact_inference <- function(dt, fit, size, obj_vars, ini, len){
 #' @param mode "exact" for exact inference, "aprox" for approximate
 #' @return the results of the forecast
 #' @export
-forecast_ts <- function(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1]-ini,
+forecast_ts <- function(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1]-ini+1,
                         rep = 1, num_p = 50, print_res = TRUE, plot_res = TRUE,
                         mode = "exact"){
   initial_folded_dt_check(dt)
@@ -232,5 +232,5 @@ forecast_ts <- function(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1]-ini,
   if(plot_res)
     plot_results(dt[ini:(ini+len)], test, obj_vars)
 
-  return(list(orig = dt[ini:(ini+len-1)], pred = test))
+  return(list(orig = dt[ini:(ini+len)], pred = test))
 }
