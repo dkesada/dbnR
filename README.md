@@ -2,6 +2,11 @@
 
 An implementation of Gaussian dynamic Bayesian networks (GDBN) structure learning and inference based on Marco Scutari's package bnlearn (http://www.bnlearn.com/). The structure learning algorithm implemented is a variation on Ghada Trabelsi's dynamic max-min hill climbing (https://tel.archives-ouvertes.fr/tel-00996061/document). The inference is performed either via the particle filtering offered by bnlearn or by doing exact inference over the multivariate Gaussian equivalent of a net implemented in this package. A visualization tool is implemented for GDBNs and bnlearn's BNs via the visNetwork package (https://github.com/datastorm-open/visNetwork).
 
+## Current development news
+
+As of today (18/11/2019), the main functionality of the package is running and working. The main focus now is to refractor the dbn.fit object from the current S3 objects to R6 objects. I want to try out these objects in a devel branch and see if they meet my expectations. If they do, the structure of the code should become more clean and natural and should allow easier further extensions that are planned down the line.
+Successful implementation of the R6 objects will result in a non retro-compatible 1.x.x version.
+
 ## Getting Started
 
 ### Prerequisites
