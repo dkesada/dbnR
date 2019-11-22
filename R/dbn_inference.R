@@ -200,7 +200,7 @@ exact_inference <- function(dt, fit, size, obj_vars, ini, len){
 #' @param mode "exact" for exact inference, "aprox" for approximate
 #' @return the results of the forecast
 #' @export
-forecast_ts <- function(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1]-ini+1,
+forecast_ts <- function(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1]-ini,
                         rep = 1, num_p = 50, print_res = TRUE, plot_res = TRUE,
                         mode = "exact"){
   initial_folded_dt_check(dt)
@@ -219,8 +219,8 @@ forecast_ts <- function(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1]-ini+1
 
   exec_time <- exec_time - Sys.time()
 
-  metrics <- lapply(obj_vars, function(x){test[, mae_by_col(dt[ini:(ini+len)], .SD),
-                                               .SDcols = x, by = exec]})
+  metrics <- lapply(obj_vars, function(x){
+    test[, mae_by_col(dt[ini:(ini+len-1)], .SD), .SDcols = x, by = exec]})
   metrics <- sapply(metrics, function(x){mean(x$V1)})
   names(metrics) <- obj_vars
 
@@ -230,7 +230,7 @@ forecast_ts <- function(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1]-ini+1
   }
     
   if(plot_res)
-    plot_results(dt[ini:(ini+len)], test, obj_vars)
+    plot_results(dt[ini:(ini+len-1)], test, obj_vars)
 
-  return(list(orig = dt[ini:(ini+len)], pred = test))
+  return(list(orig = dt[ini:(ini+len-1)], pred = test))
 }
