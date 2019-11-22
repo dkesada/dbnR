@@ -219,7 +219,7 @@ forecast_ts <- function(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1]-ini+1
 
   exec_time <- exec_time - Sys.time()
 
-  metrics <- lapply(obj_vars, function(x){test[, mae_by_col(dt[ini:(ini+len-1)], .SD),
+  metrics <- lapply(obj_vars, function(x){test[, mae_by_col(dt[ini:(ini+len)], .SD),
                                                .SDcols = x, by = exec]})
   metrics <- sapply(metrics, function(x){mean(x$V1)})
   names(metrics) <- obj_vars
