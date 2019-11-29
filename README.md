@@ -4,7 +4,10 @@ An implementation of Gaussian dynamic Bayesian networks (GDBN) structure learnin
 
 ## Current development news
 
-As of today (29/11/2019), the main functionality of the package is running and working. The main focus now is to refractor the dbn.fit object from the current S3 objects into a more encapsulated ones that contain the transformated multivariate normal and to tidy up the package with the idea of submitting it to CRA.N For now, the migration to R6 objects is not prioritary. I want to try out these objects in a devel branch and see if they meet my expectations. If they do, the structure of the code should become more clean and natural and should allow easier further extensions that are planned down the line.
+As of today (29/11/2019), the main functionality of the package is running and working. The main two focus now are:
+ * To refractor the dbn.fit object from the current S3 object into a more encapsulated one that contains the transformed multivariate normal
+ * To tidy up the package with the idea of submitting it to CRAN 
+For now, the migration to R6 objects is not prioritary. I want to try out these objects in a devel branch and see if they meet my expectations. If they do, the structure of the code should become more clean and natural and should allow easier further extensions that are planned down the line.
 Successful implementation of the R6 objects will result in a non retro-compatible 1.x.x version.
 
 ## Getting Started
