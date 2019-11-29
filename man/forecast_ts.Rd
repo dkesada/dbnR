@@ -4,8 +4,8 @@
 \alias{forecast_ts}
 \title{Performs forecasting with the GDBN over a data set}
 \usage{
-forecast_ts(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1] - ini +
-  1, rep = 1, num_p = 50, print_res = TRUE, plot_res = TRUE,
+forecast_ts(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1] - ini,
+  rep = 1, num_p = 50, print_res = TRUE, plot_res = TRUE,
   mode = "exact")
 }
 \arguments{
