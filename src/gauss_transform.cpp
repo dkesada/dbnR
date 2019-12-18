@@ -17,7 +17,7 @@ std::map<std::string, float> calc_mu_cpp(Rcpp::List &fit, std::vector<std::strin
   
   for(unsigned int i = 0; i < order.size(); i++){
     // Extract the relevant elements from the lists
-    node = fit[order[i]]; // Doesn't work on linux when building
+    node = fit[order[i]]; 
     parents = as<std::vector<std::string> >(node["parents"]);
     coefs = as<std::vector<float> >(node["coefficients"]);
 

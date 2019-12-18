@@ -11,10 +11,10 @@
 #' @export
 predict_bn <- function(fit, evidence){
   
-  n <- names(fit$bn)
+  n <- names(fit)
   obj_nodes <- n[which(!(n %in% names(evidence)))]
   
-  pred <- mvn_inference(fit$mu, fit$sigma, as_named_vector(evidence))
+  pred <- mvn_inference(attr(fit,"mu"), attr(fit,"sigma"), as_named_vector(evidence))
   pred <- as.data.table(t(pred$mu_p[,1]))
   if(length(obj_nodes) == 1)
     setnames(pred, names(pred), obj_nodes)
@@ -39,9 +39,8 @@ predict_dt <- function(fit, dt, obj_nodes, verbose = T){
   obj_dt <- dt[, .SD, .SDcols = obj_nodes]
   ev_dt <- copy(dt)
   ev_dt[, (obj_nodes) := NULL]
-  fit_t <- transform_bnfit(fit)
   
-  res <- ev_dt[, predict_bn(fit_t, .SD), by = 1:nrow(ev_dt)]
+  res <- ev_dt[, predict_bn(fit, .SD), by = 1:nrow(ev_dt)]
   
   mae <- sapply(obj_nodes, function(x){mae(obj_dt[, get(x)],
                                            res[, get(x)])})
@@ -89,9 +88,9 @@ aprox_prediction_step <- function(fit, variables, particles, n = 50){
 #' @return the inferred particles
 exact_prediction_step <- function(fit, variables, evidence){
   if(length(evidence) == 0)
-    evidence <- fit$mu[bnlearn::root.nodes(fit$bn)]
+    evidence <- attr(fit,"mu")[bnlearn::root.nodes(fit)]
   
-  res <- mvn_inference(fit$mu, fit$sigma, evidence)
+  res <- mvn_inference(attr(fit,"mu"), attr(fit,"sigma"), evidence)
   res$mu_p <- as.list(res$mu_p[,1])
   
   return(res)
@@ -165,12 +164,11 @@ exact_inference <- function(dt, fit, size, obj_vars, ini, len){
   vars_post <- var_names[-c(vars_pred_idx, vars_last_idx)]
   vars_ev <- var_names[-vars_pred_idx]
   
-  fit_t <- transform_bnfit(fit)
   test <- NULL
   evidence <- dt[ini, .SD, .SDcols = vars_ev]
   
   for(j in 1:len){
-    particles <- exact_prediction_step(fit_t, vars_pred, as_named_vector(evidence))
+    particles <- exact_prediction_step(fit, vars_pred, as_named_vector(evidence))
     if(length(vars_post) > 0)
       evidence[, (vars_prev) := .SD, .SDcols = vars_post]
     evidence[, (vars_subs) := particles$mu_p[vars_pred]]

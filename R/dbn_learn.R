@@ -101,7 +101,9 @@ learn_dbn_struc <- function(dt, size = 2, ...){
 
 #' Fits a markovian n DBN model
 #'
-#' Fits the parameters of the DBN via MLE or BGE.
+#' Fits the parameters of the DBN via MLE or BGE. The "mu" vector of means 
+#' and the "sigma" covariance matrix are set as attributes of the dbn.fit 
+#' object for future exact inference. 
 #' @param net the structure of the DBN
 #' @param f_dt a folded data.table
 #' @param ... aditional parameters for bnlearn's bn.fit function
@@ -113,6 +115,9 @@ fit_dbn_params <- function(net, f_dt, ...){
 
   fit <- bnlearn::bn.fit(net, f_dt, ...)
   class(fit)[grep("dbn", class(fit))] <- "dbn.fit"
-
+  
+  attr(fit,"mu") <- calc_mu(fit)
+  attr(fit, "sigma") <- calc_sigma(fit)
+  
   return(fit)
 }
