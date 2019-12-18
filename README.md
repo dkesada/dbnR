@@ -4,12 +4,11 @@ An implementation of Gaussian dynamic Bayesian networks (GDBN) structure learnin
 
 ## Current development news
 
-As of today (29/11/2019), the main functionality of the package is running and working. The main two focus now are:
- * To refractor the dbn.fit object from the current S3 object into a more encapsulated one that contains the transformed multivariate normal
+As of today (18/12/2019), the main functionality of the package is running and working. The main two focus now are:
  * To tidy up the package with the idea of submitting it to CRAN
+ * To add the possibility of learning nets with only certain previous lags instead of all of them. For example, a dbn with only the time slices for t_0 and t_12, or one with t_0, t_3 and t_4.
 
-For now, the migration to R6 objects is not prioritary. I want to try out these objects in a devel branch and see if they meet my expectations. If they do, the structure of the code should become more clean and natural and should allow easier further extensions that are planned down the line.
-Successful implementation of the R6 objects will result in a non retro-compatible 1.x.x version.
+For now, the dbn.fit object as an extension of bnlearn's bn.fit object will stay the same except for the "mu" and "sigma" attributes added to it. This way, it remains easy to call bnlearn's methods on the dbn.fit object and I can store the MVN transformation inside the same object. Not an elegant solution, but its simplicity is enough.
 
 ## Getting Started
 
@@ -38,19 +37,25 @@ To get the structure of a GDBN from a dataset, you need to use the function _lea
 ```
 library(dbnR)
 data(motor)
-l_res <- learn_dbn_struc(motor, 3)
+
+size = 3
+dt_train <- motor[200:2500]
+dt_val <- motor[2501:3000]
+net <- learn_dbn_struc(dt_train, size)
 ```
 The dt argument has to be either a data.frame or a data.table of numeric columns, in the example we use the sample dataset included in the package. The size argument determines the number of time slices that your net is gona have, that is, the Markovian order of the net. A Markovian order of 2 means that your data in the present is independent of the past given the previous time slice. If your case doesn't meet this criteria, the size of the net can be increased, to take into account more past time slices in the inference. In our function, Markovian order = size - 1. The function returns a list with the learned structure and the folded dataset with the extended rows.
 
 Once the structure is learnt, it can be ploted and used to learn the parameters
 ```
-plot_dynamic_network(l_res$net)
+plot_dynamic_network(net)
 ```
 ![alt text](media/dbn_plot.png)
 
 ```
-dbn_fit <- fit_dbn_params(l_res$net, l_res$f_dt)
+f_dt_train <- fold_dt(dt_train, size)
+fit <- fit_dbn_params(net, f_dt_train, method = "mle")
 ```
+After learning the net, two different types of inference can be performed: point-wise inference over a dataset and forecasting to some horizon. Point-wise inference uses the folded dt to try and predict the objective variables in each row. Forecasting to some horizon, on the other hand, tries to predict the behaviour in the future M instants given some initial evidence of the variables.
 
 ## License
 
