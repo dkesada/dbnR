@@ -1,9 +1,9 @@
-test_that("working_forecast_dbn", {
+test_that("forecast_dbn works", {
   data(motor)
   dt <- motor
   size = 3
   dt_train <- dt[1:500]
-  dt_test <- dt[501:100]
+  dt_test <- dt[501:1000]
   f_dt_train <- fold_dt(dt_train, size)
   f_dt_test <- fold_dt(dt_test, size)
   
@@ -14,3 +14,4 @@ test_that("working_forecast_dbn", {
   
   expect_equal(1, 1)
 })
+

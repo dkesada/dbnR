@@ -80,6 +80,11 @@ initial_size_check <- function(size){
     stop("the size of the DBN cannot be lesser than 2.")
 }
 
+initial_dt_vs_size_check <- function(dt, size){
+  if(size > dim(dt)[1])
+    stop("the size is bigger than the number of rows in the data.table")
+}
+
 initial_slice_check <- function(slice){
   numeric_arg_check(slice)
   if(slice < 1)

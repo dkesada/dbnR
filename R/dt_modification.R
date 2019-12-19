@@ -63,7 +63,8 @@ fold_dt <- function(dt, size){
   if(!is.data.table(dt))
     dt <- data.table::as.data.table(dt)
   initial_size_check(size)
-
+  initial_dt_vs_size_check(dt,size)
+  
   dt <- data.table::copy(dt)
   if(!check_time0_formatted(dt))
     dt <- time_rename(dt)
