@@ -99,6 +99,22 @@ learn_dbn_struc <- function(dt, size = 2, ...){
   return(net)
 }
 
+#' Adds the mu vector and sigma matrix as attributes to the bn.fit or dbn.fit object
+#'
+#' Adds the mu vector and sigma matrix as attributes to the bn.fit or dbn.fit 
+#' object to allow performing exact MVN inference on both cases.
+#' @param fit a fitted bn or dbn
+#' @return the fitted net with attributes
+#' @export
+add_attr_to_fit <- function(fit){
+  initial_fit_check(fit)
+  
+  attr(fit,"mu") <- calc_mu(fit)
+  attr(fit, "sigma") <- calc_sigma(fit)
+  
+  return(fit)
+}
+
 #' Fits a markovian n DBN model
 #'
 #' Fits the parameters of the DBN via MLE or BGE. The "mu" vector of means 
@@ -116,8 +132,7 @@ fit_dbn_params <- function(net, f_dt, ...){
   fit <- bnlearn::bn.fit(net, f_dt, ...)
   class(fit)[grep("dbn", class(fit))] <- "dbn.fit"
   
-  attr(fit,"mu") <- calc_mu(fit)
-  attr(fit, "sigma") <- calc_sigma(fit)
+  fit <- add_attr_to_fit(fit)
   
   return(fit)
 }

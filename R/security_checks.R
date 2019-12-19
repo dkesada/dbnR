@@ -203,3 +203,10 @@ initial_mode_check <- function(obj){
   if(!obj %in% modes())
     stop(paste("unknown mode. Valid modes are:", Reduce(function(acu,x){paste(acu, x, sep = ", ")}, modes())))
 }
+
+initial_attr_check <- function(fit){
+  if(is.null(attr(fit, "mu")) || is.null(attr(fit, "sigma")))
+    fit <- add_attr_to_fit(fit)
+  
+  return(fit)
+}

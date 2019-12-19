@@ -35,7 +35,8 @@ predict_bn <- function(fit, evidence){
 predict_dt <- function(fit, dt, obj_nodes, verbose = T){
   initial_fit_check(fit)
   initial_df_check(dt)
-
+  fit <- initial_attr_check(fit)
+  
   obj_dt <- dt[, .SD, .SDcols = obj_nodes]
   ev_dt <- copy(dt)
   ev_dt[, (obj_nodes) := NULL]
@@ -154,6 +155,8 @@ aproximate_inference <- function(dt, fit, size, obj_vars, ini, rep, len, num_p){
 #' @param len length of the forecast
 #' @return the results of the forecast
 exact_inference <- function(dt, fit, size, obj_vars, ini, len){
+  fit <- initial_attr_check(fit)
+  
   var_names <- names(dt)
   vars_pred_idx <- grep("t_0", var_names)
   vars_subs_idx <- grep("t_1", var_names)
