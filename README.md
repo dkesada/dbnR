@@ -2,13 +2,15 @@
 
 An implementation of Gaussian dynamic Bayesian networks (GDBN) structure learning and inference based on Marco Scutari's package bnlearn (http://www.bnlearn.com/). The structure learning algorithm implemented is a variation on Ghada Trabelsi's dynamic max-min hill climbing (https://tel.archives-ouvertes.fr/tel-00996061/document). The inference is performed either via the particle filtering offered by bnlearn or by doing exact inference over the multivariate Gaussian equivalent of a net implemented in this package. A visualization tool is implemented for GDBNs and bnlearn's BNs via the visNetwork package (https://github.com/datastorm-open/visNetwork).
 
-## Current development news
+## Current development
 
-As of today (18/12/2019), the main functionality of the package is running and working. The main two focus now are:
- * To tidy up the package with the idea of submitting it to CRAN
+As of today (03/03/2020), the main functionality of the package is running and working. In order of importance, the primary objectives are:
+ * To add vignettes and examples of the main functionality of the package in order to upload it to CRAN
+ * To run testing of some known unexpected behaviours on bn and dbn prediction (e.g. providing all variables as objective variables)
  * To add the possibility of learning nets with only certain previous lags instead of all of them. For example, a dbn with only the time slices for t_0 and t_12, or one with t_0, t_3 and t_4.
+ * To provide a visualization tool of some sub-network. Many times, you end up with quite a big BN or DBN and you are interested in only a few of the nodes. We sketched a function to plot the Markov blanket of a node, but it needs further parametrization.
 
-For now, the dbn.fit object as an extension of bnlearn's bn.fit object will stay the same except for the "mu" and "sigma" attributes added to it. This way, it remains easy to call bnlearn's methods on the dbn.fit object and I can store the MVN transformation inside the same object. Not an elegant solution, but its simplicity is enough.
+For now, the dbn.fit object as an extension of bnlearn's bn.fit object will stay the same except for the "mu" and "sigma" attributes added to it. This way, it remains easy to call bnlearn's methods on the dbn.fit object and I can store the MVN transformation inside the same object. Not an elegant solution, but its simplicity is enough. 
 
 ## Getting Started
 
