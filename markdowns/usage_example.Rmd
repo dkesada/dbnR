@@ -1,0 +1,102 @@
+---
+title: "Usage example"
+author: "David Quesada"
+date: "25/10/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+## Example dataset
+
+```{r motor}
+library(dbnR)
+data(motor)
+summary(motor)
+```
+
+## Net stucture learning
+
+```{r structure}
+size = 3
+dt_train <- motor[200:2500]
+dt_val <- motor[2501:3000]
+net <- dbnR::learn_dbn_struc(dt_train, size, restrict = "mmpc", maximize = "hc",
+                             restrict.args = list(test = "mi-g"),
+                             maximize.args = list(score = "bic-g", maxp = 8))
+```
+
+## Parameter learning
+
+```{r params}
+f_dt_train <- fold_dt(dt_train, size)
+f_dt_val <- fold_dt(dt_val, size)
+fit <- dbnR::fit_dbn_params(net, f_dt_train, method = "mle")
+```
+
+## Visualization
+
+```{r vis}
+dbnR::plot_dynamic_network(fit)
+```
+
+## Inference
+
+```{r one_inference_step}
+obj_var <- c("pm_t_0", "torque_t_0", "stator_yoke_t_0")
+obj_var <- c("pm_t_0")
+res <- (dbnR::predict_dt(fit, f_dt_val, obj_var))
+```
+
+```{r forecast}
+res_fore <- suppressWarnings(dbnR::forecast_ts(f_dt_val, fit, size, obj_var, ini = 10))
+```
+```{r full_example}
+main_forecast <- function(dt, size, n_rep, ini_fore, len_fore){
+  dt_train <- dt[1:2500]
+  dt_test <- dt[2501:3000]
+  f_dt_train <- fold_dt(dt_train, size)
+  f_dt_test <- fold_dt(dt_test, size)
+  
+  net <- learn_dbn_struc(dt_train, size = size)
+  fit <- fit_dbn_params(net, f_dt_train)
+  res_fore <- suppressWarnings(forecast_ts(f_dt_test, fit, size, "pm_t_0", rep = n_rep,
+                      ini = ini_fore, len = len_fore))
+  
+  return(list(net = net, fit = fit, res_fore = res_fore))
+}
+
+res_m <- main_forecast(motor, 4, 1, 50, 100)
+
+```
+
+```{r gaussian noise}
+add_gauss_noise <- function(x, mu = NULL, sd = NULL){
+  n <- length(x)
+  if(is.null(mu))
+    mu <- mean(x)
+  if(is.null(sd))
+    sd <- sd(x)
+  
+  noise <- rnorm(n, mu, sd)
+  
+  
+  return(x + noise)
+}
+
+noisy_dt_train <- as.data.table(dt_train[, sapply(.SD,add_gauss_noise, mu= 0, sd = 2)])
+net <- dbnR::learn_dbn_struc(noisy_dt_train, size, restrict = "mmpc", maximize = "hc",
+                             restrict.args = list(test = "mi-g"),
+                             maximize.args = list(score = "bge", maxp = 8))
+noisy_f_dt_train <- fold_dt(dt_train, size)
+fit <- dbnR::fit_dbn_params(net, noisy_f_dt_train, method = "mle")
+print(paste0("The determinant of the noisy data is: ", det(calc_sigma(fit))))
+```

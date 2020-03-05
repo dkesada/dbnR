@@ -1,0 +1,50 @@
+---
+title: "profiling_code"
+author: "David Quesada"
+date: "28/10/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r prep}
+library(dbnR)
+data(motor)
+
+dt <- motor
+size <- 3
+n_rep <- 3
+ini_fore <- 30
+len_fore <- 100
+
+```
+
+
+## profvis
+
+```{r full_example}
+library(profvis)
+
+main_forecast_profile <- function(dt, size, n_rep, ini_fore, len_fore){
+  profvis({
+    dt_train <- dt[1:2500]
+    dt_test <- dt[2501:3000]
+    f_dt_train <- fold_dt(dt_train, size)
+    f_dt_test <- fold_dt(dt_test, size)
+    
+    net <- learn_dbn_struc(dt_train, size = size)
+    fit <- fit_dbn_params(net, f_dt_train)
+    res_fore <- forecast_ts(f_dt_test, fit, size, "pm_t_0", rep = n_rep,
+                      ini = ini_fore, len = len_fore)
+  })
+  
+  return(list(net = net, fit = fit, res_fore = res_fore))
+}
+
+res_m <- main_forecast_profile(motor, 3, 3, 30, 100)
+
+```
+
