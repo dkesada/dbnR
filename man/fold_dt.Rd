@@ -10,9 +10,6 @@ fold_dt(dt, size)
 \item{dt}{the data.table to be treated}
 
 \item{size}{number of time slices to unroll. Markovian 1 would be size 2}
-
-\item{slice}{the current time slice being treated. Should not be modified
-when first calling.}
 }
 \value{
 the extended data.table

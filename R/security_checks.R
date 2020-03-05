@@ -1,17 +1,17 @@
 is_bnfit <- function(obj){
-  return(is(obj, "bn.fit"))
+  return(inherits(obj, "bn.fit"))
 }
 
 is_dbnfit <- function(obj){
-  return(is(obj, "dbn.fit"))
+  return(inherits(obj, "dbn.fit"))
 }
 
 is_bn_or_bnfit <- function(obj){
-  return(is(obj, "bn") || is_bnfit(obj))
+  return(inherits(obj, "bn") || is_bnfit(obj))
 }
 
 is_dbn_or_dbnfit <- function(obj){
-  return(is(obj, "dbn") || is_dbnfit(obj))
+  return(inherits(obj, "dbn") || is_dbnfit(obj))
 }
 
 initial_bn_check <- function(obj){

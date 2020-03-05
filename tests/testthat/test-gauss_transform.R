@@ -10,7 +10,8 @@ test_that("transform bn.fit to mu-sigma works", {
   named_m <- matrix(c(4,0,2,4,0,3,0,-3,2,0,5,10,4,-3,10,26), nrow = 4, ncol = 4)
   colnames(named_m) <- bnlearn::node.ordering(cfit)
   rownames(named_m) <- bnlearn::node.ordering(cfit)
+  res_mu <- c("X1" = 1, "X2" = -3, "X3" = 2, "X4" = -7)
   
-  expect_equal(c("X1" = 1, "X2" = -3, "X3" = 2, "X4" = -7), dbnR::calc_mu(cfit))
+  expect_equal(res_mu, dbnR::calc_mu(cfit))
   expect_equal(named_m, dbnR::calc_sigma(cfit))
 })

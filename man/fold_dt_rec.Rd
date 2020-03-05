@@ -9,6 +9,8 @@ fold_dt_rec(dt, n_prev, size, slice = 1)
 \arguments{
 \item{dt}{the data.table to be treated}
 
+\item{n_prev}{names of the previous time slice}
+
 \item{size}{number of time slices to unroll. Markovian 1 would be size 2}
 
 \item{slice}{the current time slice being treated. Should not be modified

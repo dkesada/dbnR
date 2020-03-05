@@ -31,6 +31,7 @@ time_rename <- function(dt){
 #' phase of the dmmhc. Recursive version not exported, the user calls from the
 #' handler 'fold_dt'
 #' @param dt the data.table to be treated
+#' @param n_prev names of the previous time slice
 #' @param size number of time slices to unroll. Markovian 1 would be size 2
 #' @param slice the current time slice being treated. Should not be modified
 #' when first calling.
@@ -54,8 +55,6 @@ fold_dt_rec <- function(dt, n_prev, size, slice = 1){
 #' phase of the dmmhc.
 #' @param dt the data.table to be treated
 #' @param size number of time slices to unroll. Markovian 1 would be size 2
-#' @param slice the current time slice being treated. Should not be modified
-#' when first calling.
 #' @return the extended data.table
 #' @export
 fold_dt <- function(dt, size){

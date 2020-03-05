@@ -22,7 +22,8 @@ dataset. It allows the creation of markovian n nets rather than only markov
 1.
 }
 \examples{
-net <- learn_dbn_struc(dt, size = 3, restrict = "mmpc", maximize = "hc",
+data("motor")
+net <- learn_dbn_struc(motor, size = 3, restrict = "mmpc", maximize = "hc",
                        restrict.args = list(test = "cor"),
                        maximize.args = list(score = "bic-g", maxp = 6))
 }

@@ -27,7 +27,7 @@ predict_bn <- function(fit, evidence){
 #' Performs inference over a test data set, plots the results
 #' and gives metrics of the accuracy of the results.
 #' @param fit the fitted bn
-#' @param dt_test the test data set
+#' @param dt the test data set
 #' @param obj_nodes the nodes that are going to be predicted. They are all predicted at the same time
 #' @param verbose if TRUE, displays the metrics and plots the real values against the predictions
 #' @return the prediction results
@@ -221,7 +221,7 @@ forecast_ts <- function(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1]-ini,
   exec_time <- exec_time - Sys.time()
 
   metrics <- lapply(obj_vars, function(x){
-    test[, mae_by_col(dt[ini:(ini+len-1)], .SD), .SDcols = x, by = exec]})
+    test[, mae_by_col(dt[ini:(ini+len-1)], .SD), .SDcols = x, by = "exec"]})
   metrics <- sapply(metrics, function(x){mean(x$V1)})
   names(metrics) <- obj_vars
 

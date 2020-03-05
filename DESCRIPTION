@@ -13,7 +13,7 @@ Description: The package extends the functionality offered by bnlearn to
     filtering operations are not supported. Exact inference over the multivariate
     Gaussian is implemented. A tool for visualizating the 
     structure of the net is also provided via the visNetwork package.
-Depends: R (>= 3.6.1)
+Depends: R (>= 3.6.0)
 Imports:
     bnlearn (>= 4.5),
     data.table (>= 1.12.4),
@@ -26,7 +26,7 @@ Suggests:
 LinkingTo:
     Rcpp
 URL: https://github.com/dkesada/dbnR
-License: GPL-3
+License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
