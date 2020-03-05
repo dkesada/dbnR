@@ -50,14 +50,13 @@ plot_network <- function(structure){
   edges <- data.frame(from = bnlearn::arcs(structure)[,1],
                       to = bnlearn::arcs(structure)[,2],
                       arrows = "to",
-                      #smooth = TRUE,
+                      #smooth = TRUE, # visNetwork's bug
                       shadow = FALSE,
                       color = "black")
 
   ret <- visNetwork::visNetwork(nodes, edges) %>%
     visNetwork::visHierarchicalLayout(levelSeparation = 100) %>%
-    visNetwork::visOptions(highlightNearest = list(enabled = T, hover = F),
-               nodesIdSelection = T)
+    visNetwork::visOptions(nodesIdSelection = T)
 
   eval(ret)
 }
