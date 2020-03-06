@@ -66,7 +66,7 @@ merge_nets <- function(net0, netCP1, size, acc = NULL, slice = 1){
 #' 1.
 #' @param dt the data.frame or data.table to be used
 #' @param size number of time slices of the net. Markovian 1 would be size 2
-#' @param ... aditional parameters for bnlearn's rsmax2 function
+#' @param ... aditional parameters for \code{\link{rsmax2}} function
 #' @return the structure of the net
 #' @import data.table
 #' @examples
@@ -104,7 +104,6 @@ learn_dbn_struc <- function(dt, size = 2, ...){
 #' object to allow performing exact MVN inference on both cases.
 #' @param fit a fitted bn or dbn
 #' @return the fitted net with attributes
-#' @export
 add_attr_to_fit <- function(fit){
   initial_fit_check(fit)
   
@@ -121,8 +120,14 @@ add_attr_to_fit <- function(fit){
 #' object for future exact inference. 
 #' @param net the structure of the DBN
 #' @param f_dt a folded data.table
-#' @param ... aditional parameters for bnlearn's bn.fit function
+#' @param ... aditional parameters for the \code{\link{bn.fit}} function
 #' @return the fitted net
+#' @examples
+#' size = 3
+#' dt_train <- dbnR::motor[200:2500]
+#' net <- dbnR::learn_dbn_struc(dt_train, size)
+#' f_dt_train <- fold_dt(dt_train, size)
+#' fit <- dbnR::fit_dbn_params(net, f_dt_train, method = "mle")
 #' @export
 fit_dbn_params <- function(net, f_dt, ...){
   initial_folded_dt_check(f_dt)

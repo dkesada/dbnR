@@ -11,7 +11,7 @@ learn_dbn_struc(dt, size = 2, ...)
 
 \item{size}{number of time slices of the net. Markovian 1 would be size 2}
 
-\item{...}{aditional parameters for bnlearn's rsmax2 function}
+\item{...}{aditional parameters for \code{\link{rsmax2}} function}
 }
 \value{
 the structure of the net

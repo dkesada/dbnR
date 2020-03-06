@@ -7,9 +7,19 @@
 plot_network(structure)
 }
 \arguments{
-\item{structure}{the structure of the network.}
+\item{structure}{the structure or fit of the network.}
 }
 \description{
 Calculates the levels of each node and then plots them in a hierarchical
 layout in visNetwork.
+}
+\examples{
+\dontrun{
+dt_train <- dbnR::motor[200:2500]
+obj <- c("pm", "torque")
+net <- bnlearn::mmhc(dt_train)
+plot_network(net)
+fit <- bnlearn::bn.fit(net, dt_train, method = "mle")
+plot_network(fit) # Works for both the structure and the fitted net
+}
 }

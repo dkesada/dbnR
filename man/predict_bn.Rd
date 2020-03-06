@@ -21,8 +21,8 @@ needed, it's recommended to use the function \code{\link{predict_dt}} instead.
 }
 \examples{
 size = 3
-dt_train <- motor[200:2500]
-dt_val <- motor[2501:3000]
+dt_train <- dbnR::motor[200:2500]
+dt_val <- dbnR::motor[2501:3000]
 net <- dbnR::learn_dbn_struc(dt_train, size)
 f_dt_train <- fold_dt(dt_train, size)
 f_dt_val <- fold_dt(dt_val, size)

@@ -7,8 +7,8 @@
 #' @param evidence values of the variables used as evidence for the net
 #' @examples
 #' size = 3
-#' dt_train <- motor[200:2500]
-#' dt_val <- motor[2501:3000]
+#' dt_train <- dbnR::motor[200:2500]
+#' dt_val <- dbnR::motor[2501:3000]
 #' net <- dbnR::learn_dbn_struc(dt_train, size)
 #' f_dt_train <- fold_dt(dt_train, size)
 #' f_dt_val <- fold_dt(dt_val, size)
@@ -38,6 +38,24 @@ predict_bn <- function(fit, evidence){
 #' @param obj_nodes the nodes that are going to be predicted. They are all predicted at the same time
 #' @param verbose if TRUE, displays the metrics and plots the real values against the predictions
 #' @return the prediction results
+#' @examples
+#' size = 3
+#' dt_train <- dbnR::motor[200:2500]
+#' dt_val <- dbnR::motor[2501:3000]
+#' 
+#' # With a DBN 
+#' obj <- c("pm_t_0", "torque_t_0")
+#' net <- dbnR::learn_dbn_struc(dt_train, size)
+#' f_dt_train <- fold_dt(dt_train, size)
+#' f_dt_val <- fold_dt(dt_val, size)
+#' fit <- dbnR::fit_dbn_params(net, f_dt_train, method = "mle")
+#' res <- suppressWarnings(dbnR::predict_dt(fit, f_dt_val, obj_nodes = obj, verbose = FALSE))
+#' 
+#' # With a Gaussian BN directly from bnlearn
+#' obj <- c("pm", "torque")
+#' net <- bnlearn::mmhc(dt_train)
+#' fit <- bnlearn::bn.fit(net, dt_train, method = "mle")
+#' res <- suppressWarnings(dbnR::predict_dt(fit, dt_val, obj_nodes = obj, verbose = FALSE))
 #' @importFrom graphics "plot" "lines" 
 #' @importFrom stats "ts"
 #' @export
@@ -112,7 +130,7 @@ exact_prediction_step <- function(fit, variables, evidence){
 #' performs aproximate forecasting with bnlearns cpdist function over the 
 #' initial evidence taken from the data set.
 #' @param dt data.table object with the TS data
-#' @param fit dbn.fit object
+#' @param fit bn.fit object
 #' @param size number of time slices of the net
 #' @param obj_vars variables to be predicted
 #' @param ini starting point in the data set to forecast.
@@ -157,7 +175,7 @@ aproximate_inference <- function(dt, fit, size, obj_vars, ini, rep, len, num_p){
 #' Given a bn.fit object, the size of the net and a data.set,
 #' performs exact forecasting over the initial evidence taken from the data set.
 #' @param dt data.table object with the TS data
-#' @param fit dbn.fit object
+#' @param fit bn.fit object
 #' @param size number of time slices of the net
 #' @param obj_vars variables to be predicted
 #' @param ini starting point in the data set to forecast.
@@ -195,7 +213,7 @@ exact_inference <- function(dt, fit, size, obj_vars, ini, len){
 
 #' Performs forecasting with the GDBN over a data set
 #'
-#' Given a bn.fit object, the size of the net and a data.set,
+#' Given a dbn.fit object, the size of the net and a folded data.set,
 #' performs a forecast over the initial evidence taken from the data set.
 #' @param dt data.table object with the TS data
 #' @param fit dbn.fit object
@@ -209,6 +227,17 @@ exact_inference <- function(dt, fit, size, obj_vars, ini, len){
 #' @param plot_res if TRUE plots the results of the forecast
 #' @param mode "exact" for exact inference, "aprox" for approximate
 #' @return the results of the forecast
+#' @examples
+#' size = 3
+#' dt_train <- dbnR::motor[200:2500]
+#' dt_val <- dbnR::motor[2501:3000]
+#' obj <- c("pm_t_0", "torque_t_0")
+#' net <- dbnR::learn_dbn_struc(dt_train, size)
+#' f_dt_train <- fold_dt(dt_train, size)
+#' f_dt_val <- fold_dt(dt_val, size)
+#' fit <- dbnR::fit_dbn_params(net, f_dt_train, method = "mle")
+#' res <- suppressWarnings(dbnR::forecast_ts(f_dt_val, fit, size, 
+#'         obj_vars = obj, print_res = FALSE, plot_res = FALSE))
 #' @export
 forecast_ts <- function(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1]-ini,
                         rep = 1, num_p = 50, print_res = TRUE, plot_res = TRUE,

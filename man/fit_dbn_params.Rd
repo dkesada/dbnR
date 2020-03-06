@@ -11,7 +11,7 @@ fit_dbn_params(net, f_dt, ...)
 
 \item{f_dt}{a folded data.table}
 
-\item{...}{aditional parameters for bnlearn's bn.fit function}
+\item{...}{aditional parameters for the \code{\link{bn.fit}} function}
 }
 \value{
 the fitted net
@@ -20,4 +20,11 @@ the fitted net
 Fits the parameters of the DBN via MLE or BGE. The "mu" vector of means 
 and the "sigma" covariance matrix are set as attributes of the dbn.fit 
 object for future exact inference.
+}
+\examples{
+size = 3
+dt_train <- dbnR::motor[200:2500]
+net <- dbnR::learn_dbn_struc(dt_train, size)
+f_dt_train <- fold_dt(dt_train, size)
+fit <- dbnR::fit_dbn_params(net, f_dt_train, method = "mle")
 }

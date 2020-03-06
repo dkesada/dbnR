@@ -22,3 +22,22 @@ the prediction results
 Performs inference over a test data set, plots the results
 and gives metrics of the accuracy of the results.
 }
+\examples{
+size = 3
+dt_train <- dbnR::motor[200:2500]
+dt_val <- dbnR::motor[2501:3000]
+
+# With a DBN 
+obj <- c("pm_t_0", "torque_t_0")
+net <- dbnR::learn_dbn_struc(dt_train, size)
+f_dt_train <- fold_dt(dt_train, size)
+f_dt_val <- fold_dt(dt_val, size)
+fit <- dbnR::fit_dbn_params(net, f_dt_train, method = "mle")
+res <- suppressWarnings(dbnR::predict_dt(fit, f_dt_val, obj_nodes = obj, verbose = FALSE))
+
+# With a Gaussian BN directly from bnlearn
+obj <- c("pm", "torque")
+net <- bnlearn::mmhc(dt_train)
+fit <- bnlearn::bn.fit(net, dt_train, method = "mle")
+res <- suppressWarnings(dbnR::predict_dt(fit, dt_val, obj_nodes = obj, verbose = FALSE))
+}

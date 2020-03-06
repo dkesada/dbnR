@@ -35,6 +35,18 @@ forecast_ts(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1] - ini,
 the results of the forecast
 }
 \description{
-Given a bn.fit object, the size of the net and a data.set,
+Given a dbn.fit object, the size of the net and a folded data.set,
 performs a forecast over the initial evidence taken from the data set.
+}
+\examples{
+size = 3
+dt_train <- dbnR::motor[200:2500]
+dt_val <- dbnR::motor[2501:3000]
+obj <- c("pm_t_0", "torque_t_0")
+net <- dbnR::learn_dbn_struc(dt_train, size)
+f_dt_train <- fold_dt(dt_train, size)
+f_dt_val <- fold_dt(dt_val, size)
+fit <- dbnR::fit_dbn_params(net, f_dt_train, method = "mle")
+res <- suppressWarnings(dbnR::forecast_ts(f_dt_val, fit, size, 
+        obj_vars = obj, print_res = FALSE, plot_res = FALSE))
 }

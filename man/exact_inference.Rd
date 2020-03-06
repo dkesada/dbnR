@@ -9,7 +9,7 @@ exact_inference(dt, fit, size, obj_vars, ini, len)
 \arguments{
 \item{dt}{data.table object with the TS data}
 
-\item{fit}{dbn.fit object}
+\item{fit}{bn.fit object}
 
 \item{size}{number of time slices of the net}
 

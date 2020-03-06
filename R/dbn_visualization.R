@@ -6,7 +6,7 @@
 #' will be one more of the maximum level of his parents.
 #' @param net the structure of the network.
 #' @param order a topological order of the nodes, with the orphan nodes
-#' in the first place. See \code{\link[bnlearn]{node.ordering}}
+#' in the first place. See \code{\link{node.ordering}}
 #' @param lvl current level being processed
 #' @param acc accumulator of the nodes already processed
 #' @return a matrix with the names of the nodes in the first row and their
@@ -27,8 +27,17 @@ node_levels <- function(net, order, lvl = 1, acc = NULL){
 #'
 #' Calculates the levels of each node and then plots them in a hierarchical
 #' layout in visNetwork.
-#' @param structure the structure of the network.
+#' @param structure the structure or fit of the network.
 #' @importFrom magrittr "%>%"
+#' @examples 
+#' \dontrun{
+#' dt_train <- dbnR::motor[200:2500]
+#' obj <- c("pm", "torque")
+#' net <- bnlearn::mmhc(dt_train)
+#' plot_network(net)
+#' fit <- bnlearn::bn.fit(net, dt_train, method = "mle")
+#' plot_network(fit) # Works for both the structure and the fitted net
+#' }
 #' @export
 plot_network <- function(structure){
   check_opt_pkgs_available()
@@ -130,9 +139,16 @@ expand_time_nodes <- function(name, acc, max, i){
 #' slice. The result is a net where each time slice is ordered and separated
 #' from one another, where the leftmost slice is the oldest and the rightmost
 #' represents the present time.
-#' @param structure the structure of the network.
+#' @param structure the structure or fit of the network.
 #' @param offset the blank space between time slices
 #' @return the visualization of the DBN
+#' @examples 
+#' \dontrun{
+#' size = 3
+#' dt_train <- dbnR::motor[200:2500]
+#' net <- dbnR::learn_dbn_struc(dt_train, size)
+#' plot_dynamic_network(net)
+#' }
 #' @importFrom magrittr "%>%"
 #' @export
 plot_dynamic_network <- function(structure, offset = 200){

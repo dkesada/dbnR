@@ -9,7 +9,7 @@ aproximate_inference(dt, fit, size, obj_vars, ini, rep, len, num_p)
 \arguments{
 \item{dt}{data.table object with the TS data}
 
-\item{fit}{dbn.fit object}
+\item{fit}{bn.fit object}
 
 \item{size}{number of time slices of the net}
 

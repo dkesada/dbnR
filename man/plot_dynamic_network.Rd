@@ -7,7 +7,7 @@
 plot_dynamic_network(structure, offset = 200)
 }
 \arguments{
-\item{structure}{the structure of the network.}
+\item{structure}{the structure or fit of the network.}
 
 \item{offset}{the blank space between time slices}
 }
@@ -21,4 +21,12 @@ relative position of each node with respect to his equivalent in the first
 slice. The result is a net where each time slice is ordered and separated
 from one another, where the leftmost slice is the oldest and the rightmost
 represents the present time.
+}
+\examples{
+\dontrun{
+size = 3
+dt_train <- dbnR::motor[200:2500]
+net <- dbnR::learn_dbn_struc(dt_train, size)
+plot_dynamic_network(net)
+}
 }
