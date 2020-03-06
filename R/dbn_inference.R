@@ -1,12 +1,19 @@
 #' Performs inference over a fitted GBN
 #'
 #' Performs inference over a Gaussian BN. It's thought to be used in a map for
-#' a data.table, to use as evidence each separate row.
+#' a data.table, to use as evidence each separate row. If not specifically
+#' needed, it's recommended to use the function \code{\link{predict_dt}} instead.
 #' @param fit the fitted bn
 #' @param evidence values of the variables used as evidence for the net
 #' @examples
-#' res <- dt_test[, predict_bn(fit, .SD), by = 1:nrow(dt_test)]
-#'
+#' size = 3
+#' dt_train <- motor[200:2500]
+#' dt_val <- motor[2501:3000]
+#' net <- dbnR::learn_dbn_struc(dt_train, size)
+#' f_dt_train <- fold_dt(dt_train, size)
+#' f_dt_val <- fold_dt(dt_val, size)
+#' fit <- dbnR::fit_dbn_params(net, f_dt_train, method = "mle")
+#' res <- f_dt_val[, predict_bn(fit, .SD), by = 1:nrow(f_dt_val)]
 #' @return the mean of the particles for each row
 #' @export
 predict_bn <- function(fit, evidence){
@@ -31,6 +38,8 @@ predict_bn <- function(fit, evidence){
 #' @param obj_nodes the nodes that are going to be predicted. They are all predicted at the same time
 #' @param verbose if TRUE, displays the metrics and plots the real values against the predictions
 #' @return the prediction results
+#' @importFrom graphics "plot" "lines" 
+#' @importFrom stats "ts"
 #' @export
 predict_dt <- function(fit, dt, obj_nodes, verbose = T){
   initial_fit_check(fit)

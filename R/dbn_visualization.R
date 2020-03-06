@@ -40,7 +40,7 @@ plot_network <- function(structure){
   nodes <- data.frame(id = nodes_uniq,
                       label = nodes_uniq,
                       level = node_levels(structure, nodes_uniq)[2,],
-                      color.background = rgb(red = 0.196, blue = 0.627,
+                      color.background = grDevices::rgb(red = 0.196, blue = 0.627,
                                              green = 0.302, alpha = 0.8),
                       color.border = "black",
                       borderWidth = 2,
@@ -71,9 +71,10 @@ plot_network <- function(structure){
 #' @param acc the accumulator of the index in the current sub succesion
 #' @return the vector of sub succesions in each level
 #' @examples
+#' \dontrun{
 #' levels <- c(1,1,1,2,2,3,4,4,5,5)
 #' levels <- acc_succesion(levels)
-#' levels # equals to c(1,2,3,1,2,1,1,2,1,2)
+#' levels # equals to c(1,2,3,1,2,1,1,2,1,2)}
 acc_succesion <- function(nodes, res = NULL, prev = 0, acc = 0){
   if(length(nodes) == 0)
     return(res)

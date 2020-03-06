@@ -16,9 +16,16 @@ the mean of the particles for each row
 }
 \description{
 Performs inference over a Gaussian BN. It's thought to be used in a map for
-a data.table, to use as evidence each separate row.
+a data.table, to use as evidence each separate row. If not specifically
+needed, it's recommended to use the function \code{\link{predict_dt}} instead.
 }
 \examples{
-res <- dt_test[, predict_bn(fit, .SD), by = 1:nrow(dt_test)]
-
+size = 3
+dt_train <- motor[200:2500]
+dt_val <- motor[2501:3000]
+net <- dbnR::learn_dbn_struc(dt_train, size)
+f_dt_train <- fold_dt(dt_train, size)
+f_dt_val <- fold_dt(dt_val, size)
+fit <- dbnR::fit_dbn_params(net, f_dt_train, method = "mle")
+res <- f_dt_val[, predict_bn(fit, .SD), by = 1:nrow(f_dt_val)]
 }

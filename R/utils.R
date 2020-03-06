@@ -6,6 +6,7 @@ mae_by_col <- function(dt, col){
   return(mae(unlist(dt[,.SD, .SDcols = names(col)]), col))
 }
 
+#' @importFrom stats "sd"
 sd_error <- function(orig, pred){
   return(sd((orig - pred)))
 }
@@ -17,8 +18,8 @@ print_metrics <- function(metrics, obj_vars){
 
 plot_single_result <- function(dt, results, var){
   plot(ts(dt[, .SD, .SDcols = var]))
-  invisible(sapply(1:max(results$exec), function(x){lines(results[exec == x, .SD, .SDcols = var],
-                                            col = "red")}))
+  invisible(sapply(1:max(results[get("exec")]), function(x){
+    lines(results[get("exec") == x, .SD, .SDcols = var], col = "red")}))
 }
 
 plot_results <- function(dt, results, obj_vars){

@@ -71,9 +71,7 @@ merge_nets <- function(net0, netCP1, size, acc = NULL, slice = 1){
 #' @import data.table
 #' @examples
 #' data("motor")
-#' net <- learn_dbn_struc(motor, size = 3, restrict = "mmpc", maximize = "hc",
-#'                        restrict.args = list(test = "cor"),
-#'                        maximize.args = list(score = "bic-g", maxp = 6))
+#' net <- learn_dbn_struc(motor, size = 3)
 #' @export
 learn_dbn_struc <- function(dt, size = 2, ...){
   initial_size_check(size)

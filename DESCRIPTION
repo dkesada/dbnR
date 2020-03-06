@@ -22,6 +22,8 @@ Imports:
 Suggests:
     visNetwork (>= 2.0.8),
     grDevices (>= 3.6.1),
+    graphics (>= 3.6.1),
+    stats (>= 3.6.1),
     testthat (>= 2.1.0)
 LinkingTo:
     Rcpp
