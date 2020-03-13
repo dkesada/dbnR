@@ -21,5 +21,6 @@ phase of the dmmhc.
 }
 \examples{
 data(motor)
-dt <- dbnR::fold_dt(motor, 3)
+size <-  3
+dt <- fold_dt(motor, size)
 }

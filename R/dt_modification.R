@@ -8,7 +8,7 @@
 #' @return the renamed data.table
 #' @examples 
 #' data("motor")
-#' dt <- dbnR::time_rename(motor)
+#' dt <- time_rename(motor)
 #' @export
 time_rename <- function(dt){
   initial_df_check(dt)
@@ -61,7 +61,8 @@ fold_dt_rec <- function(dt, n_prev, size, slice = 1){
 #' @return the extended data.table
 #' @examples 
 #' data(motor)
-#' dt <- dbnR::fold_dt(motor, 3)
+#' size <-  3
+#' dt <- fold_dt(motor, size)
 #' @export
 fold_dt <- function(dt, size){
   initial_df_check(dt)

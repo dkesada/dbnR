@@ -20,5 +20,5 @@ no further operation will be done.
 }
 \examples{
 data("motor")
-dt <- dbnR::time_rename(motor)
+dt <- time_rename(motor)
 }
