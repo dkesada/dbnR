@@ -8,7 +8,7 @@ of a C++ function.}
 calc_mu(fit)
 }
 \arguments{
-\item{fit}{a bn.fit object}
+\item{fit}{a bn.fit or dbn.fit object}
 }
 \value{
 a named numeric vector of the means of each variable
@@ -16,4 +16,10 @@ a named numeric vector of the means of each variable
 \description{
 Calculate the mu vector of means of a Gaussian linear network. Front end
 of a C++ function.
+}
+\examples{
+dt_train <- dbnR::motor[200:2500]
+net <- bnlearn::mmhc(dt_train)
+fit <- bnlearn::bn.fit(net, dt_train, method = "mle")
+mu <- calc_mu(fit)
 }

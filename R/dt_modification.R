@@ -6,6 +6,9 @@
 #' no further operation will be done.
 #' @param dt the data.table to be treated
 #' @return the renamed data.table
+#' @examples 
+#' data("motor")
+#' dt <- <- dbnR::time_rename(motor)
 #' @export
 time_rename <- function(dt){
   initial_df_check(dt)
@@ -56,6 +59,9 @@ fold_dt_rec <- function(dt, n_prev, size, slice = 1){
 #' @param dt the data.table to be treated
 #' @param size number of time slices to unroll. Markovian 1 would be size 2
 #' @return the extended data.table
+#' @examples 
+#' data(motor)
+#' dt <- dbnR::fold_dt(motor, 3)
 #' @export
 fold_dt <- function(dt, size){
   initial_df_check(dt)

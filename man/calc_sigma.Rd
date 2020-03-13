@@ -8,7 +8,7 @@ Front end of a C++ function.}
 calc_sigma(fit)
 }
 \arguments{
-\item{fit}{a bn.fit object}
+\item{fit}{a bn.fit or dbn.fit object}
 }
 \value{
 a numeric covariance matrix of the nodes
@@ -16,4 +16,10 @@ a numeric covariance matrix of the nodes
 \description{
 Calculate the sigma covariance matrix of a Gaussian linear network. 
 Front end of a C++ function.
+}
+\examples{
+dt_train <- dbnR::motor[200:2500]
+net <- bnlearn::mmhc(dt_train)
+fit <- bnlearn::bn.fit(net, dt_train, method = "mle")
+sigma <- calc_sigma(fit)
 }
