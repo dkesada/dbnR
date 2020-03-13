@@ -97,7 +97,7 @@ predict_dt <- function(fit, dt, obj_nodes, verbose = T){
 #' @param particles a list with the provided evidence
 #' @param n the number of particles to be used by bnlearn
 #' @return the inferred particles
-aprox_prediction_step <- function(fit, variables, particles, n = 50){
+approx_prediction_step <- function(fit, variables, particles, n = 50){
   if(length(particles) == 0)
     particles <- TRUE
 
@@ -126,21 +126,21 @@ exact_prediction_step <- function(fit, variables, evidence){
   return(res)
 }
 
-#' Performs aproximate inference forecasting with the GDBN over a data set
+#' Performs approximate inference forecasting with the GDBN over a data set
 #'
 #' Given a bn.fit object, the size of the net and a data.set,
-#' performs aproximate forecasting with bnlearns cpdist function over the 
+#' performs approximate forecasting with bnlearns cpdist function over the 
 #' initial evidence taken from the data set.
 #' @param dt data.table object with the TS data
 #' @param fit bn.fit object
 #' @param size number of time slices of the net
 #' @param obj_vars variables to be predicted
 #' @param ini starting point in the data set to forecast.
-#' @param rep number of repetitions to be performed of the aproximate inference
+#' @param rep number of repetitions to be performed of the approximate inference
 #' @param len length of the forecast
 #' @param num_p number of particles to be used by bnlearn
 #' @return the results of the forecast
-aproximate_inference <- function(dt, fit, size, obj_vars, ini, rep, len, num_p){
+approximate_inference <- function(dt, fit, size, obj_vars, ini, rep, len, num_p){
   var_names <- names(dt)
   vars_pred_idx <- grep("t_0", var_names)
   vars_subs_idx <- grep("t_1", var_names)
@@ -158,7 +158,7 @@ aproximate_inference <- function(dt, fit, size, obj_vars, ini, rep, len, num_p){
     
     # Subsequent queries
     for(j in 1:len){
-      particles <- aprox_prediction_step(fit, vars_pred, as.list(evidence), num_p)
+      particles <- approx_prediction_step(fit, vars_pred, as.list(evidence), num_p)
       if(length(vars_post) > 0)
         evidence[, (vars_prev) := .SD, .SDcols = vars_post]
       evidence[, (vars_subs) := particles[vars_pred]]
@@ -227,7 +227,7 @@ exact_inference <- function(dt, fit, size, obj_vars, ini, len){
 #' @param num_p number of particles in the approximate forecasting
 #' @param print_res if TRUE prints the mae and sd metrics of the forecast
 #' @param plot_res if TRUE plots the results of the forecast
-#' @param mode "exact" for exact inference, "aprox" for approximate
+#' @param mode "exact" for exact inference, "approx" for approximate
 #' @return the results of the forecast
 #' @examples
 #' size = 3
@@ -256,8 +256,8 @@ forecast_ts <- function(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1]-ini,
   
   if(mode == "exact")
     test <- exact_inference(dt, fit, size, obj_vars, ini, len)
-  else if (mode == "aprox")
-    test <- aproximate_inference(dt, fit, size, obj_vars, ini, rep, len, num_p)
+  else if (mode == "approx")
+    test <- approximate_inference(dt, fit, size, obj_vars, ini, rep, len, num_p)
 
   exec_time <- exec_time - Sys.time()
 

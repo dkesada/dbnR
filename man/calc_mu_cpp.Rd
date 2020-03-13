@@ -13,7 +13,7 @@ calc_mu_cpp(fit, order)
 \item{order}{a topological ordering of the nodes as a vector of strings}
 }
 \value{
-the map with the nodes and their mu. Returns as a named numeric vec
+the map with the nodes and their mu. Returns as a named numeric vector
 }
 \description{
 Calculate the mu vector of means of a Gaussian linear network. This is 

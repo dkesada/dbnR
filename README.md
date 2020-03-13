@@ -45,9 +45,9 @@ dt_train <- motor[200:2500]
 dt_val <- motor[2501:3000]
 net <- learn_dbn_struc(dt_train, size)
 ```
-The dt argument has to be either a data.frame or a data.table of numeric columns, in the example we use the sample dataset included in the package. The size argument determines the number of time slices that your net is gona have, that is, the Markovian order of the net. A Markovian order of 2 means that your data in the present is independent of the past given the previous time slice. If your case doesn't meet this criteria, the size of the net can be increased, to take into account more past time slices in the inference. In our function, Markovian order = size - 1. The function returns a list with the learned structure and the folded dataset with the extended rows.
+The dt argument has to be either a data.frame or a data.table of numeric columns, in the example we use the sample dataset included in the package. The size argument determines the number of time slices that your net is going to have, that is, the Markovian order of the net. A Markovian order of 2 means that your data in the present is independent of the past given the previous time slice. If your case doesn't meet this criteria, the size of the net can be increased, to take into account more past time slices in the inference. In our function, Markovian order = size - 1. The function returns a list with the learned structure and the folded dataset with the extended rows.
 
-Once the structure is learnt, it can be ploted and used to learn the parameters
+Once the structure is learnt, it can be plotted and used to learn the parameters
 ```
 plot_dynamic_network(net)
 ```

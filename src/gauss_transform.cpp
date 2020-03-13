@@ -7,7 +7,7 @@ using namespace Rcpp;
 //' 
 //' @param fit a bn.fit object as a Rcpp::List
 //' @param order a topological ordering of the nodes as a vector of strings
-//' @return the map with the nodes and their mu. Returns as a named numeric vec
+//' @return the map with the nodes and their mu. Returns as a named numeric vector
 // [[Rcpp::export]]
 std::map<std::string, float> calc_mu_cpp(Rcpp::List &fit, std::vector<std::string> &order){
   std::map<std::string, float> mu;

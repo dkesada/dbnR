@@ -11,7 +11,7 @@ fit_dbn_params(net, f_dt, ...)
 
 \item{f_dt}{a folded data.table}
 
-\item{...}{aditional parameters for the \code{\link{bn.fit}} function}
+\item{...}{additional parameters for the \code{\link{bn.fit}} function}
 }
 \value{
 the fitted net

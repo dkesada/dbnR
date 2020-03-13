@@ -74,23 +74,23 @@ plot_network <- function(structure){
 #'
 #' This method processes the vector of node levels to get the position of
 #' each node inside the level.
-#' @param nodes a vetor with the level of each node
-#' @param res the accumulative results of the sub succesions
+#' @param nodes a vector with the level of each node
+#' @param res the accumulative results of the sub successionss
 #' @param prev the level of the previous node processed
-#' @param acc the accumulator of the index in the current sub succesion
-#' @return the vector of sub succesions in each level
+#' @param acc the accumulator of the index in the current sub successions
+#' @return the vector of sub successionss in each level
 #' @examples
 #' \dontrun{
 #' levels <- c(1,1,1,2,2,3,4,4,5,5)
-#' levels <- acc_succesion(levels)
+#' levels <- acc_successions(levels)
 #' levels # equals to c(1,2,3,1,2,1,1,2,1,2)}
-acc_succesion <- function(nodes, res = NULL, prev = 0, acc = 0){
+acc_successions <- function(nodes, res = NULL, prev = 0, acc = 0){
   if(length(nodes) == 0)
     return(res)
   else if(prev == nodes[1])
-    return(acc_succesion(nodes[-1], c(res, acc+1), prev, acc+1))
+    return(acc_successions(nodes[-1], c(res, acc+1), prev, acc+1))
   else
-    return(acc_succesion(nodes[-1], c(res, 1), nodes[1], 1))
+    return(acc_successions(nodes[-1], c(res, 1), nodes[1], 1))
 }
 
 #' Gets the ordering of a single time slice in a DBN
@@ -159,7 +159,7 @@ plot_dynamic_network <- function(structure, offset = 200){
   # Static net positioning
   nodes_uniq <- dynamic_ordering(structure)
   levels <- node_levels(structure, nodes_uniq)
-  positions <- acc_succesion(as.numeric(levels[2,]))
+  positions <- acc_successions(as.numeric(levels[2,]))
   n_nodes_slice <- length(nodes_uniq)
 
   max_consec <- max(positions)

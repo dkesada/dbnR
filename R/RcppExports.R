@@ -6,7 +6,7 @@
 #' 
 #' @param fit a bn.fit object as a Rcpp::List
 #' @param order a topological ordering of the nodes as a vector of strings
-#' @return the map with the nodes and their mu. Returns as a named numeric vec
+#' @return the map with the nodes and their mu. Returns as a named numeric vector
 calc_mu_cpp <- function(fit, order) {
     .Call('_dbnR_calc_mu_cpp', PACKAGE = 'dbnR', fit, order)
 }

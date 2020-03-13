@@ -61,12 +61,12 @@ merge_nets <- function(net0, netCP1, size, acc = NULL, slice = 1){
 
 #' Learns the structure of a markovian n DBN model from data
 #'
-#' Learns a gaussian dynamic bayesian network from a
+#' Learns a gaussian dynamic Bayesian network from a
 #' dataset. It allows the creation of markovian n nets rather than only markov
 #' 1.
 #' @param dt the data.frame or data.table to be used
 #' @param size number of time slices of the net. Markovian 1 would be size 2
-#' @param ... aditional parameters for \code{\link{rsmax2}} function
+#' @param ... additional parameters for \code{\link{rsmax2}} function
 #' @return the structure of the net
 #' @import data.table
 #' @examples
@@ -120,7 +120,7 @@ add_attr_to_fit <- function(fit){
 #' object for future exact inference. 
 #' @param net the structure of the DBN
 #' @param f_dt a folded data.table
-#' @param ... aditional parameters for the \code{\link{bn.fit}} function
+#' @param ... additional parameters for the \code{\link{bn.fit}} function
 #' @return the fitted net
 #' @examples
 #' size = 3
