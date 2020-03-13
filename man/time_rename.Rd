@@ -18,3 +18,7 @@ they end in '_t_0', which will be needed when folding the data.table. If
 any of the columns already ends in '_t_0', a warning will be issued and
 no further operation will be done.
 }
+\examples{
+data("motor")
+dt <- dbnR::time_rename(motor)
+}

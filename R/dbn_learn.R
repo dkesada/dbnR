@@ -125,9 +125,9 @@ add_attr_to_fit <- function(fit){
 #' @examples
 #' size = 3
 #' dt_train <- dbnR::motor[200:2500]
-#' net <- dbnR::learn_dbn_struc(dt_train, size)
+#' net <- learn_dbn_struc(dt_train, size)
 #' f_dt_train <- fold_dt(dt_train, size)
-#' fit <- dbnR::fit_dbn_params(net, f_dt_train, method = "mle")
+#' fit <- fit_dbn_params(net, f_dt_train, method = "mle")
 #' @export
 fit_dbn_params <- function(net, f_dt, ...){
   initial_folded_dt_check(f_dt)

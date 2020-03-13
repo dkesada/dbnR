@@ -19,3 +19,7 @@ This will widen the dataset to put the t previous time slices
 in each row, so that it can be used to learn temporal arcs in the second
 phase of the dmmhc.
 }
+\examples{
+data(motor)
+dt <- dbnR::fold_dt(motor, 3)
+}

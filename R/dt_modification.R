@@ -8,7 +8,7 @@
 #' @return the renamed data.table
 #' @examples 
 #' data("motor")
-#' dt <- <- dbnR::time_rename(motor)
+#' dt <- dbnR::time_rename(motor)
 #' @export
 time_rename <- function(dt){
   initial_df_check(dt)

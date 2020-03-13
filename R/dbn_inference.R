@@ -7,12 +7,13 @@
 #' @param evidence values of the variables used as evidence for the net
 #' @examples
 #' size = 3
-#' dt_train <- dbnR::motor[200:2500]
-#' dt_val <- dbnR::motor[2501:3000]
-#' net <- dbnR::learn_dbn_struc(dt_train, size)
+#' data(motor)
+#' dt_train <- motor[200:2500]
+#' dt_val <- motor[2501:3000]
+#' net <- learn_dbn_struc(dt_train, size)
 #' f_dt_train <- fold_dt(dt_train, size)
 #' f_dt_val <- fold_dt(dt_val, size)
-#' fit <- dbnR::fit_dbn_params(net, f_dt_train, method = "mle")
+#' fit <- fit_dbn_params(net, f_dt_train, method = "mle")
 #' res <- f_dt_val[, predict_bn(fit, .SD), by = 1:nrow(f_dt_val)]
 #' @return the mean of the particles for each row
 #' @export
@@ -40,22 +41,23 @@ predict_bn <- function(fit, evidence){
 #' @return the prediction results
 #' @examples
 #' size = 3
-#' dt_train <- dbnR::motor[200:2500]
-#' dt_val <- dbnR::motor[2501:3000]
+#' data(motor)
+#' dt_train <- motor[200:2500]
+#' dt_val <- motor[2501:3000]
 #' 
 #' # With a DBN 
 #' obj <- c("pm_t_0", "torque_t_0")
-#' net <- dbnR::learn_dbn_struc(dt_train, size)
+#' net <- learn_dbn_struc(dt_train, size)
 #' f_dt_train <- fold_dt(dt_train, size)
 #' f_dt_val <- fold_dt(dt_val, size)
-#' fit <- dbnR::fit_dbn_params(net, f_dt_train, method = "mle")
-#' res <- suppressWarnings(dbnR::predict_dt(fit, f_dt_val, obj_nodes = obj, verbose = FALSE))
+#' fit <- fit_dbn_params(net, f_dt_train, method = "mle")
+#' res <- suppressWarnings(predict_dt(fit, f_dt_val, obj_nodes = obj, verbose = FALSE))
 #' 
 #' # With a Gaussian BN directly from bnlearn
 #' obj <- c("pm", "torque")
 #' net <- bnlearn::mmhc(dt_train)
 #' fit <- bnlearn::bn.fit(net, dt_train, method = "mle")
-#' res <- suppressWarnings(dbnR::predict_dt(fit, dt_val, obj_nodes = obj, verbose = FALSE))
+#' res <- suppressWarnings(predict_dt(fit, dt_val, obj_nodes = obj, verbose = FALSE))
 #' @importFrom graphics "plot" "lines" 
 #' @importFrom stats "ts"
 #' @export
@@ -229,14 +231,15 @@ exact_inference <- function(dt, fit, size, obj_vars, ini, len){
 #' @return the results of the forecast
 #' @examples
 #' size = 3
-#' dt_train <- dbnR::motor[200:2500]
-#' dt_val <- dbnR::motor[2501:3000]
+#' data(motor)
+#' dt_train <- motor[200:2500]
+#' dt_val <- motor[2501:3000]
 #' obj <- c("pm_t_0", "torque_t_0")
-#' net <- dbnR::learn_dbn_struc(dt_train, size)
+#' net <- learn_dbn_struc(dt_train, size)
 #' f_dt_train <- fold_dt(dt_train, size)
 #' f_dt_val <- fold_dt(dt_val, size)
-#' fit <- dbnR::fit_dbn_params(net, f_dt_train, method = "mle")
-#' res <- suppressWarnings(dbnR::forecast_ts(f_dt_val, fit, size, 
+#' fit <- fit_dbn_params(net, f_dt_train, method = "mle")
+#' res <- suppressWarnings(forecast_ts(f_dt_val, fit, size, 
 #'         obj_vars = obj, print_res = FALSE, plot_res = FALSE))
 #' @export
 forecast_ts <- function(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1]-ini,

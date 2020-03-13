@@ -24,7 +24,7 @@ object for future exact inference.
 \examples{
 size = 3
 dt_train <- dbnR::motor[200:2500]
-net <- dbnR::learn_dbn_struc(dt_train, size)
+net <- learn_dbn_struc(dt_train, size)
 f_dt_train <- fold_dt(dt_train, size)
-fit <- dbnR::fit_dbn_params(net, f_dt_train, method = "mle")
+fit <- fit_dbn_params(net, f_dt_train, method = "mle")
 }

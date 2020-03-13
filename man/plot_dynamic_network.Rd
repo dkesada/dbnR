@@ -26,7 +26,7 @@ represents the present time.
 \dontrun{
 size = 3
 dt_train <- dbnR::motor[200:2500]
-net <- dbnR::learn_dbn_struc(dt_train, size)
+net <- learn_dbn_struc(dt_train, size)
 plot_dynamic_network(net)
 }
 }
