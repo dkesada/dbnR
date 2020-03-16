@@ -1,6 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^\markdowns*
-^\media*
-^LICENSE.md
-^README.Rmd
+^\markdowns$
+^\media$
+^LICENSE\.md$
+^README\.Rmd$
