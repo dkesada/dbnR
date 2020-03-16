@@ -5,4 +5,5 @@
 ^LICENSE\.md$
 ^README\.Rmd$
 ^cran-comments\.md$
+^NEWS\.md$
 ^CRAN-RELEASE$
