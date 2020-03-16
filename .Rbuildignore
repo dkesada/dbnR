@@ -3,3 +3,4 @@
 ^\markdowns*
 ^\media*
 ^LICENSE.md
+^README.Rmd
