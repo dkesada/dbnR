@@ -81,7 +81,7 @@ After learning the net, two different types of inference can be performed: point
 
 ## License
 
-This project is licensed under the GPL-3 License, following on bnlearn's GPL(≥ 2) license - see the [LICENSE](LICENSE) file for details
+This project is licensed under the GPL-3 License, following on bnlearn's GPL(≥ 2) license.
 
 ## References
 

@@ -122,7 +122,7 @@ given some initial evidence of the variables.
 ## License
 
 This project is licensed under the GPL-3 License, following on bnlearn’s
-GPL(≥ 2) license - see the [LICENSE](LICENSE) file for details
+GPL(≥ 2) license.
 
 ## References
 
