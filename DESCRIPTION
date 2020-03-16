@@ -8,10 +8,10 @@ Authors@R: c(
 Description: Learning and inference over dynamic Bayesian networks of arbitrary 
     Markovian order.  Extends some of the functionality offered by the 'bnlearn' 
     package to learn the networks from data and perform exact inference. 
-    It offers a modification over the dynamic max-min hill climbing 'DMMHC' 
-    algorithm for structure learning and the possibility to perform forecasts of
-    arbitrary length. A tool for visualizing the structure of the net is also 
-    provided via the 'visNetwork' package.
+    It offers a modification of Trabelsi (2013) <doi:10.1007/978-3-642-41398-8_34> 
+    dynamic max-min hill climbing algorithm for structure learning and 
+    the possibility to perform forecasts of arbitrary length. A tool for 
+    visualizing the structure of the net is also provided via the 'visNetwork' package.
 Depends: R (>= 3.6.0)
 Imports:
     bnlearn (>= 4.5),
@@ -27,7 +27,7 @@ Suggests:
 LinkingTo:
     Rcpp
 URL: https://github.com/dkesada/dbnR
-License: GPL-3 + file LICENSE
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.0
