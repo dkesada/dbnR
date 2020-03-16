@@ -1,18 +1,17 @@
 Package: dbnR
 Type: Package
-Title: Dynamic Bayesian network learning and inference
+Title: Dynamic Bayesian Network Learning and Inference
 Version: 0.3.2
 Authors@R: c(
     person("David", "Quesada", email = "dkesada@gmail.com", role = c("aut", "cre")),
     person("Gabriel", "Valverde", email = "gabrielvalverdecastilla@gmail.com", role = "ctb"))
-Description: The package extends the functionality offered by bnlearn to 
-    perform learning and inference over dynamic Bayesian networks of arbitrary 
-    Markovian order. It offers a modification over Trabelsi's dynamic max-min 
-    hill climbing (DMMHC) algorithm for structure learning and the possibility 
-    to perform forecasts of arbitrary length. At the moment, smoothing and 
-    filtering operations are not supported. Exact inference over the multivariate
-    Gaussian is implemented. A tool for visualizing the 
-    structure of the net is also provided via the visNetwork package.
+Description: Learning and inference over dynamic Bayesian networks of arbitrary 
+    Markovian order.  Extends some of the functionality offered by the 'bnlearn' 
+    package to learn the networks from data and perform exact inference. 
+    It offers a modification over the dynamic max-min hill climbing 'DMMHC' 
+    algorithm for structure learning and the possibility to perform forecasts of
+    arbitrary length. A tool for visualizing the structure of the net is also 
+    provided via the 'visNetwork' package.
 Depends: R (>= 3.6.0)
 Imports:
     bnlearn (>= 4.5),
