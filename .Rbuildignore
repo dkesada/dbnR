@@ -4,3 +4,4 @@
 ^\media$
 ^LICENSE\.md$
 ^README\.Rmd$
+^cran-comments\.md$
