@@ -16,18 +16,21 @@ implemented for GDBNs and bnlearn’s BNs via the visNetwork package
 
 ## Current development
 
-As of today (03/03/2020), the main functionality of the package is
+As of today (17/03/2020), the main functionality of the package is
 running and working. In order of importance, the primary objectives are:
-\* To add vignettes and examples of the main functionality of the
-package in order to upload it to CRAN \* To run testing of some known
-unexpected behaviours on bn and dbn prediction (e.g. providing all
-variables as objective variables) \* To add the possibility of learning
-nets with only certain previous lags instead of all of them. For
-example, a dbn with only the time slices for t\_0 and t\_12, or one with
-t\_0, t\_3 and t\_4. \* To provide a visualization tool of some
-sub-network. Many times, you end up with quite a big BN or DBN and you
-are interested in only a few of the nodes. We sketched a function to
-plot the Markov blanket of a node, but it needs further parametrization.
+
+  - To add examples of the main functionality of the package and fix R
+    CMD checks in order to upload it to CRAN
+  - To add an automatically generated shiny interface of the net
+  - To run testing of some known unexpected behaviours on bn and dbn
+    prediction (e.g. providing all variables as objective variables)
+  - To add the possibility of learning nets with only certain previous
+    lags instead of all of them. For example, a dbn with only the time
+    slices for t\_0 and t\_12, or one with t\_0, t\_3 and t\_4.
+  - To provide a visualization tool of some sub-network. Many times, you
+    end up with quite a big BN or DBN and you are interested in only a
+    few of the nodes. We sketched a function to plot the Markov blanket
+    of a node, but it needs further parametrization.
 
 For now, the dbn.fit object as an extension of bnlearn’s bn.fit object
 will stay the same except for the “mu” and “sigma” attributes added to
@@ -80,7 +83,7 @@ function *learn\_dbn\_struc*
 library(dbnR)
 data(motor)
 
-size = 3
+size <- 3
 dt_train <- motor[200:2500]
 dt_val <- motor[2501:3000]
 net <- learn_dbn_struc(dt_train, size)
