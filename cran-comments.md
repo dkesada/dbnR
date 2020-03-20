@@ -1,3 +1,10 @@
+## Resubmission
+This is a resubmission. In this version I have:
+
+* Replaced \dontrun{} by \donttest{}
+
+* Replaced cat() calls by print(x, quote = FALSE)
+
 ## Test environments
 * local OS X install, R 3.6.3
 * Windows 10 (x64), R 3.6.3 (local)

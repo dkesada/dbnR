@@ -30,7 +30,7 @@ node_levels <- function(net, order, lvl = 1, acc = NULL){
 #' @param structure the structure or fit of the network.
 #' @importFrom magrittr "%>%"
 #' @examples 
-#' \dontrun{
+#' \donttest{
 #' dt_train <- dbnR::motor[200:2500]
 #' obj <- c("pm", "torque")
 #' net <- bnlearn::mmhc(dt_train)
@@ -73,17 +73,13 @@ plot_network <- function(structure){
 #' Returns a vector with the number of consecutive nodes in each level
 #'
 #' This method processes the vector of node levels to get the position of
-#' each node inside the level.
+#' each node inside the level. E.g. c(1,1,1,2,2,3,4,4,5,5) turns into 
+#' c(1,2,3,1,2,1,1,2,1,2)
 #' @param nodes a vector with the level of each node
 #' @param res the accumulative results of the sub successionss
 #' @param prev the level of the previous node processed
 #' @param acc the accumulator of the index in the current sub successions
 #' @return the vector of sub successionss in each level
-#' @examples
-#' \dontrun{
-#' levels <- c(1,1,1,2,2,3,4,4,5,5)
-#' levels <- acc_successions(levels)
-#' levels # equals to c(1,2,3,1,2,1,1,2,1,2)}
 acc_successions <- function(nodes, res = NULL, prev = 0, acc = 0){
   if(length(nodes) == 0)
     return(res)
@@ -143,7 +139,7 @@ expand_time_nodes <- function(name, acc, max, i){
 #' @param offset the blank space between time slices
 #' @return the visualization of the DBN
 #' @examples 
-#' \dontrun{
+#' \donttest{
 #' size = 3
 #' dt_train <- dbnR::motor[200:2500]
 #' net <- learn_dbn_struc(dt_train, size)

@@ -81,8 +81,10 @@ predict_dt <- function(fit, dt, obj_nodes, verbose = T){
     sapply(obj_nodes,
            function(x){plot(ts(obj_dt[, get(x)]), ylab = x) +
                        lines(ts(res[, get(x)]), col="red")})
-    cat("MAE: \n"); print(mae)
-    cat("SD: \n"); print(sd_e)
+    print("MAE:", quote = FALSE)
+    print(mae)
+    print("SD:", quote = FALSE)
+    print(sd_e)
   }
 
   return(res)

@@ -14,7 +14,7 @@ Calculates the levels of each node and then plots them in a hierarchical
 layout in visNetwork.
 }
 \examples{
-\dontrun{
+\donttest{
 dt_train <- dbnR::motor[200:2500]
 obj <- c("pm", "torque")
 net <- bnlearn::mmhc(dt_train)

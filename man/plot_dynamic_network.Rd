@@ -23,7 +23,7 @@ from one another, where the leftmost slice is the oldest and the rightmost
 represents the present time.
 }
 \examples{
-\dontrun{
+\donttest{
 size = 3
 dt_train <- dbnR::motor[200:2500]
 net <- learn_dbn_struc(dt_train, size)
