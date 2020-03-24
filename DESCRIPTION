@@ -1,7 +1,7 @@
 Package: dbnR
 Type: Package
 Title: Dynamic Bayesian Network Learning and Inference
-Version: 0.3.3
+Version: 0.3.4
 Authors@R: c(
     person("David", "Quesada", email = "dkesada@gmail.com", role = c("aut", "cre")),
     person("Gabriel", "Valverde", email = "gabrielvalverdecastilla@gmail.com", role = "ctb"))
@@ -12,7 +12,7 @@ Description: Learning and inference over dynamic Bayesian networks of arbitrary
     dynamic max-min hill climbing algorithm for structure learning and 
     the possibility to perform forecasts of arbitrary length. A tool for 
     visualizing the structure of the net is also provided via the 'visNetwork' package.
-Depends: R (>= 3.6.0)
+Depends: R (>= 3.5.0)
 Imports:
     bnlearn (>= 4.5),
     data.table (>= 1.12.4),
@@ -20,9 +20,10 @@ Imports:
     magrittr (>= 1.5)
 Suggests:
     visNetwork (>= 2.0.8),
-    grDevices (>= 3.6.1),
-    graphics (>= 3.6.1),
-    stats (>= 3.6.1),
+    grDevices (>= 3.6.0),
+    utils (>= 3.6.0),
+    graphics (>= 3.6.0),
+    stats (>= 3.6.0),
     testthat (>= 2.1.0)
 LinkingTo:
     Rcpp

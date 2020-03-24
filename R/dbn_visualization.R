@@ -167,8 +167,13 @@ plot_dynamic_network <- function(structure, offset = 200){
   all_pos <- Reduce(function(acu, x){
     c(acu, (positions * 100 + x * 100 * max_consec + x * offset))}, 
     0:(ord-1), NULL)
-
-  color <- grDevices::col2rgb(grDevices::hcl.colors(ord, palette = "RdYlBu")) / 255
+  
+  if(utils::packageVersion("grDevices") < "3.6.0")
+    color <- grDevices::heat.colors(ord)
+  else
+    color <- grDevices::hcl.colors(ord, palette = "RdYlBu")
+  
+  color <- grDevices::col2rgb(color) / 255
   color <- apply(color, 2, function(x){do.call(grDevices::rgb,as.list(x))})
 
   all_colors <- Reduce(function(acu, x){c(acu, rep(x, n_nodes_slice))}, color, NULL)
