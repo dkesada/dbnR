@@ -11,7 +11,7 @@ This is a resubmission. In this version I have:
 * win-builder (devel, release and oldrelease)
 
 ## R CMD check results
-0 ERRORs | 0 WARNINGs | 1 NOTEs
+0 ERRORs | 0 WARNINGs | 2 NOTEs
 
 * checking CRAN incoming feasibility ... NOTE
 Maintainer: 'David Quesada <dkesada@gmail.com>'
