@@ -16,11 +16,9 @@ implemented for GDBNs and bnlearn’s BNs via the visNetwork package
 
 ## Current development
 
-As of today (17/03/2020), the main functionality of the package is
+As of today (06/04/2020), the main functionality of the package is
 running and working. In order of importance, the primary objectives are:
 
-  - To add examples of the main functionality of the package and fix R
-    CMD checks in order to upload it to CRAN
   - To add an automatically generated shiny interface of the net
   - To run testing of some known unexpected behaviours on bn and dbn
     prediction (e.g. providing all variables as objective variables)
@@ -42,10 +40,9 @@ Not an elegant solution, but its simplicity is enough.
 
 ### Prerequisites
 
-This package requires R ≥ 3.6.1 to work properly. It’s possible to make
-it work for older versions of R and of each of the packages by fiddling
-with the [DESCRIPTION](DESCRIPTION) file, although this is not
-recommended.
+This package requires R ≥ 3.6.1 to work properly. It also works for R ≥
+3.5.0, the only difference is the color palette of the DBN visualization
+tool.
 
 The **bnlearn** and **data.table** packages, among others, are required
 for this package to work. They will be installed automatically when
@@ -62,7 +59,14 @@ use it.
 
 ### Installing
 
-As of today, the easiest way of installing dbnR is via the
+As of today, the easiest way of installing dbnR is via CRAN. To install
+it, simply run
+
+``` r
+install.packages('dbnR')
+```
+
+You can also install the lastest version in GitHub with the
 *install\_github* function in the **devtools** package. The commands you
 need to run are
 

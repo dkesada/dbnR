@@ -17,9 +17,8 @@ An implementation of Gaussian dynamic Bayesian networks (GDBN) structure learnin
 
 ## Current development
 
-As of today (17/03/2020), the main functionality of the package is running and working. In order of importance, the primary objectives are:
+As of today (06/04/2020), the main functionality of the package is running and working. In order of importance, the primary objectives are:
 
-  * To add examples of the main functionality of the package and fix R CMD checks in order to upload it to CRAN
   * To add an automatically generated shiny interface of the net 
   * To run testing of some known unexpected behaviours on bn and dbn prediction (e.g. providing all variables as objective variables)
   * To add the possibility of learning nets with only certain previous lags instead of all of them. For example, a dbn with only the time slices for t_0 and t_12, or one with t_0, t_3 and t_4.
@@ -31,7 +30,7 @@ For now, the dbn.fit object as an extension of bnlearn's bn.fit object will stay
 
 ### Prerequisites
 
-This package requires R ≥ 3.6.1 to work properly. It's possible to make it work for older versions of R and of each of the packages by fiddling with the [DESCRIPTION](DESCRIPTION) file, although this is not recommended.
+This package requires R ≥ 3.6.1 to work properly. It also works for R ≥ 3.5.0, the only difference is the color palette of the DBN visualization tool.
 
 The __bnlearn__ and __data.table__ packages, among others, are required for this package to work. They will be installed automatically when installing this package. They can also be installed manually via CRAN with the command
 
@@ -42,7 +41,12 @@ install.packages(c("bnlearn", "data.table"))
 The packages __visNetwork__, __magrittr__ and __grDevices__ are optional for the visualization tool. They will only be required if you want to use it.
 
 ### Installing
-As of today, the easiest way of installing dbnR is via the _install_github_ function in the __devtools__ package. The commands you need to run are
+As of today, the easiest way of installing dbnR is via CRAN. To install it, simply run
+```{r inst_CRAN, echo=TRUE, eval=FALSE}
+install.packages('dbnR')
+```
+
+You can also install the lastest version in GitHub with the _install_github_ function in the __devtools__ package. The commands you need to run are
 ```{r inst, echo=TRUE, eval=FALSE}
 library(devtools)
 devtools::install_github("dkesada/dbnR")
