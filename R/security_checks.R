@@ -65,7 +65,7 @@ logical_arg_check <- function(...){
 character_arg_check <- function(...){
   invisible(sapply(list(...), function(x){
     if(!is.character(x))
-      stop(sprintf("%s has to be of type chararter.", deparse(substitute(x))))
+      stop(sprintf("%s has to be of type character.", deparse(substitute(x))))
   }))
 }
 
