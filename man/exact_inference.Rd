@@ -4,7 +4,7 @@
 \alias{exact_inference}
 \title{Performs exact inference forecasting with the GDBN over a data set}
 \usage{
-exact_inference(dt, fit, size, obj_vars, ini, len)
+exact_inference(dt, fit, size, obj_vars, ini, len, prov_ev)
 }
 \arguments{
 \item{dt}{data.table object with the TS data}
@@ -18,6 +18,8 @@ exact_inference(dt, fit, size, obj_vars, ini, len)
 \item{ini}{starting point in the data set to forecast.}
 
 \item{len}{length of the forecast}
+
+\item{prov_ev}{variables to be provided as evidence in each forecasting step}
 }
 \value{
 the results of the forecast

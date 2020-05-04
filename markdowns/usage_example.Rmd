@@ -57,7 +57,7 @@ res <- (dbnR::predict_dt(fit, f_dt_val, obj_var))
 ```
 
 ```{r forecast}
-res_fore <- suppressWarnings(dbnR::forecast_ts(f_dt_val, fit, size, obj_var, ini = 10))
+res_fore <- suppressWarnings(dbnR::forecast_ts(f_dt_val, fit, size, obj_var, ini = 10, prov_ev = c("torque_t_0")))
 ```
 ```{r full_example}
 main_forecast <- function(dt, size, n_rep, ini_fore, len_fore){

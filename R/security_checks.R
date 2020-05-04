@@ -69,6 +69,12 @@ character_arg_check <- function(...){
   }))
 }
 
+null_or_character_arg_check <- function(...){
+  if(!is.null(...)){
+    character_arg_check(...)
+  }
+}
+
 numeric_vector_check <- function(obj){
   if(!is.numeric(obj))
     stop(sprintf("%s has to be numeric.", deparse(substitute(obj))))
@@ -209,4 +215,9 @@ initial_attr_check <- function(fit){
     fit <- add_attr_to_fit(fit)
   
   return(fit)
+}
+
+obj_prov_check <- function(obj_vars, prov_ev){
+  if(any(obj_vars %in% prov_ev))
+    stop("some objective variables are also provided as evidence.")
 }

@@ -15,7 +15,8 @@ forecast_ts(
   num_p = 50,
   print_res = TRUE,
   plot_res = TRUE,
-  mode = "exact"
+  mode = "exact",
+  prov_ev = NULL
 )
 }
 \arguments{
@@ -40,6 +41,8 @@ forecast_ts(
 \item{plot_res}{if TRUE plots the results of the forecast}
 
 \item{mode}{"exact" for exact inference, "approx" for approximate}
+
+\item{prov_ev}{variables to be provided as evidence in each forecasting step}
 }
 \value{
 the results of the forecast
