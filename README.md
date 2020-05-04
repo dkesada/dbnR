@@ -16,12 +16,16 @@ implemented for GDBNs and bnlearn’s BNs via the visNetwork package
 
 ## Current development
 
-As of today (06/04/2020), the main functionality of the package is
-running and working. In order of importance, the primary objectives are:
+The main functionality of the package is running and working. In order
+of importance, the next objectives are:
 
-  - To add an automatically generated shiny interface of the net
-  - To run testing of some known unexpected behaviours on bn and dbn
-    prediction (e.g. providing all variables as objective variables)
+  - To add the possibility of giving evidence in each step of the
+    forecasting. This is useful when you want to fix the values of some
+    variables in the future or when you know beforehand what values are
+    they going to take.
+  - To add an automatically generated shiny interface of the net. This
+    makes interacting with the network easier and allows for simulation
+    prototypes.
   - To add the possibility of learning nets with only certain previous
     lags instead of all of them. For example, a dbn with only the time
     slices for t\_0 and t\_12, or one with t\_0, t\_3 and t\_4.
@@ -34,7 +38,10 @@ For now, the dbn.fit object as an extension of bnlearn’s bn.fit object
 will stay the same except for the “mu” and “sigma” attributes added to
 it. This way, it remains easy to call bnlearn’s methods on the dbn.fit
 object and I can store the MVN transformation inside the same object.
-Not an elegant solution, but its simplicity is enough.
+Not an elegant solution, but its simplicity is enough. What should be
+addressed is having to perform the folding of a dataset outside the
+predict function. The size of the network should be added as an
+attribute to avoid having having the user performing the folding.
 
 ## Getting Started
 
