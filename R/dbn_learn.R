@@ -84,11 +84,11 @@ learn_dbn_struc <- function(dt, size = 2, blacklist = NULL, ...){
 
   dt_copy <- data.table::copy(dt)
 
-  net0 <- bnlearn::rsmax2(x = dt_copy, ...) # Static network
+  net0 <- bnlearn::rsmax2(x = dt_copy, blacklist = blacklist, ...) # Static network
   
   f_dt <- fold_dt_rec(dt, names(dt), size)
   
-  blacklist <- rbind(create_blacklist(names(f_dt), size), blacklist)
+  blacklist <- create_blacklist(names(f_dt), size)
 
   net <- bnlearn::rsmax2(x = f_dt, blacklist = blacklist, ...) # kTBN
   check_empty_net(net)
