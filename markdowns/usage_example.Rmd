@@ -26,7 +26,7 @@ summary(motor)
 ## Net stucture learning
 
 ```{r structure}
-size = 3
+size = 4
 dt_train <- motor[200:2500]
 dt_val <- motor[2501:3000]
 net <- dbnR::learn_dbn_struc(dt_train, size, restrict = "mmpc", maximize = "hc",

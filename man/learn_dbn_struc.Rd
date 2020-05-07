@@ -4,12 +4,14 @@
 \alias{learn_dbn_struc}
 \title{Learns the structure of a markovian n DBN model from data}
 \usage{
-learn_dbn_struc(dt, size = 2, ...)
+learn_dbn_struc(dt, size = 2, blacklist = NULL, ...)
 }
 \arguments{
 \item{dt}{the data.frame or data.table to be used}
 
 \item{size}{number of time slices of the net. Markovian 1 would be size 2}
+
+\item{blacklist}{an optional matrix indicating forbidden arcs between nodes}
 
 \item{...}{additional parameters for \code{\link{rsmax2}} function}
 }

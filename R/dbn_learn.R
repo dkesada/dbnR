@@ -66,6 +66,7 @@ merge_nets <- function(net0, netCP1, size, acc = NULL, slice = 1){
 #' 1.
 #' @param dt the data.frame or data.table to be used
 #' @param size number of time slices of the net. Markovian 1 would be size 2
+#' @param blacklist an optional matrix indicating forbidden arcs between nodes
 #' @param ... additional parameters for \code{\link{rsmax2}} function
 #' @return the structure of the net
 #' @import data.table
@@ -73,7 +74,7 @@ merge_nets <- function(net0, netCP1, size, acc = NULL, slice = 1){
 #' data("motor")
 #' net <- learn_dbn_struc(motor, size = 3)
 #' @export
-learn_dbn_struc <- function(dt, size = 2, ...){
+learn_dbn_struc <- function(dt, size = 2, blacklist = NULL, ...){
   initial_size_check(size)
   initial_df_check(dt)
   if(!is.data.table(dt))
@@ -86,7 +87,8 @@ learn_dbn_struc <- function(dt, size = 2, ...){
   net0 <- bnlearn::rsmax2(x = dt_copy, ...) # Static network
   
   f_dt <- fold_dt_rec(dt, names(dt), size)
-  blacklist <- create_blacklist(names(f_dt), size)
+  
+  blacklist <- rbind(create_blacklist(names(f_dt), size), blacklist)
 
   net <- bnlearn::rsmax2(x = f_dt, blacklist = blacklist, ...) # kTBN
   check_empty_net(net)
