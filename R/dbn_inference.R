@@ -186,6 +186,39 @@ approximate_inference <- function(dt, fit, size, obj_vars, ini, rep, len, num_p)
 #' @param len length of the forecast
 #' @param prov_ev variables to be provided as evidence in each forecasting step
 #' @return the results of the forecast
+exact_inference <- function(dt, fit, size, obj_vars, ini, len, prov_ev){
+  fit <- initial_attr_check(fit)
+  
+  var_names <- names(dt)
+  vars_pred_idx <- grep("t_0", var_names)
+  vars_subs_idx <- grep("t_1", var_names)
+  vars_last_idx <- grep(paste0("t_", size-1), var_names)
+  vars_pred <- var_names[vars_pred_idx]
+  vars_subs <- var_names[vars_subs_idx]
+  vars_prev <- var_names[-c(vars_pred_idx, vars_subs_idx)]
+  vars_post <- var_names[-c(vars_pred_idx, vars_last_idx)]
+  vars_ev <- var_names[-vars_pred_idx]
+  prov_ev_subs <- sub("t_0","t_1", prov_ev)
+  
+  test <- NULL
+  evidence <- dt[ini, .SD, .SDcols = vars_ev]
+  
+  for(j in 1:len){
+    particles <- exact_prediction_step(fit, vars_pred, as_named_vector(evidence))
+    if(length(vars_post) > 0)
+      evidence[, (vars_prev) := .SD, .SDcols = vars_post]
+    evidence[, (vars_subs) := particles$mu_p[vars_pred]]
+    if(!is.null(prov_ev))
+      evidence[,(vars_prev) := dt[ini+j, .SD, .SDcols = prov_ev]]
+    
+    temp <- particles$mu_p[obj_vars]
+    temp["exec"] <- 1
+    test <- rbindlist(list(test, temp))
+  }
+  
+  return(test)
+}
+
 # exact_inference <- function(dt, fit, size, obj_vars, ini, len, prov_ev){
 #   fit <- initial_attr_check(fit)
 #   
@@ -194,22 +227,23 @@ approximate_inference <- function(dt, fit, size, obj_vars, ini, rep, len, num_p)
 #   vars_subs_idx <- grep("t_1", var_names)
 #   vars_last_idx <- grep(paste0("t_", size-1), var_names)
 #   vars_pred <- var_names[vars_pred_idx]
-#   vars_subs <- var_names[vars_subs_idx]
 #   vars_prev <- var_names[-c(vars_pred_idx, vars_subs_idx)]
 #   vars_post <- var_names[-c(vars_pred_idx, vars_last_idx)]
 #   vars_ev <- var_names[-vars_pred_idx]
+#   vars_pred_crop <- vars_pred[!(vars_pred %in% prov_ev)]
+#   vars_subs_crop <- sub("t_0","t_1", vars_pred_crop)
 #   prov_ev_subs <- sub("t_0","t_1", prov_ev)
 #   
 #   test <- NULL
-#   evidence <- dt[ini, .SD, .SDcols = vars_ev]
+#   evidence <- dt[ini, .SD, .SDcols = c(vars_ev, prov_ev)]
 #   
 #   for(j in 1:len){
 #     particles <- exact_prediction_step(fit, vars_pred, as_named_vector(evidence))
 #     if(length(vars_post) > 0)
 #       evidence[, (vars_prev) := .SD, .SDcols = vars_post]
-#     evidence[, (vars_subs) := particles$mu_p[vars_pred]]
+#     evidence[, (vars_subs_crop) := particles$mu_p[vars_pred_crop]]
 #     if(!is.null(prov_ev))
-#       evidence[,(vars_prev) := dt[ini+j, .SD, .SDcols = prov_ev]]
+#       evidence[, (prov_ev_subs) := dt[ini + j, .SD, .SDcols = prov_ev]]
 #     
 #     temp <- particles$mu_p[obj_vars]
 #     temp["exec"] <- 1
@@ -218,40 +252,6 @@ approximate_inference <- function(dt, fit, size, obj_vars, ini, rep, len, num_p)
 #   
 #   return(test)
 # }
-
-exact_inference <- function(dt, fit, size, obj_vars, ini, len, prov_ev){
-  fit <- initial_attr_check(fit)
-
-  var_names <- names(dt)
-  vars_pred_idx <- grep("t_0", var_names)
-  vars_subs_idx <- grep("t_1", var_names)
-  vars_last_idx <- grep(paste0("t_", size-1), var_names)
-  vars_pred <- var_names[vars_pred_idx]
-  vars_prev <- var_names[-c(vars_pred_idx, vars_subs_idx)]
-  vars_post <- var_names[-c(vars_pred_idx, vars_last_idx)]
-  vars_ev <- var_names[-vars_pred_idx]
-  vars_pred_crop <- vars_pred[!(vars_pred %in% prov_ev)]
-  vars_subs_crop <- sub("t_0","t_1", vars_pred_crop)
-  prov_ev_subs <- sub("t_0","t_1", prov_ev)
-
-  test <- NULL
-  evidence <- dt[ini, .SD, .SDcols = c(vars_ev, prov_ev)]
-
-  for(j in 1:len){
-    particles <- exact_prediction_step(fit, vars_pred, as_named_vector(evidence))
-    if(length(vars_post) > 0)
-      evidence[, (vars_prev) := .SD, .SDcols = vars_post]
-    evidence[, (vars_subs_crop) := particles$mu_p[vars_pred_crop]]
-    if(!is.null(prov_ev))
-      evidence[, (prov_ev_subs) := dt[ini + j, .SD, .SDcols = prov_ev]]
-
-    temp <- particles$mu_p[obj_vars]
-    temp["exec"] <- 1
-    test <- rbindlist(list(test, temp))
-  }
-
-  return(test)
-}
 
 #' Performs forecasting with the GDBN over a data set
 #'
