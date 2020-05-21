@@ -1,3 +1,8 @@
+# dbnR 0.4.4
+
+* Bug fixes in the evidence providing
+* Typo fix in the "approx" mode of forecasting
+
 # dbnR 0.4.0
 
 * Added the possibility to provide evidence in each forecasting step

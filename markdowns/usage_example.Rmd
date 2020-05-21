@@ -26,7 +26,7 @@ summary(motor)
 ## Net stucture learning
 
 ```{r structure}
-size = 4
+size = 3
 dt_train <- motor[200:2500]
 dt_val <- motor[2501:3000]
 net <- dbnR::learn_dbn_struc(dt_train, size, restrict = "mmpc", maximize = "hc",
@@ -58,6 +58,7 @@ res <- (dbnR::predict_dt(fit, f_dt_val, obj_var))
 
 ```{r forecast}
 res_fore <- suppressWarnings(dbnR::forecast_ts(f_dt_val, fit, size, obj_var, ini = 10, prov_ev = c("torque_t_0")))
+#res_fore <- suppressWarnings(dbnR::forecast_ts(f_dt_val, fit, size, obj_var, ini = 10, prov_ev = c("torque_t_0"),mode = "approx"))
 ```
 ```{r full_example}
 main_forecast <- function(dt, size, n_rep, ini_fore, len_fore){

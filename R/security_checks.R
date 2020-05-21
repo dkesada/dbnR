@@ -201,7 +201,7 @@ warn_empty_net <- function(obj){
 
 modes <- function(){
   ret <- c("exact",
-           "aprox")
+           "approx")
   return(ret)
 }
 
