@@ -1,3 +1,7 @@
+# dbnR 0.4.5
+
+* Fixed .Rbuildignore markdown and media folders
+
 # dbnR 0.4.4
 
 * Bug fixes in the evidence providing

@@ -1,7 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^\markdowns$
-^\media$
+^markdowns$
+^media$
 ^LICENSE\.md$
 ^README\.Rmd$
 ^cran-comments\.md$
