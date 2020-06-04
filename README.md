@@ -1,6 +1,11 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+[![CRAN Status
+Badge](https://www.r-pkg.org/badges/version/dbnR)](https://CRAN.R-project.org/package=dbnR)
+[![CRAN Downloads
+Badge](https://cranlogs.r-pkg.org/badges/grand-total/dbnR)](https://CRAN.R-project.org/package=dbnR)
+
 # dbnR
 
 An implementation of Gaussian dynamic Bayesian networks (GDBN) structure
