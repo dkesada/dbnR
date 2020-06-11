@@ -76,10 +76,10 @@ plot_network <- function(structure){
 #' each node inside the level. E.g. c(1,1,1,2,2,3,4,4,5,5) turns into 
 #' c(1,2,3,1,2,1,1,2,1,2)
 #' @param nodes a vector with the level of each node
-#' @param res the accumulative results of the sub successionss
+#' @param res the accumulative results of the sub successions
 #' @param prev the level of the previous node processed
 #' @param acc the accumulator of the index in the current sub successions
-#' @return the vector of sub successionss in each level
+#' @return the vector of sub successions in each level
 acc_successions <- function(nodes, res = NULL, prev = 0, acc = 0){
   if(length(nodes) == 0)
     return(res)

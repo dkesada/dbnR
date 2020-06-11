@@ -9,14 +9,14 @@ acc_successions(nodes, res = NULL, prev = 0, acc = 0)
 \arguments{
 \item{nodes}{a vector with the level of each node}
 
-\item{res}{the accumulative results of the sub successionss}
+\item{res}{the accumulative results of the sub successions}
 
 \item{prev}{the level of the previous node processed}
 
 \item{acc}{the accumulator of the index in the current sub successions}
 }
 \value{
-the vector of sub successionss in each level
+the vector of sub successions in each level
 }
 \description{
 This method processes the vector of node levels to get the position of
