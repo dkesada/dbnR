@@ -24,10 +24,6 @@ implemented for GDBNs and bnlearn’s BNs via the visNetwork package
 The main functionality of the package is running and working. In order
 of importance, the next objectives are:
 
-  - To add the possibility of giving evidence in each step of the
-    forecasting. This is useful when you want to fix the values of some
-    variables in the future or when you know beforehand what values are
-    they going to take.
   - To add an automatically generated shiny interface of the net. This
     makes interacting with the network easier and allows for simulation
     prototypes.
@@ -46,7 +42,7 @@ object and I can store the MVN transformation inside the same object.
 Not an elegant solution, but its simplicity is enough. What should be
 addressed is having to perform the folding of a dataset outside the
 predict function. The size of the network should be added as an
-attribute to avoid having having the user performing the folding.
+attribute to avoid having the user performing the folding.
 
 ## Getting Started
 
