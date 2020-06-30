@@ -15,8 +15,9 @@ implemented is a variation on Ghada Trabelsi’s dynamic max-min hill
 climbing (<https://tel.archives-ouvertes.fr/tel-00996061/document>). The
 inference is performed either via the particle filtering offered by
 bnlearn or by doing exact inference over the multivariate Gaussian
-equivalent of a net implemented in this package. A visualization tool is
-implemented for GDBNs and bnlearn’s BNs via the visNetwork package
+equivalent of a net implemented in this package. Higher-order DBNs are
+supported in this package. A visualization tool is implemented for GDBNs
+and bnlearn’s BNs via the visNetwork package
 (<https://github.com/datastorm-open/visNetwork>).
 
 ## Current development
@@ -105,7 +106,7 @@ The dt argument has to be either a data.frame or a data.table of numeric
 columns, in the example we use the sample dataset included in the
 package. The size argument determines the number of time slices that
 your net is going to have, that is, the Markovian order of the net. A
-Markovian order of 2 means that your data in the present is independent
+Markovian order of 1 means that your data in the present is independent
 of the past given the previous time slice. If your case doesn’t meet
 this criteria, the size of the net can be increased, to take into
 account more past time slices in the inference. In our function,
