@@ -6,25 +6,25 @@
 using namespace Rcpp;
 
 // calc_mu_cpp
-std::map<std::string, float> calc_mu_cpp(Rcpp::List& fit, std::vector<std::string>& order);
+std::map<std::string, float> calc_mu_cpp(Rcpp::List& fit, Rcpp::StringVector& order);
 RcppExport SEXP _dbnR_calc_mu_cpp(SEXP fitSEXP, SEXP orderSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List& >::type fit(fitSEXP);
-    Rcpp::traits::input_parameter< std::vector<std::string>& >::type order(orderSEXP);
+    Rcpp::traits::input_parameter< Rcpp::StringVector& >::type order(orderSEXP);
     rcpp_result_gen = Rcpp::wrap(calc_mu_cpp(fit, order));
     return rcpp_result_gen;
 END_RCPP
 }
 // calc_sigma_cpp
-Rcpp::NumericMatrix calc_sigma_cpp(Rcpp::List& fit, std::vector<std::string>& order);
+Rcpp::NumericMatrix calc_sigma_cpp(Rcpp::List& fit, Rcpp::StringVector& order);
 RcppExport SEXP _dbnR_calc_sigma_cpp(SEXP fitSEXP, SEXP orderSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List& >::type fit(fitSEXP);
-    Rcpp::traits::input_parameter< std::vector<std::string>& >::type order(orderSEXP);
+    Rcpp::traits::input_parameter< Rcpp::StringVector& >::type order(orderSEXP);
     rcpp_result_gen = Rcpp::wrap(calc_sigma_cpp(fit, order));
     return rcpp_result_gen;
 END_RCPP
