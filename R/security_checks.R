@@ -125,7 +125,7 @@ initial_folded_dt_check <- function(obj){
 
 check_pkg_available <- function(pkg){
   if (!requireNamespace(pkg, quietly = TRUE))
-    stop(sprintf("Package %s needed for this function to work."), pkg)
+    stop(sprintf("Package %s needed for this function to work.", pkg))
 }
 
 check_opt_pkgs_available <- function(){
