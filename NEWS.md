@@ -1,3 +1,8 @@
+# dbnR 0.4.6
+
+* Dropped std:vector in favor of Rcpp::Numeric/StringVector in gauss_transform.cpp
+* Fixed a security check typo
+
 # dbnR 0.4.5
 
 * Fixed .Rbuildignore markdown and media folders
