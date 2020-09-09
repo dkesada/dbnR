@@ -221,3 +221,14 @@ obj_prov_check <- function(obj_vars, prov_ev){
   if(any(obj_vars %in% prov_ev))
     stop("some objective variables are also provided as evidence.")
 }
+
+struc_learning_methods <- function(){
+  ret <- c("dmmhc",
+           "psoho")
+  return(ret)
+}
+
+initial_learning_method_check <- function(obj){
+  if(!obj %in% struc_learning_methods())
+    stop(paste("unknown structure learning method. Valid methods are:", Reduce(function(acu,x){paste(acu, x, sep = ", ")}, struc_learning_methods())))
+}

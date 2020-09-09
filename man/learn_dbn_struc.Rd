@@ -4,14 +4,14 @@
 \alias{learn_dbn_struc}
 \title{Learns the structure of a markovian n DBN model from data}
 \usage{
-learn_dbn_struc(dt, size = 2, blacklist = NULL, ...)
+learn_dbn_struc(dt, size = 2, method = "dmmhc", ...)
 }
 \arguments{
 \item{dt}{the data.frame or data.table to be used}
 
 \item{size}{number of time slices of the net. Markovian 1 would be size 2}
 
-\item{blacklist}{an optional matrix indicating forbidden arcs between nodes}
+\item{method}{the structure learning method of choice to use}
 
 \item{...}{additional parameters for \code{\link{rsmax2}} function}
 }
@@ -20,8 +20,7 @@ the structure of the net
 }
 \description{
 Learns a gaussian dynamic Bayesian network from a
-dataset. It allows the creation of markovian n nets rather than only markov
-1.
+dataset. It allows the creation of markovian n nets rather than only markov 1.
 }
 \examples{
 data("motor")

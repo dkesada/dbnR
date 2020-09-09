@@ -66,15 +66,10 @@ merge_nets <- function(net0, netCP1, size, acc = NULL, slice = 1){
 #' 1.
 #' @param dt the data.frame or data.table to be used
 #' @param size number of time slices of the net. Markovian 1 would be size 2
-#' @param blacklist an optional matrix indicating forbidden arcs between nodes
 #' @param ... additional parameters for \code{\link{rsmax2}} function
 #' @return the structure of the net
 #' @import data.table
-#' @examples
-#' data("motor")
-#' net <- learn_dbn_struc(motor, size = 3)
-#' @export
-learn_dbn_struc <- function(dt, size = 2, blacklist = NULL, ...){
+dmmhc <- function(dt, size = 2, ...){
   initial_size_check(size)
   initial_df_check(dt)
   if(!is.data.table(dt))
@@ -84,7 +79,7 @@ learn_dbn_struc <- function(dt, size = 2, blacklist = NULL, ...){
 
   dt_copy <- data.table::copy(dt)
 
-  net0 <- bnlearn::rsmax2(x = dt_copy, blacklist = blacklist, ...) # Static network
+  net0 <- bnlearn::rsmax2(x = dt_copy, ...) # Static network
   
   f_dt <- fold_dt_rec(dt, names(dt), size)
   
@@ -97,6 +92,32 @@ learn_dbn_struc <- function(dt, size = 2, blacklist = NULL, ...){
     bnlearn::arcs(net) <- merge_nets(net0, net, size)
   class(net) <- c("dbn", class(net))
 
+  return(net)
+}
+
+#' Learns the structure of a markovian n DBN model from data
+#'
+#' Learns a gaussian dynamic Bayesian network from a
+#' dataset. It allows the creation of markovian n nets rather than only markov 1.
+#' @param dt the data.frame or data.table to be used
+#' @param size number of time slices of the net. Markovian 1 would be size 2
+#' @param method the structure learning method of choice to use
+#' @param ... additional parameters for \code{\link{rsmax2}} function
+#' @return the structure of the net
+#' @import data.table
+#' @examples
+#' data("motor")
+#' net <- learn_dbn_struc(motor, size = 3)
+#' @export
+learn_dbn_struc <- function(dt, size = 2, method = "dmmhc", ...){
+  initial_size_check(size)
+  initial_learning_method_check(method)
+  initial_df_check(dt)
+  if(!is.data.table(dt))
+    dt <- as.data.table(dt)
+  
+  net <- do.call(method, list(dt = dt, size = size, ...))
+  
   return(net)
 }
 
