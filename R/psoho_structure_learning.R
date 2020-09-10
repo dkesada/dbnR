@@ -4,8 +4,11 @@
 #' source files are merged into one to avoid bloating the R/ folder of the
 #' package.
 #' 
+#' The classes are now not exported because the whole algorithm is 
+#' encapsulated inside the package and only the resulting dbn structure is
+#' wanted. As a result, many security checks have been omitted.
 
-# ----------------------
+# -----------------------------------------------------------------------------
 
 #' R6 class that defines causal lists in the PSO
 #' 
@@ -19,8 +22,6 @@ Causlist <- R6::R6Class("Causlist",
     #' @param size number of timeslices of the DBN
     #' @return A new 'causlist' object
     initialize = function(ordering, size){
-      #initial_size_check(size) --ICO-Merge
-      
       private$size <- size
       private$ordering <- ordering
       private$cl <- initialize_cl_cpp(ordering, size)
@@ -43,7 +44,7 @@ Causlist <- R6::R6Class("Causlist",
   )
 )
 
-# ----------------------
+# -----------------------------------------------------------------------------
 
 #' R6 class that defines velocities affecting causality lists in the PSO
 #' 
@@ -142,7 +143,7 @@ Velocity <- R6::R6Class("Velocity",
   )
 )
 
-# ----------------------
+# -----------------------------------------------------------------------------
 
 #' R6 class that defines DBNs as causality lists
 #' 
@@ -299,7 +300,7 @@ Position <- R6::R6Class("Position",
   )
 )
 
-# ----------------------
+# -----------------------------------------------------------------------------
 
 #' R6 class that defines a Particle in the PSO algorithm
 #' 
@@ -312,8 +313,6 @@ Particle <- R6::R6Class("Particle",
     #' @param size number of timeslices of the DBN
     #' @return A new 'Particle' object
     initialize = function(ordering, size, v_probs){
-      #initial_size_check(size) --ICO-Merge
-      
       private$ps <- Position$new(NULL, size, ordering)
       private$vl <- Velocity$new(private$ps$get_ordering(), size)
       private$vl$randomize_velocity(v_probs)
@@ -391,7 +390,7 @@ Particle <- R6::R6Class("Particle",
   )
 )
 
-# ----------------------
+# -----------------------------------------------------------------------------
 
 #' R6 class that defines the PSO controller
 #' 
@@ -412,9 +411,6 @@ PsoCtrl <- R6::R6Class("PsoCtrl",
    #' @return A new 'PsoCtrl' object
    initialize = function(ordering, size, n_inds, n_it, in_cte, gb_cte, lb_cte,
                          v_probs, r_probs){
-     #initial_size_check(size) --ICO-Merge
-     # Missing security checks --ICO-Merge
-     
      private$initialize_particles(ordering, size, n_inds, v_probs)
      private$gb_scr <- -Inf
      private$n_it <- n_it
@@ -501,7 +497,7 @@ PsoCtrl <- R6::R6Class("PsoCtrl",
   )
 )
 
-# ----------------------
+# -----------------------------------------------------------------------------
 
 #' Learn a DBN structure with a PSO approach
 #' 
@@ -521,14 +517,16 @@ psoho <- function(dt, size, n_inds = 50, n_it = 50,
                                     in_cte = 1, gb_cte = 0.5, lb_cte = 0.5,
                                     v_probs = c(10, 65, 25), 
                                     r_probs = c(-0.5, 1.5)){
-  #initial_size_check(size) --ICO-Merge
-  #initial_df_check(dt) --ICO-Merge
+  #initial_psoho_check(n_inds, n_it,in_cte, gb_cte, lb_cte, v_probs,r_prob) --ICO-Merge
   
   ordering <- names(dt)
   ctrl <- PsoCtrl$new(ordering, size, n_inds, n_it, in_cte, gb_cte, lb_cte,
                       v_probs, r_probs)
   ctrl$run(dt)
   
-  return(ctrl$get_best_network())
+  net <- ctrl$get_best_network()
+  class(net) <- c("dbn", class(net))
+  
+  return(net)
 }
 

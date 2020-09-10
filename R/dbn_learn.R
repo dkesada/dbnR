@@ -70,11 +70,6 @@ merge_nets <- function(net0, netCP1, size, acc = NULL, slice = 1){
 #' @return the structure of the net
 #' @import data.table
 dmmhc <- function(dt, size = 2, ...){
-  initial_size_check(size)
-  initial_df_check(dt)
-  if(!is.data.table(dt))
-    dt <- as.data.table(dt)
-
   dt <- time_rename(dt)
 
   dt_copy <- data.table::copy(dt)
