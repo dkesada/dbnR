@@ -520,9 +520,12 @@ psoho <- function(dt, size, n_inds = 50, n_it = 50,
   #initial_psoho_check(n_inds, n_it,in_cte, gb_cte, lb_cte, v_probs,r_prob) --ICO-Merge
   
   ordering <- names(dt)
+  dt <- time_rename(dt)
+  f_dt <- fold_dt_rec(dt, names(dt), size)
+  
   ctrl <- PsoCtrl$new(ordering, size, n_inds, n_it, in_cte, gb_cte, lb_cte,
                       v_probs, r_probs)
-  ctrl$run(dt)
+  ctrl$run(f_dt)
   
   net <- ctrl$get_best_network()
   class(net) <- c("dbn", class(net))

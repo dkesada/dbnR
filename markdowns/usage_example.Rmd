@@ -29,7 +29,7 @@ summary(motor)
 size = 3
 dt_train <- motor[200:2500]
 dt_val <- motor[2501:3000]
-net <- dbnR::learn_dbn_struc(dt_train, size,method = "dmmhc", restrict = "mmpc",
+net <- dbnR::learn_dbn_struc(dt_train, size, method = "dmmhc", restrict = "mmpc",
                              maximize = "hc", restrict.args = list(test = "mi-g"),
                              maximize.args = list(score = "bic-g", maxp = 8))
 ```
