@@ -1,5 +1,9 @@
+#ifndef Rcpp_head
+#define Rcpp_head
 #include <Rcpp.h>
 using namespace Rcpp;
+#endif
+
 #include <map>
 
 #ifndef gausst_op

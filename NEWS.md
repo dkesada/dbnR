@@ -1,3 +1,8 @@
+# dbnR 0.5.0
+
+* Refractored the structure learning to accommodate multiple algorithms
+* Added a new particle swarm optimization structure learning algorithm (psoho)
+
 # dbnR 0.4.6
 
 * Dropped std:vector in favor of Rcpp::Numeric/StringVector in gauss_transform.cpp
