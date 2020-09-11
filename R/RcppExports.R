@@ -21,3 +21,103 @@ calc_sigma_cpp <- function(fit, order) {
     .Call('_dbnR_calc_sigma_cpp', PACKAGE = 'dbnR', fit, order)
 }
 
+#' Create a causality list and initialize it
+#' 
+#' @param ordering a list with the order of the variables in t_0
+#' @param size the size of the DBN
+#' @return a causality list
+initialize_cl_cpp <- function(ordering, size) {
+    .Call('_dbnR_initialize_cl_cpp', PACKAGE = 'dbnR', ordering, size)
+}
+
+#' Create a causal list from a DBN. This is the C++ backend of the function.
+#' 
+#' @param cl an initialized causality list
+#' @param net a dbn object treated as a list of lists
+#' @param size the size of the DBN
+#' @param ordering a list with the order of the variables in t_0
+#' @return a list with a CharacterVector and a NumericVector
+create_causlist_cpp <- function(cl, net, size, ordering) {
+    .Call('_dbnR_create_causlist_cpp', PACKAGE = 'dbnR', cl, net, size, ordering)
+}
+
+#' Create a matrix with the arcs defined in a causlist object
+#' 
+#' @param cl a causal list
+#' @param ordering a list with the order of the variables in t_0
+#' @param rows number of arcs in the network
+#' @return a list with a CharacterVector and a NumericVector
+cl_to_arc_matrix_cpp <- function(cl, ordering, rows) {
+    .Call('_dbnR_cl_to_arc_matrix_cpp', PACKAGE = 'dbnR', cl, ordering, rows)
+}
+
+#' Add a velocity to a position
+#' 
+#' @param cl the position's causal list
+#' @param vl the velocity's causal list
+#' @param n_arcs number of arcs present in the position
+#' @return a list with the modified position and the new number of arcs
+pos_plus_vel_cpp <- function(cl, vl, n_arcs) {
+    .Call('_dbnR_pos_plus_vel_cpp', PACKAGE = 'dbnR', cl, vl, n_arcs)
+}
+
+#' Initialize the particles
+#' 
+#' @param nodes the names of the nodes
+#' @param size the size of the DBN
+#' @param n_inds the number of particles
+#' @return a list with the randomly initialized particles
+init_list_cpp <- function(nodes, size, n_inds) {
+    .Call('_dbnR_init_list_cpp', PACKAGE = 'dbnR', nodes, size, n_inds)
+}
+
+#' Randomize a velocity with the given probabilities
+#' 
+#' @param vl a velocity list
+#' @param probs the probabilities of each value in the set {-1,0,1}
+#' @return a velocity list with randomized values
+randomize_vl_cpp <- function(vl, probs) {
+    .Call('_dbnR_randomize_vl_cpp', PACKAGE = 'dbnR', vl, probs)
+}
+
+#' Substracts two Positions to obtain the Velocity that transforms one into the other
+#' 
+#' @param cl the first position's causal list
+#' @param ps the second position's causal list
+#' @param vl the Velocity's causal list
+#' @return a list with the Velocity's causal list and the number of operations
+pos_minus_pos_cpp <- function(cl, ps, vl) {
+    .Call('_dbnR_pos_minus_pos_cpp', PACKAGE = 'dbnR', cl, ps, vl)
+}
+
+#' Add two Velocities 
+#' 
+#' @param vl1 the first Velocity's causal list
+#' @param vl2 the second Velocity's causal list
+#' @param abs_op the final number of {1,-1} operations
+#' @return a list with the Velocity's causal list and the number of operations
+vel_plus_vel_cpp <- function(vl1, vl2, abs_op) {
+    .Call('_dbnR_vel_plus_vel_cpp', PACKAGE = 'dbnR', vl1, vl2, abs_op)
+}
+
+#' Multiply a Velocity by a constant real number
+#' 
+#' @param k the constant real number
+#' @param vl the Velocity's causal list
+#' @param abs_op the final number of {1,-1} operations
+#' @param max_op the maximum number of directions in the causal list
+#' @return a list with the Velocity's new causal list and number of operations
+cte_times_vel_cpp <- function(k, vl, abs_op, max_op) {
+    .Call('_dbnR_cte_times_vel_cpp', PACKAGE = 'dbnR', k, vl, abs_op, max_op)
+}
+
+#' Return a list of nodes with the time slice appended up to the desired size
+#' of the network
+#' 
+#' @param nodes a list with the names of the nodes in the network
+#' @param size the size of the DBN
+#' @return a list with the renamed nodes in each timeslice
+rename_nodes_cpp <- function(nodes, size) {
+    .Call('_dbnR_rename_nodes_cpp', PACKAGE = 'dbnR', nodes, size)
+}
+

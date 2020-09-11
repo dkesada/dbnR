@@ -29,10 +29,149 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// initialize_cl_cpp
+Rcpp::List initialize_cl_cpp(StringVector& ordering, unsigned int size);
+RcppExport SEXP _dbnR_initialize_cl_cpp(SEXP orderingSEXP, SEXP sizeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< StringVector& >::type ordering(orderingSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type size(sizeSEXP);
+    rcpp_result_gen = Rcpp::wrap(initialize_cl_cpp(ordering, size));
+    return rcpp_result_gen;
+END_RCPP
+}
+// create_causlist_cpp
+Rcpp::List create_causlist_cpp(Rcpp::List& cl, Rcpp::List& net, unsigned int size, StringVector& ordering);
+RcppExport SEXP _dbnR_create_causlist_cpp(SEXP clSEXP, SEXP netSEXP, SEXP sizeSEXP, SEXP orderingSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List& >::type cl(clSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List& >::type net(netSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type size(sizeSEXP);
+    Rcpp::traits::input_parameter< StringVector& >::type ordering(orderingSEXP);
+    rcpp_result_gen = Rcpp::wrap(create_causlist_cpp(cl, net, size, ordering));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cl_to_arc_matrix_cpp
+Rcpp::CharacterMatrix cl_to_arc_matrix_cpp(Rcpp::List& cl, Rcpp::CharacterVector& ordering, unsigned int rows);
+RcppExport SEXP _dbnR_cl_to_arc_matrix_cpp(SEXP clSEXP, SEXP orderingSEXP, SEXP rowsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List& >::type cl(clSEXP);
+    Rcpp::traits::input_parameter< Rcpp::CharacterVector& >::type ordering(orderingSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type rows(rowsSEXP);
+    rcpp_result_gen = Rcpp::wrap(cl_to_arc_matrix_cpp(cl, ordering, rows));
+    return rcpp_result_gen;
+END_RCPP
+}
+// pos_plus_vel_cpp
+Rcpp::List pos_plus_vel_cpp(Rcpp::List& cl, Rcpp::List& vl, int n_arcs);
+RcppExport SEXP _dbnR_pos_plus_vel_cpp(SEXP clSEXP, SEXP vlSEXP, SEXP n_arcsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List& >::type cl(clSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List& >::type vl(vlSEXP);
+    Rcpp::traits::input_parameter< int >::type n_arcs(n_arcsSEXP);
+    rcpp_result_gen = Rcpp::wrap(pos_plus_vel_cpp(cl, vl, n_arcs));
+    return rcpp_result_gen;
+END_RCPP
+}
+// init_list_cpp
+Rcpp::List init_list_cpp(Rcpp::StringVector nodes, unsigned int size, unsigned int n_inds);
+RcppExport SEXP _dbnR_init_list_cpp(SEXP nodesSEXP, SEXP sizeSEXP, SEXP n_indsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::StringVector >::type nodes(nodesSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type size(sizeSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type n_inds(n_indsSEXP);
+    rcpp_result_gen = Rcpp::wrap(init_list_cpp(nodes, size, n_inds));
+    return rcpp_result_gen;
+END_RCPP
+}
+// randomize_vl_cpp
+Rcpp::List randomize_vl_cpp(Rcpp::List& vl, NumericVector& probs);
+RcppExport SEXP _dbnR_randomize_vl_cpp(SEXP vlSEXP, SEXP probsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List& >::type vl(vlSEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type probs(probsSEXP);
+    rcpp_result_gen = Rcpp::wrap(randomize_vl_cpp(vl, probs));
+    return rcpp_result_gen;
+END_RCPP
+}
+// pos_minus_pos_cpp
+Rcpp::List pos_minus_pos_cpp(Rcpp::List& cl, Rcpp::List& ps, Rcpp::List& vl);
+RcppExport SEXP _dbnR_pos_minus_pos_cpp(SEXP clSEXP, SEXP psSEXP, SEXP vlSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List& >::type cl(clSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List& >::type ps(psSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List& >::type vl(vlSEXP);
+    rcpp_result_gen = Rcpp::wrap(pos_minus_pos_cpp(cl, ps, vl));
+    return rcpp_result_gen;
+END_RCPP
+}
+// vel_plus_vel_cpp
+Rcpp::List vel_plus_vel_cpp(Rcpp::List& vl1, Rcpp::List& vl2, int abs_op);
+RcppExport SEXP _dbnR_vel_plus_vel_cpp(SEXP vl1SEXP, SEXP vl2SEXP, SEXP abs_opSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List& >::type vl1(vl1SEXP);
+    Rcpp::traits::input_parameter< Rcpp::List& >::type vl2(vl2SEXP);
+    Rcpp::traits::input_parameter< int >::type abs_op(abs_opSEXP);
+    rcpp_result_gen = Rcpp::wrap(vel_plus_vel_cpp(vl1, vl2, abs_op));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cte_times_vel_cpp
+Rcpp::List cte_times_vel_cpp(float k, Rcpp::List& vl, unsigned int abs_op, int max_op);
+RcppExport SEXP _dbnR_cte_times_vel_cpp(SEXP kSEXP, SEXP vlSEXP, SEXP abs_opSEXP, SEXP max_opSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< float >::type k(kSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List& >::type vl(vlSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type abs_op(abs_opSEXP);
+    Rcpp::traits::input_parameter< int >::type max_op(max_opSEXP);
+    rcpp_result_gen = Rcpp::wrap(cte_times_vel_cpp(k, vl, abs_op, max_op));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rename_nodes_cpp
+Rcpp::StringVector rename_nodes_cpp(const Rcpp::StringVector& nodes, unsigned int size);
+RcppExport SEXP _dbnR_rename_nodes_cpp(SEXP nodesSEXP, SEXP sizeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::StringVector& >::type nodes(nodesSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type size(sizeSEXP);
+    rcpp_result_gen = Rcpp::wrap(rename_nodes_cpp(nodes, size));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_dbnR_calc_mu_cpp", (DL_FUNC) &_dbnR_calc_mu_cpp, 2},
     {"_dbnR_calc_sigma_cpp", (DL_FUNC) &_dbnR_calc_sigma_cpp, 2},
+    {"_dbnR_initialize_cl_cpp", (DL_FUNC) &_dbnR_initialize_cl_cpp, 2},
+    {"_dbnR_create_causlist_cpp", (DL_FUNC) &_dbnR_create_causlist_cpp, 4},
+    {"_dbnR_cl_to_arc_matrix_cpp", (DL_FUNC) &_dbnR_cl_to_arc_matrix_cpp, 3},
+    {"_dbnR_pos_plus_vel_cpp", (DL_FUNC) &_dbnR_pos_plus_vel_cpp, 3},
+    {"_dbnR_init_list_cpp", (DL_FUNC) &_dbnR_init_list_cpp, 3},
+    {"_dbnR_randomize_vl_cpp", (DL_FUNC) &_dbnR_randomize_vl_cpp, 2},
+    {"_dbnR_pos_minus_pos_cpp", (DL_FUNC) &_dbnR_pos_minus_pos_cpp, 3},
+    {"_dbnR_vel_plus_vel_cpp", (DL_FUNC) &_dbnR_vel_plus_vel_cpp, 3},
+    {"_dbnR_cte_times_vel_cpp", (DL_FUNC) &_dbnR_cte_times_vel_cpp, 4},
+    {"_dbnR_rename_nodes_cpp", (DL_FUNC) &_dbnR_rename_nodes_cpp, 2},
     {NULL, NULL, 0}
 };
 
