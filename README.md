@@ -10,10 +10,15 @@ Badge](https://cranlogs.r-pkg.org/badges/grand-total/dbnR)](https://CRAN.R-proje
 
 An implementation of Gaussian dynamic Bayesian networks (GDBN) structure
 learning and inference based on Marco Scutari’s package bnlearn
-(<http://www.bnlearn.com/>). The structure learning algorithm
-implemented is a variation on Ghada Trabelsi’s dynamic max-min hill
-climbing (<https://tel.archives-ouvertes.fr/tel-00996061/document>). The
-inference is performed either via the particle filtering offered by
+(<http://www.bnlearn.com/>). Two structure learning algorithm are
+implemented:
+
+  - A variation on Ghada Trabelsi’s dynamic max-min hill climbing
+    (<https://tel.archives-ouvertes.fr/tel-00996061/document>).
+  - A particle swarm optimization algorithm for higher-order DBNs
+    (<https://doi.org/10.1109/BRC.2014.6880957>)
+
+The inference is performed either via the particle filtering offered by
 bnlearn or by doing exact inference over the multivariate Gaussian
 equivalent of a net implemented in this package. Higher-order DBNs are
 supported in this package. A visualization tool is implemented for GDBNs
@@ -134,6 +139,10 @@ horizon. Point-wise inference uses the folded dt to try and predict the
 objective variables in each row. Forecasting to some horizon, on the
 other hand, tries to predict the behaviour in the future M instants
 given some initial evidence of the variables.
+
+There is an extensive example of how to use the package in the
+*markdowns* folder, which covers more advanced concepts of structure
+learning and inference.
 
 ## License
 

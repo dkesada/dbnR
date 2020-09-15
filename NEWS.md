@@ -1,3 +1,9 @@
+# dbnR 0.5.1
+
+* More extensive examples in markdowns/usage_example.Rmd
+* Fixed the test dataset
+* New learning algorithm present in the docs and readme
+
 # dbnR 0.5.0
 
 * Refractored the structure learning to accommodate multiple algorithms

@@ -66,15 +66,16 @@ merge_nets <- function(net0, netCP1, size, acc = NULL, slice = 1){
 #' 1.
 #' @param dt the data.frame or data.table to be used
 #' @param size number of time slices of the net. Markovian 1 would be size 2
+#' @param blacklist an optional matrix indicating forbidden arcs between nodes
 #' @param ... additional parameters for \code{\link{rsmax2}} function
 #' @return the structure of the net
 #' @import data.table
-dmmhc <- function(dt, size = 2, ...){
+dmmhc <- function(dt, size = 2, blacklist = NULL, ...){
   dt <- time_rename(dt)
   
   dt_copy <- data.table::copy(dt)
   
-  net0 <- bnlearn::rsmax2(x = dt_copy, ...) # Static network
+  net0 <- bnlearn::rsmax2(x = dt_copy, blacklist = blacklist, ...) # Static network
   
   f_dt <- fold_dt_rec(dt, names(dt), size)
   

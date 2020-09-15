@@ -16,7 +16,6 @@ layout in visNetwork.
 \examples{
 \donttest{
 dt_train <- dbnR::motor[200:2500]
-obj <- c("pm", "torque")
 net <- bnlearn::mmhc(dt_train)
 plot_network(net)
 fit <- bnlearn::bn.fit(net, dt_train, method = "mle")

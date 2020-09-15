@@ -503,6 +503,7 @@ PsoCtrl <- R6::R6Class("PsoCtrl",
 #' 
 #' Given a dataset and the desired Markovian order, this function returns a DBN
 #' structure ready to be fitted. It requires a folded dataset.
+#' Original algorithm at https://doi.org/10.1109/BRC.2014.6880957
 #' @param dt a data.table with the data of the network to be trained. Previously folded with the 'dbnR' package or other means.
 #' @param size Number of timeslices of the DBN. Markovian order 1 equals size 2, and so on.
 #' @param n_inds Number of particles used in the algorithm.

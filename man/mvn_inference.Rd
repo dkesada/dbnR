@@ -34,7 +34,7 @@ size = 3
 data(motor)
 dt_train <- motor[200:2500]
 dt_val <- motor[2501:3000]
-obj <- c("pm_t_0", "torque_t_0")
+obj <- c("pm_t_0")
 
 net <- learn_dbn_struc(dt_train, size)
 f_dt_train <- fold_dt(dt_train, size)

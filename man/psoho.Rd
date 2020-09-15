@@ -41,4 +41,5 @@ A 'bn' object with the structure of the best network found
 \description{
 Given a dataset and the desired Markovian order, this function returns a DBN
 structure ready to be fitted. It requires a folded dataset.
+Original algorithm at https://doi.org/10.1109/BRC.2014.6880957
 }

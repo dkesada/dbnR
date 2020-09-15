@@ -29,7 +29,7 @@ dt_train <- motor[200:2500]
 dt_val <- motor[2501:3000]
 
 # With a DBN 
-obj <- c("pm_t_0", "torque_t_0")
+obj <- c("pm_t_0")
 net <- learn_dbn_struc(dt_train, size)
 f_dt_train <- fold_dt(dt_train, size)
 f_dt_val <- fold_dt(dt_val, size)
@@ -37,7 +37,7 @@ fit <- fit_dbn_params(net, f_dt_train, method = "mle")
 res <- suppressWarnings(predict_dt(fit, f_dt_val, obj_nodes = obj, verbose = FALSE))
 
 # With a Gaussian BN directly from bnlearn
-obj <- c("pm", "torque")
+obj <- c("pm")
 net <- bnlearn::mmhc(dt_train)
 fit <- bnlearn::bn.fit(net, dt_train, method = "mle")
 res <- suppressWarnings(predict_dt(fit, dt_val, obj_nodes = obj, verbose = FALSE))
