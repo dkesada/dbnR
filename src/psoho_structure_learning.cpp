@@ -75,9 +75,8 @@ void insert_node_cl(Rcpp::List &cl, std::string node, unsigned int i){
 // [[Rcpp::export]]
 Rcpp::List create_causlist_cpp(Rcpp::List &cl, Rcpp::List &net, unsigned int size, StringVector &ordering) {
   Rcpp::List aux;
-  Rcpp::StringVector caus_unit;
+  Rcpp::StringVector caus_unit, parents;
   std::string node;
-  Rcpp::StringVector parents;
   
   // Translation into causal list
   for(unsigned int i = 0; i < ordering.size(); i++){
@@ -105,8 +104,7 @@ Rcpp::CharacterMatrix cl_to_arc_matrix_cpp(Rcpp::List &cl, Rcpp::CharacterVector
                                            unsigned int rows){
   Rcpp::StringMatrix res (rows, 2);
   unsigned int res_row = 0;
-  Rcpp::List slice;
-  Rcpp::List cu;
+  Rcpp::List slice, cu;
   Rcpp::StringVector nodes;
   Rcpp::NumericVector arcs;
   
@@ -137,14 +135,8 @@ Rcpp::CharacterMatrix cl_to_arc_matrix_cpp(Rcpp::List &cl, Rcpp::CharacterVector
 //' @return a list with the modified position and the new number of arcs
 // [[Rcpp::export]]
 Rcpp::List pos_plus_vel_cpp(Rcpp::List &cl, Rcpp::List &vl, int n_arcs){
-  Rcpp::List slice_cl;
-  Rcpp::List slice_vl;
-  Rcpp::List cu_cl;
-  Rcpp::List cu_vl;
-  Rcpp::List pair_cl;
-  Rcpp::List pair_vl;
-  Rcpp::NumericVector dirs_cl;
-  Rcpp::NumericVector dirs_vl;
+  Rcpp::List slice_cl, slice_vl, cu_cl, cu_vl, pair_cl, pair_vl;
+  Rcpp::NumericVector dirs_cl, dirs_vl;
   Rcpp::List res (2);
   
   for(unsigned int i = 0; i < cl.size(); i++){
@@ -205,11 +197,7 @@ Rcpp::List init_list_cpp(Rcpp::StringVector nodes, unsigned int size, unsigned i
 //' @return a velocity list with randomized values
 // [[Rcpp::export]]
 Rcpp::List randomize_vl_cpp(Rcpp::List &vl, NumericVector &probs) {
-  Rcpp::List slice;
-  Rcpp::List velocity;
-  Rcpp::List directions;
-  Rcpp::List cu;
-  Rcpp::List pair;
+  Rcpp::List slice, velocity, directions, cu, pair;
   unsigned int abs_op = 0;
   Rcpp::List res (2);
   
@@ -238,18 +226,8 @@ Rcpp::List randomize_vl_cpp(Rcpp::List &vl, NumericVector &probs) {
 //' @return a list with the Velocity's causal list and the number of operations
 // [[Rcpp::export]]
 Rcpp::List pos_minus_pos_cpp(Rcpp::List &cl, Rcpp::List &ps, Rcpp::List &vl){
-  Rcpp::List slice_cl;
-  Rcpp::List slice_ps;
-  Rcpp::List slice_vl;
-  Rcpp::List cu_cl;
-  Rcpp::List cu_ps;
-  Rcpp::List cu_vl;
-  Rcpp::List pair_cl;
-  Rcpp::List pair_ps;
-  Rcpp::List pair_vl;
-  Rcpp::NumericVector dirs_cl;
-  Rcpp::NumericVector dirs_ps;
-  Rcpp::NumericVector dirs_vl;
+  Rcpp::List slice_cl, slice_ps, slice_vl, cu_cl, cu_ps, cu_vl, pair_cl, pair_ps, pair_vl;
+  Rcpp::NumericVector dirs_cl, dirs_ps, dirs_vl;
   int n_abs = 0;
   Rcpp::List res (2);
   
@@ -287,14 +265,8 @@ Rcpp::List pos_minus_pos_cpp(Rcpp::List &cl, Rcpp::List &ps, Rcpp::List &vl){
 //' @return a list with the Velocity's causal list and the number of operations
 // [[Rcpp::export]]
 Rcpp::List vel_plus_vel_cpp(Rcpp::List &vl1, Rcpp::List &vl2, int abs_op){
-  Rcpp::List slice_vl1;
-  Rcpp::List slice_vl2;
-  Rcpp::List cu_vl1;
-  Rcpp::List cu_vl2;
-  Rcpp::List pair_vl1;
-  Rcpp::List pair_vl2;
-  Rcpp::NumericVector dirs_vl1;
-  Rcpp::NumericVector dirs_vl2;
+  Rcpp::List slice_vl1, slice_vl2, cu_vl1, cu_vl2, pair_vl1, pair_vl2;
+  Rcpp::NumericVector dirs_vl1, dirs_vl2;
   Rcpp::List res (2);
   
   for(unsigned int i = 0; i < vl1.size(); i++){
@@ -331,12 +303,9 @@ Rcpp::List vel_plus_vel_cpp(Rcpp::List &vl1, Rcpp::List &vl2, int abs_op){
 // [[Rcpp::export]]
 Rcpp::List cte_times_vel_cpp(float k, Rcpp::List &vl, unsigned int abs_op, int max_op){
   Rcpp::List res (2);
-  int n_op;
-  Rcpp::List pool;
-  Rcpp::List n_pool;
-  int idx;
+  int n_op, idx, cmp;
+  Rcpp::List pool, n_pool;
   int l_pool = abs_op;
-  int cmp;
   Rcpp::NumericVector pos;
   bool invert = false;
   NumericVector tmp;
@@ -600,9 +569,7 @@ Rcpp::NumericVector add_vel_dirs_vec(const NumericVector &d1, const NumericVecto
 // @param cmp the direction to be searched, either 0 or 1 
 // @return a list with the Velocity's new causal list and number of operations
 void locate_directions(Rcpp::List &vl, Rcpp::List &pool, int cmp, bool invert){
-  Rcpp::List slice;
-  Rcpp::List cu;
-  Rcpp::List pair;
+  Rcpp::List slice, cu, pair;
   Rcpp::NumericVector dirs;
   unsigned int pool_i = 0;
   
@@ -635,10 +602,8 @@ void locate_directions(Rcpp::List &vl, Rcpp::List &pool, int cmp, bool invert){
 // @param cmp the direction to be searched, either 0 or 1 
 // @return a list with the Velocity's new causal list and number of operations
 void modify_directions(Rcpp::List &vl, Rcpp::List &n_pool, int cmp){
-  Rcpp::List slice;
-  Rcpp::List pair;
-  Rcpp::NumericVector tuple;
-  Rcpp::NumericVector dirs;
+  Rcpp::List slice, pair;
+  Rcpp::NumericVector tuple, dirs;
   unsigned int idx;
   NumericVector base = {-1,1};
   NumericVector rand (1);
