@@ -8,34 +8,33 @@ Badge](https://cranlogs.r-pkg.org/badges/grand-total/dbnR)](https://CRAN.R-proje
 
 # dbnR
 
-An implementation of Gaussian dynamic Bayesian networks (GDBN) structure
-learning and inference based on Marco Scutari’s package bnlearn
-(<http://www.bnlearn.com/>). Two structure learning algorithm are
-implemented:
+This package offers an implementation of Gaussian dynamic Bayesian
+networks (GDBN) structure learning and inference based partially on
+Marco Scutari’s package bnlearn (<http://www.bnlearn.com/>). It also
+allows the construction of higher-order DBNs. Two structure learning
+algorithm are implemented:
 
   - A variation on Ghada Trabelsi’s dynamic max-min hill climbing
     (<https://tel.archives-ouvertes.fr/tel-00996061/document>).
   - A particle swarm optimization algorithm for higher-order DBNs
     (<https://doi.org/10.1109/BRC.2014.6880957>)
 
-The inference is performed either via the particle filtering offered by
+Inference is performed either via the particle filtering offered by
 bnlearn or by doing exact inference over the multivariate Gaussian
-equivalent of a net implemented in this package. Higher-order DBNs are
-supported in this package. A visualization tool is implemented for GDBNs
-and bnlearn’s BNs via the visNetwork package
-(<https://github.com/datastorm-open/visNetwork>).
+equivalent of a network implemented in this package. A visualization
+tool is also implemented for GDBNs and bnlearn’s BNs via the visNetwork
+package (<https://github.com/datastorm-open/visNetwork>).
 
 ## Current development
 
 The main functionality of the package is running and working. In order
 of importance, the next objectives are:
 
+  - To refractor the DMMHC algorithm into R6 for consistency with the
+    PSOHO algorithm and with any new structure learning algorithms.
   - To add an automatically generated shiny interface of the net. This
     makes interacting with the network easier and allows for simulation
     prototypes.
-  - To add the possibility of learning nets with only certain previous
-    lags instead of all of them. For example, a dbn with only the time
-    slices for t\_0 and t\_12, or one with t\_0, t\_3 and t\_4.
   - To provide a visualization tool of some sub-network. Many times, you
     end up with quite a big BN or DBN and you are interested in only a
     few of the nodes. We sketched a function to plot the Markov blanket
@@ -80,7 +79,7 @@ it, simply run
 install.packages('dbnR')
 ```
 
-You can also install the lastest version in GitHub with the
+You can also install the latest version in GitHub with the
 *install\_github* function in the **devtools** package. The commands you
 need to run are
 
@@ -156,3 +155,7 @@ GPL(≥ 2) license.
     (<https://datastorm-open.github.io/visNetwork/>)
   - Kaggle’s dataset repository, where the sample dataset is from
     (<https://www.kaggle.com/wkirgsn/electric-motor-temperature>)
+  - Koller, D., & Friedman, N. (2009). *Probabilistic graphical models:
+    principles and techniques*. MIT press.
+  - Murphy, K. P. (2012). *Machine learning: a probabilistic
+    perspective*. MIT press.
