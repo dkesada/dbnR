@@ -1,9 +1,9 @@
 ## Update
-This is a package update from version 0.3.4 to 0.4.5. In this version, I have fixed a number of bugs and added new backwards campatible functionality.
+This is a package update from version 0.4.5 to 0.5.1. In this update, I have fixed a some bugs and added a new structure learning algorithm mantaining backward compatibility with older versions.
 
 ## Test environments
-* Windows 10 (x64), R 4.0.1 (local)
-* Ubuntu 16.04 (x64), R 4.0.1 (local)
+* Windows 10 (x64), R 4.0.2 (local)
+* Ubuntu 16.04 (x64), R 4.0.2 (local)
 * Rhub
 * win-builder (devel, release and oldrelease)
 
