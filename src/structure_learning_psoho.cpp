@@ -198,7 +198,7 @@ Rcpp::List init_list_cpp(Rcpp::StringVector nodes, unsigned int size, unsigned i
 // [[Rcpp::export]]
 Rcpp::List randomize_vl_cpp(Rcpp::List &vl, NumericVector &probs) {
   Rcpp::List slice, velocity, directions, cu, pair;
-  unsigned int abs_op = 0;
+  unsigned int abs_op = 0, dir_tmp;
   Rcpp::List res (2);
   
   // Initialization of the velocity
@@ -208,7 +208,8 @@ Rcpp::List randomize_vl_cpp(Rcpp::List &vl, NumericVector &probs) {
       pair = slice[j];
       directions = random_directions(probs, slice.size());
       pair[1] = directions[0];
-      abs_op += directions[1];
+      dir_tmp = directions[1]; // Error on some systems with abs_op += directions[1];
+      abs_op += dir_tmp;
     }
   }
   
@@ -332,13 +333,13 @@ Rcpp::List cte_times_vel_cpp(float k, Rcpp::List &vl, unsigned int abs_op, int m
   
   if(n_op < 0){ // Convert {0} into {1,-1}
     l_pool = max_op - abs_op; // Number of 0's remaining
-    n_op = abs(n_op);
+    n_op = std::abs(n_op);
     pool = Rcpp::List(l_pool);
     cmp = 0;
   } 
   
   else{ // Convert {1,-1} into {0}
-    n_op = abs(n_op);
+    n_op = std::abs(n_op);
     pool = Rcpp::List(l_pool);
     cmp = 1;
   }
@@ -583,7 +584,7 @@ void locate_directions(Rcpp::List &vl, Rcpp::List &pool, int cmp, bool invert){
       for(unsigned int k = 0; k < dirs.size(); k++){
         if(invert)
           dirs[k] = -dirs[k];
-        if(abs(dirs[k]) == cmp){
+        if(std::abs(dirs[k]) == cmp){
           Rcpp::NumericVector pool_res (3);
           pool_res[0] = i;
           pool_res[1] = j;
