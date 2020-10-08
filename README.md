@@ -150,7 +150,7 @@ GPL(≥ 2) license.
 
 ## References
 
-  - The bnlearn package (<http://www.bnlearn.com/>).
+  - The bnlearn package (<https://www.bnlearn.com/>).
   - The visNetwork package
     (<https://datastorm-open.github.io/visNetwork/>)
   - Kaggle’s dataset repository, where the sample dataset is from

@@ -1,5 +1,7 @@
-## Update
-This is a package update from version 0.4.5 to 0.5.1. In this update, I have fixed a some bugs and added a new structure learning algorithm mantaining backward compatibility with older versions.
+## Reupload
+This is a reupload, fixing an url in the README.md from 'http' to 'https'.
+
+Update from version 0.4.5 to 0.5.1. In this update, I have fixed some bugs and added a new structure learning algorithm mantaining backward compatibility with older versions.
 
 ## Test environments
 * Windows 10 (x64), R 4.0.2 (local)

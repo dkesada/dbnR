@@ -102,7 +102,7 @@ This project is licensed under the GPL-3 License, following on bnlearn's GPL(≥
 
 ## References
 
-* The bnlearn package (http://www.bnlearn.com/).
+* The bnlearn package (https://www.bnlearn.com/).
 * The visNetwork package (https://datastorm-open.github.io/visNetwork/)
 * Kaggle's dataset repository, where the sample dataset is from (https://www.kaggle.com/wkirgsn/electric-motor-temperature)
 * Koller, D., & Friedman, N. (2009). _Probabilistic graphical models: principles and techniques_. MIT press.
