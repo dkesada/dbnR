@@ -1,3 +1,7 @@
+# dbnR 0.5.3
+
+* Fixed the lack of imports from the 'R6' package with @importFrom, NOTE in CRAN checks results
+
 # dbnR 0.5.2
 
 * Fixed the visualization of dynamic networks with no intra-slice arcs. The nodes were plotted in a horizontal line, now they are shown in vertical lines in each time slice

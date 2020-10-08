@@ -14,6 +14,7 @@
 #' 
 #' The causal lists will be the base of the positions and the velocities
 #' in the pso part of the algorithm.
+#' @importFrom R6 "R6Class"
 Causlist <- R6::R6Class("Causlist",
   public = list(
     #' @description 
