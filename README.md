@@ -10,7 +10,7 @@ Badge](https://cranlogs.r-pkg.org/badges/grand-total/dbnR)](https://CRAN.R-proje
 
 This package offers an implementation of Gaussian dynamic Bayesian
 networks (GDBN) structure learning and inference based partially on
-Marco Scutari’s package bnlearn (<http://www.bnlearn.com/>). It also
+Marco Scutari’s package bnlearn (<https://www.bnlearn.com/>). It also
 allows the construction of higher-order DBNs. Two structure learning
 algorithm are implemented:
 

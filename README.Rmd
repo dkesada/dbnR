@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = TRUE,
 
 # dbnR
 
-This package offers an implementation of Gaussian dynamic Bayesian networks (GDBN) structure learning and inference based partially on Marco Scutari's package bnlearn (http://www.bnlearn.com/). It also allows the construction of higher-order DBNs. Two structure learning algorithm are implemented: 
+This package offers an implementation of Gaussian dynamic Bayesian networks (GDBN) structure learning and inference based partially on Marco Scutari's package bnlearn (https://www.bnlearn.com/). It also allows the construction of higher-order DBNs. Two structure learning algorithm are implemented: 
 
   * A variation on Ghada Trabelsi's dynamic max-min hill climbing (https://tel.archives-ouvertes.fr/tel-00996061/document). 
   * A particle swarm optimization algorithm for higher-order DBNs (https://doi.org/10.1109/BRC.2014.6880957)  
