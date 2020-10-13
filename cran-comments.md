@@ -10,7 +10,11 @@ Update from version 0.4.5 to 0.5.3. In this update, I have fixed some bugs and a
 * win-builder (devel, release and oldrelease)
 
 ## R CMD check results
-0 ERRORs | 0 WARNINGs | 0 NOTEs
+0 ERRORs | 0 WARNINGs | 1 NOTEs
+
+Days since last update: 5
+
+* This is a patch to fix the aforementioned NOTE in some CRAN check results
 
 ## Downstream dependencies
 There are no downstream dependencies
