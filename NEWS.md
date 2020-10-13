@@ -1,3 +1,13 @@
+# dbnR 0.5.4
+
+* Additional security checks for the PSOHO algorithm
+
+* Added an auxiliary function to reduce the frequency in a data.table by performing the mean of consecutive rows
+
+* Added an auxiliary function to fold a dataset and not allow instances from different labeled series to be in the same row
+
+* Added the possibility to introduce a previously folded dataset to the structure learning. This helps when the dataset has several iterations of the same process separated by id. If you fold the dataset directly, data from 2 or more different processes will appear in some rows, giving the impression to the model that the ending and the begining of the processes merge into each other, which most likely is not true
+
 # dbnR 0.5.3
 
 * Fixed the lack of imports from the 'R6' package with @importFrom, NOTE in CRAN checks results

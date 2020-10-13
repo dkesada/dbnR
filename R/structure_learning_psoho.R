@@ -78,7 +78,7 @@ Velocity <- R6::R6Class("Velocity",
     #' @param probs the weight of each value {-1,0,1}. They define the probability that each of them will be picked 
     #' @param seed the seed provided to the random number generation
     randomize_velocity = function(probs = c(10, 65, 25)){
-      numeric_prob_vector_check(probs)
+      numeric_prob_vector_check(probs, 3)
       directions <- randomize_vl_cpp(private$cl, probs)
       private$cl <- directions[[1]]
       private$abs_op <- directions[[2]]
@@ -514,16 +514,21 @@ PsoCtrl <- R6::R6Class("PsoCtrl",
 #' @param lb_cte parameter that varies the effect of the local best
 #' @param v_probs vector that defines the random velocity initialization probabilities
 #' @param r_probs vector that defines the range of random variation of gb_cte and lb_cte
+#' @param f_dt previously folded dataset, in case some specific rows have to be removed after the folding
 #' @return A 'bn' object with the structure of the best network found
-psoho <- function(dt, size, n_inds = 50, n_it = 50,
+psoho <- function(dt, size, f_dt = NULL, n_inds = 50, n_it = 50,
                                     in_cte = 1, gb_cte = 0.5, lb_cte = 0.5,
                                     v_probs = c(10, 65, 25), 
                                     r_probs = c(-0.5, 1.5)){
-  #initial_psoho_check(n_inds, n_it,in_cte, gb_cte, lb_cte, v_probs,r_prob) --ICO-Merge
+  numeric_arg_check(n_inds, n_it, in_cte, gb_cte, lb_cte)
+  numeric_prob_vector_check(v_probs, 3)
+  numeric_prob_vector_check(r_probs, 2)
   
   ordering <- names(dt)
-  dt <- time_rename(dt)
-  f_dt <- fold_dt_rec(dt, names(dt), size)
+  if(is.null(f_dt)){
+    dt <- time_rename(dt)
+    f_dt <- fold_dt_rec(dt, names(dt), size)
+  }
   
   ctrl <- PsoCtrl$new(ordering, size, n_inds, n_it, in_cte, gb_cte, lb_cte,
                       v_probs, r_probs)

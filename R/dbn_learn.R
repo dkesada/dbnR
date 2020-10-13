@@ -5,6 +5,7 @@
 #' @param dt the data.frame or data.table to be used
 #' @param size number of time slices of the net. Markovian 1 would be size 2
 #' @param method the structure learning method of choice to use
+#' @param f_dt previously folded dataset, in case some specific rows have to be removed after the folding
 #' @param ... additional parameters for \code{\link{rsmax2}} function
 #' @return the structure of the net
 #' @import data.table
@@ -12,12 +13,14 @@
 #' data("motor")
 #' net <- learn_dbn_struc(motor, size = 3)
 #' @export
-learn_dbn_struc <- function(dt, size = 2, method = "dmmhc", ...){
+learn_dbn_struc <- function(dt, size = 2, method = "dmmhc", f_dt = NULL, ...){
   initial_size_check(size)
   initial_learning_method_check(method)
   initial_df_check(dt)
   if(!is.data.table(dt))
     dt <- as.data.table(dt)
+  if(!is.null(f_dt))
+    initial_folded_dt_check(f_dt)
   
   net <- do.call(method, list(dt = dt, size = size, ...))
   

@@ -7,6 +7,7 @@
 psoho(
   dt,
   size,
+  f_dt = NULL,
   n_inds = 50,
   n_it = 50,
   in_cte = 1,
@@ -20,6 +21,8 @@ psoho(
 \item{dt}{a data.table with the data of the network to be trained. Previously folded with the 'dbnR' package or other means.}
 
 \item{size}{Number of timeslices of the DBN. Markovian order 1 equals size 2, and so on.}
+
+\item{f_dt}{previously folded dataset, in case some specific rows have to be removed after the folding}
 
 \item{n_inds}{Number of particles used in the algorithm.}
 

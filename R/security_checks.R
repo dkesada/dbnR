@@ -263,12 +263,12 @@ initial_dbn_to_causlist_check <- function(obj){
   no_intraslice_check(obj)
 }
 
-numeric_prob_vector_check <- function(obj){
+numeric_prob_vector_check <- function(obj, l){
   if(!is.numeric(obj))
     stop(sprintf("%s has to be numeric.", deparse(substitute(obj))))
-  if(length(obj) != 3)
-    stop(sprintf("%s has to of length 3.", deparse(substitute(obj))))
-  # Not checking for positive numbers. Negative ones are also valid, although kind of useless.
+  if(length(obj) != l)
+    stop(sprintf("%s has to of length %s.", deparse(substitute(obj)), l))
+  # Not checking for positive numbers. Negative ones are also valid.
 }
 
 initial_vel_2_pos_check <- function(vl, size, ordering){

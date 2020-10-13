@@ -1,7 +1,7 @@
 Package: dbnR
 Type: Package
 Title: Dynamic Bayesian Network Learning and Inference
-Version: 0.5.3
+Version: 0.5.4
 Authors@R: c(
     person("David", "Quesada", email = "dkesada@gmail.com", role = c("aut", "cre")),
     person("Gabriel", "Valverde", email = "gabrielvalverdecastilla@gmail.com", role = "ctb"))
@@ -18,7 +18,8 @@ Imports:
     data.table (>= 1.12.4),
     Rcpp (>= 1.0.2),
     magrittr (>= 1.5),
-    R6 (>= 2.4.1)
+    R6 (>= 2.4.1),
+    methods (>= 3.6.0)
 Suggests:
     visNetwork (>= 2.0.8),
     grDevices (>= 3.6.0),

@@ -4,7 +4,7 @@
 \alias{learn_dbn_struc}
 \title{Learns the structure of a markovian n DBN model from data}
 \usage{
-learn_dbn_struc(dt, size = 2, method = "dmmhc", ...)
+learn_dbn_struc(dt, size = 2, method = "dmmhc", f_dt = NULL, ...)
 }
 \arguments{
 \item{dt}{the data.frame or data.table to be used}
@@ -12,6 +12,8 @@ learn_dbn_struc(dt, size = 2, method = "dmmhc", ...)
 \item{size}{number of time slices of the net. Markovian 1 would be size 2}
 
 \item{method}{the structure learning method of choice to use}
+
+\item{f_dt}{previously folded dataset, in case some specific rows have to be removed after the folding}
 
 \item{...}{additional parameters for \code{\link{rsmax2}} function}
 }
