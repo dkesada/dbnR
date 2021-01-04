@@ -91,8 +91,6 @@ Velocity <- R6::R6Class("Velocity",
     #' @param ps a Position object
     #' return the Velocity that gets this position to the new one
     subtract_positions = function(ps1, ps2){
-      initial_pos_2_pos_check(ps1, ps2$get_size(), ps2$get_ordering())
-      
       res <- pos_minus_pos_cpp(ps1$get_cl(), ps2$get_cl(), private$cl)
       
       private$cl <- res[[1]]
@@ -104,8 +102,6 @@ Velocity <- R6::R6Class("Velocity",
     #' 
     #' @param vl a Velocity object
     add_velocity = function(vl){
-      initial_vel_2_vel_check(vl, private$size, private$ordering)
-      
       res <- vel_plus_vel_cpp(private$cl, vl$get_cl(), private$abs_op)
       
       private$cl <- res[[1]]
@@ -202,8 +198,6 @@ Position <- R6::R6Class("Position",
     #' Given a Velocity object, add it to the current position.
     #' @param vl a Velocity object
     add_velocity = function(vl){
-      initial_vel_2_pos_check(vl, private$size, private$ordering)
-      
       res = pos_plus_vel_cpp(private$cl, vl$get_cl(), private$n_arcs)
       private$cl = res[[1]]
       private$n_arcs = res[[2]]
@@ -216,8 +210,6 @@ Position <- R6::R6Class("Position",
     #' @param ps a Position object
     #' return the Velocity that gets this position to the new one
     subtract_position = function(ps){
-      initial_pos_2_pos_check(ps, private$size, private$ordering)
-      
       res <- Velocity$new(private$ordering, private$size)
       res$subtract_positions(self, ps)
       
