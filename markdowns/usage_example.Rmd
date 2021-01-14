@@ -19,6 +19,7 @@ We will use the sample of the 'motor' dataset included in the package for the ex
 
 ```{r motor}
 library(dbnR)
+library(data.table)
 data(motor)
 summary(motor)
 ```

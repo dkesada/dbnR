@@ -22,7 +22,7 @@ learn_dbn_struc <- function(dt, size = 2, method = "dmmhc", f_dt = NULL, ...){
   if(!is.null(f_dt))
     initial_folded_dt_check(f_dt)
   
-  net <- do.call(method, list(dt = dt, size = size, ...))
+  net <- do.call(method, list(dt = dt, size = size, f_dt = f_dt, ...))
   
   return(net)
 }
