@@ -85,3 +85,24 @@ filter_same_cycle <- function(f_dt, size, id_var){
   
   return(f_dt[eval(parse(text=cond))])
 }
+
+#' Fold a dataset to a certain size and avoid overlapping of different time-series
+#' 
+#' If the dataset that is going to be folded contains several different time-series 
+#' instances of the same process, folding it could introduce false rows with data
+#' from different time-series. Given an id variable that labels the different 
+#' instances of a time series inside a dataset and a desired size, this function 
+#' folds the dataset and avoids mixing data from different origins in the same instance.
+#' @param dt data.table to be folded
+#' @param size the size of the data.table
+#' @param id_var the variable that labels each individual instance of the time-series
+#' @return the filtered dataset
+#' @export
+filtered_fold_dt <- function(dt, size, id_var){
+  f_dt <- fold_dt(dt, size)
+  f_dt <- filter_same_cycle(f_dt, size, id_var)
+  del_vars <- names(f_dt)[grepl(id_var, names(f_dt))]
+  f_dt[, (del_vars) := NULL]
+  
+  return(f_dt)
+}

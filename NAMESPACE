@@ -3,6 +3,7 @@
 export(calc_mu)
 export(calc_sigma)
 export(filter_same_cycle)
+export(filtered_fold_dt)
 export(fit_dbn_params)
 export(fold_dt)
 export(forecast_ts)
