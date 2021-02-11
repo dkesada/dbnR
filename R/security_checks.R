@@ -270,3 +270,13 @@ numeric_prob_vector_check <- function(obj, l){
     stop(sprintf("%s has to be of length %s.", deparse(substitute(obj)), l))
   # Not checking for positive numbers. Negative ones are also valid.
 }
+
+initial_null_dt_check <- function(dt, f_dt){
+  if(is.null(dt) && is.null(f_dt))
+    stop("both the provided dataset and folded dataset cannot be NULL at the same time.")
+}
+
+dt_null_check <- function(dt, intra){
+  if(is.null(dt) && intra)
+    stop("the unfolded training dataset is NULL, so intra-slice arcs cannot be learnt.")
+}

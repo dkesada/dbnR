@@ -4,6 +4,8 @@
 
 * New auxiliary function 'filtered_fold_dt'
 
+* Added the possibility of not learning intra-slice arcs in the dmmhc algorithm
+
 # dbnR 0.5.5
 
 * Removed obsolete and time consuming security checks. The psoho initial checks were supposed to secure the separate usage of the 'Position' and 'Velocity' classes, but they are not exported, and consequentially they cannot be missused in the sense that the checks prevented. They also were O(n) on the size of the ordering, and were run each time some operation was performed over positions or velocities.

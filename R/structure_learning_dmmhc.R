@@ -66,18 +66,21 @@ merge_nets <- function(net0, netCP1, size, acc = NULL, slice = 1){
 #' 1.
 #' @param dt the data.frame or data.table to be used
 #' @param size number of time slices of the net. Markovian 1 would be size 2
-#' @param blacklist an optional matrix indicating forbidden arcs between nodes
 #' @param f_dt previously folded dataset, in case some specific rows have to be removed after the folding
+#' @param blacklist an optional matrix indicating forbidden arcs between nodes
+#' @param intra if TRUE, the intra-slice arcs of the network will be learnt. If FALSE, they will be ignored
 #' @param ... additional parameters for \code{\link{rsmax2}} function
 #' @return the structure of the net
 #' @import data.table
 #' @importFrom methods "hasArg"
-dmmhc <- function(dt, size = 2, f_dt = NULL, blacklist = NULL, ...){
-  dt <- time_rename(dt)
+dmmhc <- function(dt, size = 2, f_dt = NULL, blacklist = NULL, intra = TRUE, ...){
+  dt_null_check(dt, intra)
   
-  dt_copy <- data.table::copy(dt)
-  
-  net0 <- bnlearn::rsmax2(x = dt_copy, blacklist = blacklist, ...) # Static network
+  if(!is.null(dt) && intra){
+    dt <- time_rename(dt)
+    dt_copy <- data.table::copy(dt)
+    net0 <- bnlearn::rsmax2(x = dt_copy, blacklist = blacklist, ...) # Static network
+  }
   
   if(is.null(f_dt))
     f_dt <- fold_dt_rec(dt, names(dt), size)
@@ -87,7 +90,7 @@ dmmhc <- function(dt, size = 2, f_dt = NULL, blacklist = NULL, ...){
   net <- bnlearn::rsmax2(x = f_dt, blacklist = blacklist, ...) # kTBN
   check_empty_net(net)
   
-  if(!warn_empty_net(net0))
+  if(intra && !warn_empty_net(net0))
     bnlearn::arcs(net) <- merge_nets(net0, net, size)
   class(net) <- c("dbn", class(net))
   

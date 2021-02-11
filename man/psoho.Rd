@@ -18,7 +18,7 @@ psoho(
 )
 }
 \arguments{
-\item{dt}{a data.table with the data of the network to be trained. Previously folded with the 'dbnR' package or other means.}
+\item{dt}{a data.table with the data of the network to be trained}
 
 \item{size}{Number of timeslices of the DBN. Markovian order 1 equals size 2, and so on.}
 

@@ -16,9 +16,12 @@
 learn_dbn_struc <- function(dt, size = 2, method = "dmmhc", f_dt = NULL, ...){
   initial_size_check(size)
   initial_learning_method_check(method)
-  initial_df_check(dt)
-  if(!is.data.table(dt))
-    dt <- as.data.table(dt)
+  initial_null_dt_check(dt, f_dt)
+  if(!is.null(dt)){
+    initial_df_check(dt)
+    if(!is.data.table(dt))
+      dt <- as.data.table(dt)
+  }
   if(!is.null(f_dt))
     initial_folded_dt_check(f_dt)
   

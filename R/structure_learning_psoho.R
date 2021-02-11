@@ -497,7 +497,7 @@ PsoCtrl <- R6::R6Class("PsoCtrl",
 #' Given a dataset and the desired Markovian order, this function returns a DBN
 #' structure ready to be fitted. It requires a folded dataset.
 #' Original algorithm at https://doi.org/10.1109/BRC.2014.6880957
-#' @param dt a data.table with the data of the network to be trained. Previously folded with the 'dbnR' package or other means.
+#' @param dt a data.table with the data of the network to be trained
 #' @param size Number of timeslices of the DBN. Markovian order 1 equals size 2, and so on.
 #' @param n_inds Number of particles used in the algorithm.
 #' @param n_it Maximum number of iterations that the algorithm can perform.
@@ -516,11 +516,14 @@ psoho <- function(dt, size, f_dt = NULL, n_inds = 50, n_it = 50,
   numeric_prob_vector_check(v_probs, 3)
   numeric_prob_vector_check(r_probs, 2)
   
-  ordering <- names(dt)
   if(is.null(f_dt)){
+    ordering <- names(dt)
     dt <- time_rename(dt)
     f_dt <- fold_dt_rec(dt, names(dt), size)
   }
+  
+  else
+    ordering <- gsub("_t_0", "", grep("_t_0", names(f_dt), value = T))
   
   ctrl <- PsoCtrl$new(ordering, size, n_inds, n_it, in_cte, gb_cte, lb_cte,
                       v_probs, r_probs)

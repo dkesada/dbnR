@@ -114,8 +114,9 @@ Markovian order of 1 means that your data in the present is independent
 of the past given the previous time slice. If your case doesn’t meet
 this criteria, the size of the net can be increased, to take into
 account more past time slices in the inference. In our function,
-Markovian order = size - 1. The function returns a list with the learned
-structure and the folded dataset with the extended rows.
+Markovian order = size - 1. The function returns a ‘dbn’ object that
+inherits from the ‘bn’ class in *bnlearn*, so that its auxiliary
+functions like ‘arcs’ and such also work on DBN structures.
 
 Once the structure is learnt, it can be plotted and used to learn the
 parameters
