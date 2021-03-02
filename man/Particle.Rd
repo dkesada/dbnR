@@ -8,6 +8,10 @@
 
 \item{size}{number of timeslices of the DBN}
 
+\item{v_probs}{vector that defines the random velocity initialization probabilities}
+
+\item{score}{bnlearn score function used}
+
 \item{dt}{dataset to evaluate the fitness of the particle}
 
 \item{in_cte}{parameter that varies the effect of the inertia}
@@ -51,5 +55,7 @@ A particle has a Position, a Velocity and a local best
 \item{\code{lb}}{local best score obtained}
 
 \item{\code{lb_ps}}{local best position found}
+
+\item{\code{score}}{bnlearn score function used}
 }}
 

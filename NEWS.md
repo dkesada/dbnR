@@ -1,3 +1,7 @@
+# dbnR 0.5.7
+
+* Parameter for different bnlearn scores in the PSOHO algorithm 
+
 # dbnR 0.5.6
 
 * Hotfix for the 'f_dt' parameter in the 'learn_dbn_struc' function. It was not being passed down to each algorithm.

@@ -304,12 +304,15 @@ Particle <- R6::R6Class("Particle",
     #' Constructor of the 'Particle' class
     #' @param ordering a vector with the names of the nodes in t_0
     #' @param size number of timeslices of the DBN
+    #' @param v_probs vector that defines the random velocity initialization probabilities
+    #' @param score bnlearn score function used
     #' @return A new 'Particle' object
-    initialize = function(ordering, size, v_probs){
+    initialize = function(ordering, size, v_probs, score){
       private$ps <- Position$new(NULL, size, ordering)
       private$vl <- Velocity$new(private$ps$get_ordering(), size)
       private$vl$randomize_velocity(v_probs)
       private$lb <- -Inf
+      private$score <- score
     },
     
     #' @description 
@@ -321,7 +324,7 @@ Particle <- R6::R6Class("Particle",
     #' @return The score of the current position
     eval_ps = function(dt){
       struct <- private$ps$bn_translate()
-      score <- bnlearn::score(struct, dt, type = "bge") # For now, unoptimized bge. Any Gaussian score could be used
+      score <- bnlearn::score(struct, dt, type = private$score) # Careful with bge score, it returns NaNs for big networks
       if(score > private$lb){
         private$lb <- score 
         private$lb_ps <- private$ps
@@ -379,7 +382,9 @@ Particle <- R6::R6Class("Particle",
     #' @field lb local best score obtained
     lb = NULL,
     #' @field lb_ps local best position found
-    lb_ps = NULL
+    lb_ps = NULL,
+    #' @field score bnlearn score function used
+    score = NULL
   )
 )
 
@@ -401,10 +406,11 @@ PsoCtrl <- R6::R6Class("PsoCtrl",
    #' @param lb_cte parameter that varies the effect of the local best
    #' @param v_probs vector that defines the random velocity initialization probabilities
    #' @param r_probs vector that defines the range of random variation of gb_cte and lb_cte
+   #' @param score bnlearn score function used
    #' @return A new 'PsoCtrl' object
    initialize = function(ordering, size, n_inds, n_it, in_cte, gb_cte, lb_cte,
-                         v_probs, r_probs){
-     private$initialize_particles(ordering, size, n_inds, v_probs)
+                         v_probs, r_probs, score){
+     private$initialize_particles(ordering, size, n_inds, v_probs, score)
      private$gb_scr <- -Inf
      private$n_it <- n_it
      private$in_cte <- in_cte
@@ -472,7 +478,7 @@ PsoCtrl <- R6::R6Class("PsoCtrl",
      #private$parts <- parallel::parLapply(private$cl,1:n_inds, function(i){Particle$new(ordering, size)})
      private$parts <- vector(mode = "list", length = n_inds)
      for(i in 1:n_inds)
-       private$parts[[i]] <- Particle$new(ordering, size, v_probs)
+       private$parts[[i]] <- Particle$new(ordering, size, v_probs, score)
    },
    
    #' @description 
@@ -507,11 +513,12 @@ PsoCtrl <- R6::R6Class("PsoCtrl",
 #' @param v_probs vector that defines the random velocity initialization probabilities
 #' @param r_probs vector that defines the range of random variation of gb_cte and lb_cte
 #' @param f_dt previously folded dataset, in case some specific rows have to be removed after the folding
+#' @param score bnlearn score function used
 #' @return A 'bn' object with the structure of the best network found
 psoho <- function(dt, size, f_dt = NULL, n_inds = 50, n_it = 50,
                                     in_cte = 1, gb_cte = 0.5, lb_cte = 0.5,
                                     v_probs = c(10, 65, 25), 
-                                    r_probs = c(-0.5, 1.5)){
+                                    r_probs = c(-0.5, 1.5), score = "bge"){
   numeric_arg_check(n_inds, n_it, in_cte, gb_cte, lb_cte)
   numeric_prob_vector_check(v_probs, 3)
   numeric_prob_vector_check(r_probs, 2)
@@ -526,7 +533,7 @@ psoho <- function(dt, size, f_dt = NULL, n_inds = 50, n_it = 50,
     ordering <- gsub("_t_0", "", grep("_t_0", names(f_dt), value = T))
   
   ctrl <- PsoCtrl$new(ordering, size, n_inds, n_it, in_cte, gb_cte, lb_cte,
-                      v_probs, r_probs)
+                      v_probs, r_probs, score)
   ctrl$run(f_dt)
   
   net <- ctrl$get_best_network()

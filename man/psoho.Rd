@@ -14,7 +14,8 @@ psoho(
   gb_cte = 0.5,
   lb_cte = 0.5,
   v_probs = c(10, 65, 25),
-  r_probs = c(-0.5, 1.5)
+  r_probs = c(-0.5, 1.5),
+  score = "bge"
 )
 }
 \arguments{
@@ -37,6 +38,8 @@ psoho(
 \item{v_probs}{vector that defines the random velocity initialization probabilities}
 
 \item{r_probs}{vector that defines the range of random variation of gb_cte and lb_cte}
+
+\item{score}{bnlearn score function used}
 }
 \value{
 A 'bn' object with the structure of the best network found

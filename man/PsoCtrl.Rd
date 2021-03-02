@@ -14,6 +14,8 @@
 
 \item{r_probs}{vector that defines the range of random variation of gb_cte and lb_cte}
 
+\item{score}{bnlearn score function used}
+
 \item{ordering}{a vector with the names of the nodes in t_0}
 
 \item{size}{number of timeslices of the DBN}
