@@ -14,8 +14,6 @@
 
 \item{r_probs}{vector that defines the range of random variation of gb_cte and lb_cte}
 
-\item{score}{bnlearn score function used}
-
 \item{ordering}{a vector with the names of the nodes in t_0}
 
 \item{size}{number of timeslices of the DBN}
@@ -23,6 +21,8 @@
 \item{n_inds}{number of particles that the algorithm will simultaneously process}
 
 \item{v_probs}{vector that defines the random velocity initialization probabilities}
+
+\item{score}{bnlearn score function used}
 
 \item{dt}{the dataset used to evaluate the position}
 }

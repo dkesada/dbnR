@@ -474,7 +474,8 @@ PsoCtrl <- R6::R6Class("PsoCtrl",
    #' @param size number of timeslices of the DBN
    #' @param n_inds number of particles that the algorithm will simultaneously process
    #' @param v_probs vector that defines the random velocity initialization probabilities
-   initialize_particles = function(ordering, size, n_inds, v_probs){
+   #' @param score bnlearn score function used
+   initialize_particles = function(ordering, size, n_inds, v_probs, score){
      #private$parts <- parallel::parLapply(private$cl,1:n_inds, function(i){Particle$new(ordering, size)})
      private$parts <- vector(mode = "list", length = n_inds)
      for(i in 1:n_inds)
