@@ -91,13 +91,13 @@ There are two forecasting modes: exact and approximate inference. Exact inferenc
 
 We can also perform evidenced forecasting with our models. We call 'evidenced forecasting' to the special case when we already know the values that some variables are going to take in the future, and so we set those values and predict the rest. This is very useful if we want our models to serve as simulators, fixing some variables to certain values to see the effect that those have on the forecasting.
 
-```{r forecast_ev}
+```{r forecast_ev_1}
 res_fore <- suppressWarnings(dbnR::forecast_ts(f_dt_val, fit, size, obj_var = c("pm_t_0"), ini = 100, len = 70, prov_ev = c("stator_winding_t_0", "u_q_t_0")))
 ```
 
 Several variables can be provided as evidence. In each prediction step, the values in t_0 of these variables will be fixed with the ones provided in f_dt_val. If we want to set an intervention and see its effect, we can do it as follows:
 
-```{r forecast_ev}
+```{r forecast_ev_2}
 inter_dt <- copy(f_dt_val)
 inter_dt[, stator_winding_t_0 := 0.32]
 res_fore <- suppressWarnings(dbnR::forecast_ts(inter_dt, fit, size, obj_var = c("pm_t_0"), ini = 100, len = 70, prov_ev = c("stator_winding_t_0", "u_q_t_0")))
