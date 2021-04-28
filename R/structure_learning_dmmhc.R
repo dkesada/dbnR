@@ -76,10 +76,12 @@ merge_nets <- function(net0, netCP1, size, acc = NULL, slice = 1){
 dmmhc <- function(dt, size = 2, f_dt = NULL, blacklist = NULL, intra = TRUE, ...){
   dt_null_check(dt, intra)
   
-  if(!is.null(dt) && intra){
+  if(!is.null(dt)){
     dt <- time_rename(dt)
-    dt_copy <- data.table::copy(dt)
-    net0 <- bnlearn::rsmax2(x = dt_copy, blacklist = blacklist, ...) # Static network
+    if(intra){
+      dt_copy <- data.table::copy(dt)
+      net0 <- bnlearn::rsmax2(x = dt_copy, blacklist = blacklist, ...) # Static network
+    }
   }
   
   if(is.null(f_dt))

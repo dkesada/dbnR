@@ -35,7 +35,7 @@ dt_val <- motor[2801:3000]
 blacklist <- c("motor_speed_t_0", "i_d_t_0")
 blacklist <- rbind(blacklist, c("motor_speed_t_0", "i_q_t_0"))
 net <- dbnR::learn_dbn_struc(dt_train, size, method = "dmmhc", blacklist = blacklist,
-                             restrict = "mmpc", maximize = "hc", 
+                             restrict = "mmpc", maximize = "hc",
                              restrict.args = list(test = "cor"),
                              maximize.args = list(score = "bic-g", maxp = 10))
 
