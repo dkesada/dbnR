@@ -66,6 +66,7 @@ predict_dt <- function(fit, dt, obj_nodes, verbose = T){
   initial_df_check(dt)
   fit <- initial_attr_check(fit)
   
+  dt <- as.data.table(dt)
   obj_dt <- dt[, .SD, .SDcols = obj_nodes]
   ev_dt <- copy(dt)
   ev_dt[, (obj_nodes) := NULL]
@@ -262,6 +263,8 @@ forecast_ts <- function(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1]-ini,
   obj_prov_check(obj_vars, prov_ev)
   logical_arg_check(print_res, plot_res)
   initial_mode_check(mode)
+  
+  dt <- as.data.table(dt)
 
   exec_time <- Sys.time()
   
