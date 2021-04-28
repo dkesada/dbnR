@@ -6,3 +6,4 @@
 *.dll
 *.Rproj
 CRAN-RELEASE
+markdowns/.ipynb_checkpoints
