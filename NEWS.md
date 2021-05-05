@@ -1,6 +1,12 @@
 # dbnR 0.5.7
 
-* Parameter for different bnlearn scores in the PSOHO algorithm 
+* Parameter for different bnlearn scores in the PSOHO algorithm
+
+* New Jupyter notebook that shows how to integrate dbnR with Python
+
+* Fixed the 'intra' argument in the mmhc algorithm. The 'if' statements regarding it were wrong.
+
+* Several fixes in compatibility with 'as.data.table' calls
 
 # dbnR 0.5.6
 
@@ -12,7 +18,7 @@
 
 # dbnR 0.5.5
 
-* Removed obsolete and time consuming security checks. The psoho initial checks were supposed to secure the separate usage of the 'Position' and 'Velocity' classes, but they are not exported, and consequentially they cannot be missused in the sense that the checks prevented. They also were O(n) on the size of the ordering, and were run each time some operation was performed over positions or velocities.
+* Removed obsolete and time consuming security checks. The psoho initial checks were supposed to secure the separate usage of the 'Position' and 'Velocity' classes, but they are not exported, and consequently they cannot be missused in the sense that the checks prevented. They also were O(n) on the size of the ordering, and were run each time some operation was performed over positions or velocities.
 
 # dbnR 0.5.4
 
