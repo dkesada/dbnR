@@ -1,3 +1,7 @@
+# dbnR 0.6.0
+
+* Added the possibility of doing smoothing over a time series
+
 # dbnR 0.5.7
 
 * Parameter for different bnlearn scores in the PSOHO algorithm

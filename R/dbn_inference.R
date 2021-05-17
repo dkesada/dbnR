@@ -290,3 +290,103 @@ forecast_ts <- function(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1]-ini,
 
   return(list(orig = dt[ini:(ini+len-1)], pred = test))
 }
+
+#' Performs exact inference smoothing with the GDBN over a data set
+#'
+#' Given a bn.fit object, the size of the net and a data.set,
+#' performs exact smoothing over the initial evidence taken from the data set.
+#' Take notice that the smoothing is done backwards in time, as opposed to
+#' forecasting.
+#' @param dt data.table object with the TS data
+#' @param fit bn.fit object
+#' @param size number of time slices of the net
+#' @param obj_vars variables to be predicted. Should be in the oldest time step
+#' @param ini starting point in the data set to smooth
+#' @param len length of the smoothing
+#' @param prov_ev variables to be provided as evidence in each forecasting step. Should be in the oldest time step
+#' @return the results of the smoothing
+exact_inference_backwards <- function(dt, fit, size, obj_vars, ini, len, prov_ev){
+  fit <- initial_attr_check(fit)
+  
+  var_names <- names(dt)
+  vars_pred_idx <- grep(paste0("t_", size-1), var_names)
+  vars_subs_idx <- grep(paste0("t_", size-2), var_names)
+  vars_last_idx <- grep("t_0", var_names)
+  vars_pred <- var_names[vars_pred_idx] # In this case, we predict the oldes time slice, because we are going backwards 
+  vars_prev <- var_names[-c(vars_pred_idx, vars_subs_idx)]
+  vars_post <- var_names[-c(vars_pred_idx, vars_last_idx)]
+  vars_ev <- var_names[-vars_pred_idx]
+  vars_pred_crop <- vars_pred[!(vars_pred %in% prov_ev)]
+  vars_subs_crop <- sub(paste0("t_", size-1), paste0("t_", size-2), vars_pred_crop)
+  prov_ev_subs <- sub(paste0("t_", size-1), paste0("t_", size-1), prov_ev)
+  
+  test <- NULL
+  evidence <- dt[ini, .SD, .SDcols = c(vars_ev, prov_ev)]
+  
+  for(j in 1:len){
+    particles <- exact_prediction_step(fit, vars_pred, as_named_vector(evidence))
+    if(length(vars_post) > 0)
+      evidence[, (vars_prev) := .SD, .SDcols = vars_post]
+    evidence[, (vars_subs_crop) := particles$mu_p[vars_pred_crop]]
+    if(!is.null(prov_ev)){
+      evidence[, (prov_ev_subs) := .SD, .SDcols = prov_ev]
+      evidence[, (prov_ev) := dt[ini + j, .SD, .SDcols = prov_ev]]
+    }
+    temp <- particles$mu_p[obj_vars]
+    temp["exec"] <- 1
+    test <- rbindlist(list(temp, test))
+  }
+  
+  return(test)
+}
+
+#' Performs smoothing with the GDBN over a data set
+#'
+#' Given a dbn.fit object, the size of the net and a folded data.set,
+#' performs a smoothing of a trayectory. Smoothing is the opposite of 
+#' forecasting: given a starting point, predict backwards in time to obtain
+#' the time series that generated that poing. 
+#' @param dt data.table object with the TS data
+#' @param fit dbn.fit object
+#' @param size number of time slices of the net
+#' @param obj_vars variables to be predicted. Should be in the oldest time step
+#' @param ini starting point in the data set to smooth
+#' @param len length of the smoothing
+#' @param print_res if TRUE prints the mae and sd metrics of the smoothing
+#' @param plot_res if TRUE plots the results of the smoothing
+#' @param prov_ev variables to be provided as evidence in each smoothing step. Should be in the oldest time step
+#' @return the results of the smoothing
+#' @export
+smooth_ts <- function(dt, fit, size, obj_vars, ini = dim(dt)[1], len = ini-1,
+                      print_res = TRUE, plot_res = TRUE, prov_ev = NULL){
+  initial_folded_dt_check(dt)
+  initial_dbnfit_check(fit)
+  numeric_arg_check(size, ini, len)
+  character_arg_check(obj_vars)
+  null_or_character_arg_check(prov_ev)
+  obj_prov_check(obj_vars, prov_ev)
+  logical_arg_check(print_res, plot_res)
+  
+  dt <- as.data.table(dt)
+  
+  exec_time <- Sys.time()
+  
+  test <- exact_inference_backwards(dt, fit, size, obj_vars, ini, len, prov_ev)
+  
+  exec_time <- exec_time - Sys.time()
+  
+  metrics <- lapply(obj_vars, function(x){
+    test[, mae_by_col(dt[(ini-len+1):ini], .SD), .SDcols = x, by = "exec"]})
+  metrics <- sapply(metrics, function(x){mean(x$V1)})
+  names(metrics) <- obj_vars
+  
+  if(print_res){
+    print(exec_time)
+    print_metrics(metrics, obj_vars)
+  }
+  
+  if(plot_res)
+    plot_results(dt[(ini-len+1):ini], test, obj_vars)
+  
+  return(list(orig = dt[(ini-len+1):ini], pred = test))
+}
