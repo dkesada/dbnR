@@ -207,6 +207,10 @@ exact_inference <- function(dt, fit, size, obj_vars, ini, len, prov_ev){
 
   for(j in 1:len){
     particles <- exact_prediction_step(fit, vars_pred, as_named_vector(evidence))
+    
+    if(is.null(names(particles$mu_p)))
+      names(particles$mu_p) <- obj_vars # If only 1 variable is obtained from the inference, no name is returned
+        
     if(length(vars_post) > 0)
       evidence[, (vars_prev) := .SD, .SDcols = vars_post]
     evidence[, (vars_subs_crop) := particles$mu_p[vars_pred_crop]]
@@ -325,6 +329,10 @@ exact_inference_backwards <- function(dt, fit, size, obj_vars, ini, len, prov_ev
   
   for(j in 1:len){
     particles <- exact_prediction_step(fit, vars_pred, as_named_vector(evidence))
+    
+    if(is.null(names(particles$mu_p)))
+      names(particles$mu_p) <- obj_vars
+    
     if(length(vars_post) > 0)
       evidence[, (vars_prev) := .SD, .SDcols = vars_post]
     evidence[, (vars_subs_crop) := particles$mu_p[vars_pred_crop]]

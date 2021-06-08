@@ -2,6 +2,8 @@
 
 * Added the possibility of doing smoothing over a time series
 
+* Fixed a bug that returned NaNs when predicting 1 variable in t_0 and providing all other variables as evidence
+
 # dbnR 0.5.7
 
 * Parameter for different bnlearn scores in the PSOHO algorithm
