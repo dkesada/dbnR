@@ -110,4 +110,4 @@ This project is licensed under the GPL-3 License, following on bnlearn's GPL(≥
 
 ## Applications of dbnR
 
-* <font size="2"> Quesada, D., Valverde, G., Larrañaga, P., & Bielza, C. (2021). _Long-term forecasting of multivariate time series in industrial furnaces with dynamic Gaussian Bayesian networks_. Engineering Applications of Artificial Intelligence, 103, 104301.</font> 
+* Quesada, D., Valverde, G., Larrañaga, P., & Bielza, C. (2021). _Long-term forecasting of multivariate time series in industrial furnaces with dynamic Gaussian Bayesian networks_. Engineering Applications of Artificial Intelligence, 103, 104301. 

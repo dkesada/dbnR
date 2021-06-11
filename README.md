@@ -163,8 +163,7 @@ GPL(≥ 2) license.
 
 ## Applications of dbnR
 
-  - <font size="2"> Quesada, D., Valverde, G., Larrañaga, P., & Bielza,
-    C. (2021). *Long-term forecasting of multivariate time series in
-    industrial furnaces with dynamic Gaussian Bayesian networks*.
-    Engineering Applications of Artificial Intelligence, 103,
-    104301.</font>
+  - Quesada, D., Valverde, G., Larrañaga, P., & Bielza, C. (2021).
+    *Long-term forecasting of multivariate time series in industrial
+    furnaces with dynamic Gaussian Bayesian networks*. Engineering
+    Applications of Artificial Intelligence, 103, 104301.
