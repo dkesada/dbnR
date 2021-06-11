@@ -160,3 +160,11 @@ GPL(≥ 2) license.
     principles and techniques*. MIT press.
   - Murphy, K. P. (2012). *Machine learning: a probabilistic
     perspective*. MIT press.
+
+## Applications of dbnR
+
+  - <font size="2"> Quesada, D., Valverde, G., Larrañaga, P., & Bielza,
+    C. (2021). *Long-term forecasting of multivariate time series in
+    industrial furnaces with dynamic Gaussian Bayesian networks*.
+    Engineering Applications of Artificial Intelligence, 103,
+    104301.</font>

@@ -107,3 +107,7 @@ This project is licensed under the GPL-3 License, following on bnlearn's GPL(≥
 * Kaggle's dataset repository, where the sample dataset is from (https://www.kaggle.com/wkirgsn/electric-motor-temperature)
 * Koller, D., & Friedman, N. (2009). _Probabilistic graphical models: principles and techniques_. MIT press.
 * Murphy, K. P. (2012). _Machine learning: a probabilistic perspective_. MIT press.
+
+## Applications of dbnR
+
+* <font size="2"> Quesada, D., Valverde, G., Larrañaga, P., & Bielza, C. (2021). _Long-term forecasting of multivariate time series in industrial furnaces with dynamic Gaussian Bayesian networks_. Engineering Applications of Artificial Intelligence, 103, 104301.</font> 
