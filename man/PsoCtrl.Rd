@@ -14,6 +14,8 @@
 
 \item{r_probs}{vector that defines the range of random variation of gb_cte and lb_cte}
 
+\item{cte}{a boolean that determines whether the parameters remain constant or vary as the algorithm progresses. The increases and decreases are calculated as a function of the total number of iterations, decreasing until close to 0 and increasing until close to 1.}
+
 \item{ordering}{a vector with the names of the nodes in t_0}
 
 \item{size}{number of timeslices of the DBN}
@@ -45,6 +47,8 @@ Main function of the pso algorithm.
 Initialize the particles for the algorithm to random positions and velocities.
 
 Evaluate the particles and update the global best
+
+Modify the PSO parameters after each iteration
 }
 \details{
 The controller will encapsulate the particles and run the algorithm
@@ -69,5 +73,13 @@ The controller will encapsulate the particles and run the algorithm
 \item{\code{b_scr}}{global best score obtained}
 
 \item{\code{r_probs}}{vector that defines the range of random variation of gb_cte and lb_cte}
+
+\item{\code{cte}}{boolean that defines whether the parameters remain constant or vary as the execution progresses}
+
+\item{\code{in_var}}{decrement of the inertia each iteration}
+
+\item{\code{gb_var}}{increment of the global best parameter each iteration}
+
+\item{\code{lb_var}}{increment of the local best parameter each iteration}
 }}
 

@@ -1,3 +1,7 @@
+# dbnR 0.6.1
+
+* Added variable inertia, global best and local best parameters over time to the PSOHO algorithm
+
 # dbnR 0.6.0
 
 * Added the possibility of doing smoothing over a time series

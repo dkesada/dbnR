@@ -407,9 +407,10 @@ PsoCtrl <- R6::R6Class("PsoCtrl",
    #' @param v_probs vector that defines the random velocity initialization probabilities
    #' @param r_probs vector that defines the range of random variation of gb_cte and lb_cte
    #' @param score bnlearn score function used
+   #' @param cte a boolean that determines whether the parameters remain constant or vary as the algorithm progresses. The increases and decreases are calculated as a function of the total number of iterations, decreasing until close to 0 and increasing until close to 1.
    #' @return A new 'PsoCtrl' object
    initialize = function(ordering, size, n_inds, n_it, in_cte, gb_cte, lb_cte,
-                         v_probs, r_probs, score){
+                         v_probs, r_probs, score, cte){
      private$initialize_particles(ordering, size, n_inds, v_probs, score)
      private$gb_scr <- -Inf
      private$n_it <- n_it
@@ -417,6 +418,12 @@ PsoCtrl <- R6::R6Class("PsoCtrl",
      private$gb_cte <- gb_cte
      private$lb_cte <- lb_cte
      private$r_probs <- r_probs
+     private$cte <- cte
+     if(!cte){
+       private$in_var <- in_cte / n_it # Decrease inertia
+       private$gb_var <- (1-gb_cte) / n_it # Increase gb
+       private$lb_var <- lb_cte / n_it # Decrease lb
+     }
    },
    
    #' @description 
@@ -441,6 +448,9 @@ PsoCtrl <- R6::R6Class("PsoCtrl",
        # Inside loop. Update each particle
        for(p in private$parts)
          p$update_state(private$in_cte, private$gb_cte, private$gb_ps, private$lb_cte, private$r_probs)
+       
+       if(!private$cte)
+         private$adjust_pso_parameters()
        
        private$evaluate_particles(dt)
        utils::setTxtProgressBar(pb, i)
@@ -467,6 +477,14 @@ PsoCtrl <- R6::R6Class("PsoCtrl",
    gb_scr = NULL,
    #' @field r_probs vector that defines the range of random variation of gb_cte and lb_cte
    r_probs = NULL,
+   #' @field cte boolean that defines whether the parameters remain constant or vary as the execution progresses
+   cte = NULL,
+   #' @field in_var decrement of the inertia each iteration
+   in_var = NULL,
+   #' @field gb_var increment of the global best parameter each iteration
+   gb_var = NULL,
+   #' @field lb_var increment of the local best parameter each iteration
+   lb_var = NULL,
    
    #' @description 
    #' Initialize the particles for the algorithm to random positions and velocities.
@@ -493,6 +511,14 @@ PsoCtrl <- R6::R6Class("PsoCtrl",
          private$gb_ps <- p$get_ps()
        }
      }
+   },
+   
+   #' @description 
+   #' Modify the PSO parameters after each iteration
+   adjust_pso_parameters = function(){
+     private$in_cte <- private$in_cte - private$in_var
+     private$gb_cte <- private$gb_cte + private$gb_var
+     private$lb_cte <- private$lb_cte - private$lb_var
    }
   )
 )
@@ -515,11 +541,13 @@ PsoCtrl <- R6::R6Class("PsoCtrl",
 #' @param r_probs vector that defines the range of random variation of gb_cte and lb_cte
 #' @param f_dt previously folded dataset, in case some specific rows have to be removed after the folding
 #' @param score bnlearn score function used
+#' @param cte a boolean that determines whether the inertia, global best and local best parameters remain constant or vary as the algorithm progresses. Inertia and local best values decrease as the global best increases, to favor exploration at first and exploitation at the end.
 #' @return A 'bn' object with the structure of the best network found
 psoho <- function(dt, size, f_dt = NULL, n_inds = 50, n_it = 50,
                                     in_cte = 1, gb_cte = 0.5, lb_cte = 0.5,
                                     v_probs = c(10, 65, 25), 
-                                    r_probs = c(-0.5, 1.5), score = "bge"){
+                                    r_probs = c(-0.5, 1.5), score = "bge",
+                                    cte = TRUE){
   numeric_arg_check(n_inds, n_it, in_cte, gb_cte, lb_cte)
   numeric_prob_vector_check(v_probs, 3)
   numeric_prob_vector_check(r_probs, 2)
@@ -534,7 +562,7 @@ psoho <- function(dt, size, f_dt = NULL, n_inds = 50, n_it = 50,
     ordering <- gsub("_t_0", "", grep("_t_0", names(f_dt), value = T))
   
   ctrl <- PsoCtrl$new(ordering, size, n_inds, n_it, in_cte, gb_cte, lb_cte,
-                      v_probs, r_probs, score)
+                      v_probs, r_probs, score, cte)
   ctrl$run(f_dt)
   
   net <- ctrl$get_best_network()

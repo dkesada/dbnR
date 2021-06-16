@@ -15,7 +15,8 @@ psoho(
   lb_cte = 0.5,
   v_probs = c(10, 65, 25),
   r_probs = c(-0.5, 1.5),
-  score = "bge"
+  score = "bge",
+  cte = TRUE
 )
 }
 \arguments{
@@ -40,6 +41,8 @@ psoho(
 \item{r_probs}{vector that defines the range of random variation of gb_cte and lb_cte}
 
 \item{score}{bnlearn score function used}
+
+\item{cte}{a boolean that determines whether the inertia, global best and local best parameters remain constant or vary as the algorithm progresses. Inertia and local best values decrease as the global best increases, to favor exploration at first and exploitation at the end.}
 }
 \value{
 A 'bn' object with the structure of the best network found
