@@ -4,7 +4,7 @@
 \alias{filtered_fold_dt}
 \title{Fold a dataset to a certain size and avoid overlapping of different time-series}
 \usage{
-filtered_fold_dt(dt, size, id_var)
+filtered_fold_dt(dt, size, id_var, clear_id_var = TRUE)
 }
 \arguments{
 \item{dt}{data.table to be folded}
@@ -12,6 +12,8 @@ filtered_fold_dt(dt, size, id_var)
 \item{size}{the size of the data.table}
 
 \item{id_var}{the variable that labels each individual instance of the time-series}
+
+\item{clear_id_var}{boolean that decides wether or not the id_var column is deleted}
 }
 \value{
 the filtered dataset
