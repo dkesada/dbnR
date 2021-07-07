@@ -7,6 +7,8 @@
 Badge](https://www.r-pkg.org/badges/version/dbnR)](https://CRAN.R-project.org/package=dbnR)
 [![CRAN Downloads
 Badge](https://cranlogs.r-pkg.org/badges/grand-total/dbnR)](https://CRAN.R-project.org/package=dbnR)
+[![License: GPL
+v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 ## Introduction
 
