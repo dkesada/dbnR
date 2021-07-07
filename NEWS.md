@@ -4,6 +4,8 @@
 
 * Now filtered_fold_dt() allows a boolean argument to avoid deleting the id_var column before returning the folded dataset
 
+* New package logo
+
 # dbnR 0.6.0
 
 * Added the possibility of doing smoothing over a time series

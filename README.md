@@ -1,12 +1,14 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+# dbnR <a href='https://CRAN.R-project.org/package=dbnR'><img src='https://raw.githubusercontent.com/dkesada/dbnR/devel/media/dbnR_logo.png' align="right" height="139" /></a>
+
 [![CRAN Status
 Badge](https://www.r-pkg.org/badges/version/dbnR)](https://CRAN.R-project.org/package=dbnR)
 [![CRAN Downloads
 Badge](https://cranlogs.r-pkg.org/badges/grand-total/dbnR)](https://CRAN.R-project.org/package=dbnR)
 
-# dbnR
+## Introduction
 
 This package offers an implementation of Gaussian dynamic Bayesian
 networks (GDBN) structure learning and inference based partially on
