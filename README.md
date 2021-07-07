@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# dbnR <a href='https://CRAN.R-project.org/package=dbnR'><img src='https://raw.githubusercontent.com/dkesada/dbnR/devel/media/dbnR_logo.png' align="right" height="139" /></a>
+# dbnR
 
 [![CRAN Status
 Badge](https://www.r-pkg.org/badges/version/dbnR)](https://CRAN.R-project.org/package=dbnR)
