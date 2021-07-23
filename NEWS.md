@@ -1,3 +1,7 @@
+# dbnR 0.6.2
+
+* Fixed the create_blacklist method for sizes greater than 10. A regex "$" was missing.
+
 # dbnR 0.6.1
 
 * Added variable inertia, global best and local best parameters over time to the PSOHO algorithm

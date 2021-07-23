@@ -11,7 +11,7 @@
 create_blacklist <- function(name, size, acc = NULL, slice = 1){
   # Create the blacklist so that there are no arcs from t to t-1 and within t
   if(size >= slice){
-    n <- grep(paste0("t_", (slice-1)), name)
+    n <- grep(paste0("t_", (slice-1), "$"), name)
     len <- length(n)
     from <- name[n]
     to = name[-n]
