@@ -331,11 +331,12 @@ natParticle <- R6::R6Class("natParticle",
    #' @param v_probs vector of probabilities for the velocity sampling
    #' @param p parameter of the truncated geometric distribution 
    #' @return A new 'natParticle' object
-   initialize = function(nodes, ordering, ordering_raw, max_size, v_probs, p){
+   initialize = function(nodes, ordering, ordering_raw, max_size, v_probs, p, score){
      private$ps <- natPosition$new(nodes, ordering, ordering_raw, max_size, p)
      private$vl <- natVelocity$new(ordering, ordering_raw, max_size)
      private$vl$randomize_velocity(v_probs, p)
      private$lb <- -Inf
+     private$score <- score
    },
    
    #' @description 
@@ -347,7 +348,7 @@ natParticle <- R6::R6Class("natParticle",
    #' @return The score of the current position
    eval_ps = function(dt){
      struct <- private$ps$bn_translate() # --ICO-Improve a custom bge score could avoid translating and could perform the score over the nat vector
-     score <- bnlearn::score(struct, dt, type = "bge") # For now, unoptimized bge. Any Gaussian score could be used
+     score <- bnlearn::score(struct, dt, type = private$score) # For now, unoptimized score functions like BGe or Gaussian BIC
      
      if(score > private$lb){
        private$lb <- score 
@@ -406,7 +407,9 @@ natParticle <- R6::R6Class("natParticle",
    #' @field lb local best score obtained
    lb = NULL,
    #' @field lb_ps local best position found
-   lb_ps = NULL
+   lb_ps = NULL,
+   #' @field score bnlearn score function used
+   score = NULL
   )
 )
 
@@ -414,8 +417,12 @@ natParticle <- R6::R6Class("natParticle",
 
 #' R6 class that defines the PSO controller
 #' 
-#' The controller will encapsulate the particles and run the algorithm
+#' The controller will encapsulate the particles and run the algorithm. This
+#' time, it extends the class "PsoCtrl" in the "structure_learning_psoho.R"
+#' file, because both controllers are practically the same. The particles,
+#' positions and velocities though are too different to extend one another.
 natPsoCtrl <- R6::R6Class("natPsoCtrl",
+   inherit = natCauslist,
    public = list(
      #' @description 
      #' Constructor of the 'natPsoCtrl' class
@@ -429,12 +436,13 @@ natPsoCtrl <- R6::R6Class("natPsoCtrl",
      #' @param v_probs vector that defines the random velocity initialization probabilities
      #' @param p parameter of the truncated geometric distribution for sampling edges
      #' @param r_probs vector that defines the range of random variation of gb_cte and lb_cte
+     #' @param score bnlearn score function used
      #' @param cte boolean that defines whether the parameters remain constant or vary as the execution progresses
      #' @return A new 'natPsoCtrl' object
      initialize = function(nodes, max_size, n_inds, n_it, in_cte, gb_cte, lb_cte,
-                           v_probs, p, r_probs, cte){
+                           v_probs, p, r_probs, score, cte){
         ordering <- grep("_t_0", nodes, value = TRUE) 
-        private$initialize_particles(nodes, ordering, max_size, n_inds, v_probs, p)
+        private$initialize_particles(nodes, ordering, max_size, n_inds, v_probs, p, score)
         private$gb_scr <- -Inf
         private$n_it <- n_it
         private$in_cte <- in_cte
@@ -447,68 +455,9 @@ natPsoCtrl <- R6::R6Class("natPsoCtrl",
            private$gb_var <- (1-gb_cte) / n_it # Increase gb
            private$lb_var <- lb_cte / n_it # Decrease gb
         }
-     },
-     
-     #' @description 
-     #' Getter of the cluster attribute
-     #' @return the cluster attribute
-     get_cl = function(){return(private$cl)},
-     
-     #' @description 
-     #' Transforms the best position found into a bn structure and returns it
-     #' @return the size attribute
-     get_best_network = function(){return(private$gb_ps$bn_translate())},
-     
-     #' @description 
-     #' Main function of the pso algorithm.
-     #' @param dt the dataset from which the structure will be learned
-     run = function(dt){
-        # Missing security checks --ICO-Merge
-        private$evaluate_particles(dt)
-        pb <- utils::txtProgressBar(min = 0, max = private$n_it, style = 3)
-        # Main loop of the algorithm.
-        for(i in 1:private$n_it){
-           # Inside loop. Update each particle
-           for(p in private$parts)
-              p$update_state(private$in_cte, private$gb_cte, private$gb_ps, private$lb_cte, private$r_probs)
-           
-           if(!private$cte)
-              private$adjust_pso_parameters()
-           
-           private$evaluate_particles(dt)
-           utils::setTxtProgressBar(pb, i)
-        }
-        close(pb)
      }
    ),
    private = list(
-     #' @field parts list with all the particles in the algorithm
-     parts = NULL,
-     #' @field cl cluster for the parallel computations
-     cl = NULL,
-     #' @field n_it maximum number of iterations of the pso algorithm
-     n_it = NULL,
-     #' @field in_cte parameter that varies the effect of the inertia
-     in_cte = NULL,
-     #' @field gb_cte parameter that varies the effect of the global best
-     gb_cte = NULL,
-     #' @field lb_cte parameter that varies the effect of the local best
-     lb_cte = NULL,
-     #' @field b_ps global best position found
-     gb_ps = NULL,
-     #' @field b_scr global best score obtained
-     gb_scr = NULL,
-     #' @field r_probs vector that defines the range of random variation of gb_cte and lb_cte
-     r_probs = NULL,
-     #' @field cte boolean that defines whether the parameters remain constant or vary as the execution progresses
-     cte = NULL,
-     #' @field in_var decrement of the inertia each iteration
-     in_var = NULL,
-     #' @field gb_var increment of the global best parameter each iteration
-     gb_var = NULL,
-     #' @field lb_var increment of the local best parameter each iteration
-     lb_var = NULL,
-     
      #' @description 
      #' If the names of the nodes have "_t_0" appended at the end, remove it
      #' @param ordering a vector with the names of the nodes in t_0
@@ -525,12 +474,12 @@ natPsoCtrl <- R6::R6Class("natPsoCtrl",
      #' @param n_inds number of particles that the algorithm will simultaneously process
      #' @param v_probs vector that defines the random velocity initialization probabilities
      #' @param p parameter of the truncated geometric distribution for sampling edges
-     initialize_particles = function(nodes, ordering, max_size, n_inds, v_probs, p){
-        #private$parts <- parallel::parLapply(private$cl,1:n_inds, function(i){Particle$new(ordering, size)})
+     #' @param score bnlearn score function used
+     initialize_particles = function(nodes, ordering, max_size, n_inds, v_probs, p, score){
         private$parts <- vector(mode = "list", length = n_inds)
         ordering_raw <- private$crop_names(ordering)
         for(i in 1:n_inds)
-           private$parts[[i]] <- natParticle$new(nodes, ordering, ordering_raw, max_size, v_probs, p)
+           private$parts[[i]] <- natParticle$new(nodes, ordering, ordering_raw, max_size, v_probs, p, score)
      },
      
      #' @description 
