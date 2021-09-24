@@ -324,7 +324,7 @@ Particle <- R6::R6Class("Particle",
     #' @return The score of the current position
     eval_ps = function(dt){
       struct <- private$ps$bn_translate()
-      score <- bnlearn::score(struct, dt, type = private$score) # Careful with bge score, it returns NaNs for big networks
+      score <- bnlearn::score(struct, dt, type = private$score)
       if(score > private$lb){
         private$lb <- score 
         private$lb_ps <- private$ps
