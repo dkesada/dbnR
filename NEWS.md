@@ -1,3 +1,7 @@
+#dbnR 0.7.0
+
+* Added new order invariant particle swarm structure learning algorithm: natPSOHO
+
 # dbnR 0.6.2
 
 * Fixed the create_blacklist method for sizes greater than 10. A regex "$" was missing.
