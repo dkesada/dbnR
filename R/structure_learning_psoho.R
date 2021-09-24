@@ -551,6 +551,7 @@ psoho <- function(dt, size, f_dt = NULL, n_inds = 50, n_it = 50,
   numeric_arg_check(n_inds, n_it, in_cte, gb_cte, lb_cte)
   numeric_prob_vector_check(v_probs, 3)
   numeric_prob_vector_check(r_probs, 2)
+  logical_arg_check(cte)
   
   if(is.null(f_dt)){
     ordering <- names(dt)
