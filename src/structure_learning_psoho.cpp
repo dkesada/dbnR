@@ -1,4 +1,4 @@
-#include "include/psoho_structure_learning.h"
+#include "include/structure_learning_psoho.h"
 
 // All the C++ code of the psoho algorithm has also been condensed into one
 // source file and one header.
