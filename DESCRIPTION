@@ -8,7 +8,7 @@ Authors@R: c(
 Description: Learning and inference over dynamic Bayesian networks of arbitrary 
     Markovian order. Extends some of the functionality offered by the 'bnlearn' 
     package to learn the networks from data and perform exact inference. 
-    It offers two structure learning algorithms for dynamic Bayesian networks
+    It offers three structure learning algorithms for dynamic Bayesian networks
     and the possibility to perform forecasts of arbitrary length. A tool for 
     visualizing the structure of the net is also provided via the 'visNetwork' 
     package.
