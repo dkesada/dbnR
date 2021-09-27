@@ -234,16 +234,6 @@ initial_learning_method_check <- function(obj){
     stop(paste("unknown structure learning method. Valid methods are:", Reduce(function(acu,x){paste(acu, x, sep = ", ")}, struc_learning_methods())))
 }
 
-is_causlist <- function(obj){
-  return(inherits(obj, "causlist"))
-}
-
-initial_causlist_check <- function(obj){
-  if(!is_causlist(obj))
-    stop(sprintf("%s must be of class 'causlist'.",
-                 deparse(substitute(obj))))
-}
-
 no_intraslice_check <- function(net){
   idx <- which(grepl("t_0", names(net$nodes)))
   for(i in idx)
