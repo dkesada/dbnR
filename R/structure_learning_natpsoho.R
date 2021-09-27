@@ -143,8 +143,6 @@ natVelocity <- R6::R6Class("natVelocity",
       #' 
       #' @param k a real number
       cte_times_velocity = function(k){
-         # initial_numeric_check(k) --ICO-Merge
-         
          # If k < 0, invert the cl and the cl_neg
          if(k < 0){ 
             tmp <- private$cl
@@ -181,140 +179,125 @@ natVelocity <- R6::R6Class("natVelocity",
 #' is to encode the solutions in the PSO framework. Each particle will have a 
 #' position.
 natPosition <- R6::R6Class("natPosition", 
-  inherit = natCauslist,
-  public = list(
-   #' @description 
-   #' Constructor of the 'natPosition' class
-   #' @param nodes a vector with the names of the nodes
-   #' @param ordering a vector with the names of the nodes in t_0
-   #' @param ordering_raw a vector with the names of the nodes without the appended "_t_0"
-   #' @param max_size Maximum number of timeslices of the DBN
-   #' @param p the parameter of the sampling truncated geometric distribution
-   #' If lesser or equal to 0, a uniform distribution will be used instead. 
-   #' @return A new 'natPosition' object
-   #' @importFrom dbnR fold_dt
-   initialize = function(nodes, ordering, ordering_raw, max_size, p = 0.06){
-     super$initialize(ordering, ordering_raw)
-     private$nodes <- nodes
-     private$cl <- private$generate_random_position(length(ordering), max_size, p)
-     private$n_arcs <- private$recount_arcs()
-     private$max_size <- max_size
-     private$p <- p
-   },
+   inherit = natCauslist,
+   public = list(
+      #' @description 
+      #' Constructor of the 'natPosition' class
+      #' @param nodes a vector with the names of the nodes
+      #' @param ordering a vector with the names of the nodes in t_0
+      #' @param ordering_raw a vector with the names of the nodes without the appended "_t_0"
+      #' @param max_size Maximum number of timeslices of the DBN
+      #' @param p the parameter of the sampling truncated geometric distribution
+      #' If lesser or equal to 0, a uniform distribution will be used instead. 
+      #' @return A new 'natPosition' object
+      #' @importFrom dbnR fold_dt
+      initialize = function(nodes, ordering, ordering_raw, max_size, p = 0.06){
+         super$initialize(ordering, ordering_raw)
+         private$nodes <- nodes
+         private$max_size <- max_size
+         private$cl <- private$generate_random_position(length(ordering), p)
+         private$n_arcs <- private$recount_arcs()
+         private$p <- p
+      },
+      
+      get_n_arcs = function(){return(private$n_arcs)},
+      
+      #' @description 
+      #' Translate the vector into a DBN network
+      #' 
+      #' Uses this object private cl and transforms it into a DBN.
+      #' @return a dbn object
+      bn_translate = function(){
+         arc_mat <- cl_to_arc_matrix_cpp(private$cl, private$ordering_raw, private$n_arcs)
+         net <- bnlearn::empty.graph(private$nodes, check.args = FALSE) # Quite inefficient with bnlearn security checks
+         bnlearn::arcs(net, check.cycles = FALSE, check.illegal = FALSE, check.bypass = TRUE) <- arc_mat # Quite inefficient with bnlearn security checks
+         
+         return(net)
+      },
+      
+      #' @description 
+      #' Add a velocity to the position
+      #' 
+      #' Given a natVelocity object, add it to the current position.
+      #' @param vl a natVelocity object
+      add_velocity = function(vl){
+         private$n_arcs <- nat_pos_plus_vel_cpp(private$cl, vl$get_cl(), vl$get_cl_neg(), private$n_arcs)
+      }
+   ),
    
-   get_n_arcs = function(){return(private$n_arcs)},
-   
-   #' @description 
-   #' Translate the vector into a DBN network
-   #' 
-   #' Uses this object private cl and transforms it into a DBN.
-   #' @return a dbn object
-   bn_translate = function(){
-     arc_mat <- cl_to_arc_matrix_cpp(private$cl, private$ordering_raw, private$n_arcs)
-     
-     net <- bnlearn::empty.graph(private$nodes)
-     bnlearn::arcs(net, check.cycles = FALSE, check.illegal = FALSE) <- arc_mat
-     
-     return(net)
-   },
-   
-   #' @description 
-   #' Add a velocity to the position
-   #' 
-   #' Given a natVelocity object, add it to the current position.
-   #' @param vl a natVelocity object
-   add_velocity = function(vl){
-     private$n_arcs <- nat_pos_plus_vel_cpp(private$cl, vl$get_cl(), vl$get_cl_neg(), private$n_arcs)
-   },
-   
-   #' @description 
-   #' Given another position, returns the velocity that gets it to this
-   #' position.
-   #'  
-   #' @param ps a natPosition object
-   #' return the natVelocity that gets the other position to this one
-   subtract_position = function(ps){
-     res <- natVelocity$new(private$ordering, private$ordering_raw, private$max_size)
-     res$subtract_positions(ps, self)
-     
-     return(res)
-   }
-  ),
-  
-  private = list(
-   #' @field n_arcs Number of arcs in the network
-   n_arcs = NULL,
-   #' @field max_size Maximum number of timeslices of the DBN
-   max_size = NULL,
-   #' @field p Parameter of the sampling truncated geometric distribution
-   p = NULL,
-   #' @field nodes Names of the nodes in the network
-   nodes = NULL,
-   
-   #' @description 
-   #' Return the static node ordering
-   #' 
-   #' This function takes as input a dbn and return the node ordering of the
-   #' variables inside a timeslice. This ordering is needed to understand a
-   #' position vector.
-   #' @param net a dbn or dbn.fit object
-   #' @return the ordering of the nodes in t_0
-   dbn_ordering = function(net){
-     return(grep("t_0", names(net$nodes), value = TRUE))
-   },
-   
-   #' @description 
-   #' Translate a DBN into a position vector
-   #' 
-   #' This function takes as input a network from a DBN and transforms the 
-   #' structure into a vector of natural numbers if it is a valid DBN. Valid 
-   #' DBNs have only inter-timeslice edges and only allow variables in t_0 to 
-   #' have parents.
-   #' @param net a dbn object
-   cl_translate = function(net){
-     private$cl <- create_natcauslist_cpp(private$cl, net$nodes, private$ordering)
-   },
-   
-   #' @description 
-   #' Generates a random position
-   #' 
-   #' This function takes as input the number of variables, the maximum size
-   #' and the parameter p and returns a random position with arcs 
-   #' sampled either from the uniform distribution or from a truncated 
-   #' geometric distribution. Much faster than the binary implementation with
-   #' lists of lists and random bn generation into translation.
-   #' @param n_vars the number of variables in t_0
-   #' @param max_size the maximum size of the DBN
-   #' @param p the parameter of the truncated geometric sampler. If lesser or
-   #' equal to 0, a uniform distribution will be used instead.
-   #' @return a random position
-   generate_random_position = function(n_vars, max_size, p){
-     res <- init_cl_cpp(n_vars * n_vars)
-     
-     if(p <= 0){
-       res <- floor(runif(n_vars * n_vars, 0, max_size))
-     }
-     
-     else{
-       for(i in 1:length(res))
-         res[i] <- trunc_geom(p, max_size)
-     }
-     
-     return(res)
-   },
-   
-   #' @description 
-   #' Recount the number of arcs in the cl
-   #' @return the number of arcs
-   recount_arcs = function(){
-     private$n_arcs <- 0
-     for(i in 1:length(private$cl))
-       private$n_arcs <- private$n_arcs + bitcount(private$cl[i])
-     
-     return(private$n_arcs)
-   }
-   
-  )
+   private = list(
+      #' @field n_arcs Number of arcs in the network
+      n_arcs = NULL,
+      #' @field max_size Maximum number of timeslices of the DBN
+      max_size = NULL,
+      #' @field p Parameter of the sampling truncated geometric distribution
+      p = NULL,
+      #' @field nodes Names of the nodes in the network
+      nodes = NULL,
+      
+      #' @description 
+      #' Return the static node ordering
+      #' 
+      #' This function takes as input a dbn and return the node ordering of the
+      #' variables inside a timeslice. This ordering is needed to understand a
+      #' position vector.
+      #' @param net a dbn or dbn.fit object
+      #' @return the ordering of the nodes in t_0
+      dbn_ordering = function(net){
+         return(grep("t_0", names(net$nodes), value = TRUE))
+      },
+      
+      #' @description 
+      #' Translate a DBN into a position vector
+      #' 
+      #' This function takes as input a network from a DBN and transforms the 
+      #' structure into a vector of natural numbers if it is a valid DBN. Valid 
+      #' DBNs have only inter-timeslice edges and only allow variables in t_0 to 
+      #' have parents.
+      #' @param net a dbn object
+      cl_translate = function(net){
+         private$cl <- create_natcauslist_cpp(private$cl, net$nodes, private$ordering)
+      },
+      
+      #' @description 
+      #' Generates a random position
+      #' 
+      #' This function takes as input the number of variables, the maximum size
+      #' and the parameter p and returns a random position with arcs 
+      #' sampled either from the uniform distribution or from a truncated 
+      #' geometric distribution. Much faster than the binary implementation with
+      #' lists of lists and random bn generation into translation.
+      #' @param n_vars the number of variables in t_0
+      #' @param p the parameter of the truncated geometric sampler. If lesser or
+      #' equal to 0, a uniform distribution will be used instead.
+      #' @return a random position
+      generate_random_position = function(n_vars, p){
+         res <- init_cl_cpp(n_vars * n_vars)
+         
+         if(p <= 0){
+            res <- floor(runif(n_vars * n_vars, 0, 2^(private$max_size - 1)))
+         }
+         
+         else{
+            for(i in 1:length(res))
+               res[i] <- trunc_geom(p, 2^(private$max_size - 1))
+         }
+         
+         return(res)
+      },
+      
+      #' @description 
+      #' Recount the number of arcs in the cl
+      #' @return the number of arcs
+      recount_arcs = function(){
+         private$n_arcs <- 0
+         for(i in 1:length(private$cl))
+            private$n_arcs <- private$n_arcs + bitcount(private$cl[i])
+         
+         return(private$n_arcs)
+      }
+      
+   )
 )
 
 # -----------------------------------------------------------------------------
@@ -323,96 +306,104 @@ natPosition <- R6::R6Class("natPosition",
 #' 
 #' A particle has a Position, a Velocity and a local best
 natParticle <- R6::R6Class("natParticle",
-  public = list(
-   #' @description 
-   #' Constructor of the 'natParticle' class
-   #' @param nodes a vector with the names of the nodes
-   #' @param ordering a vector with the names of the nodes in t_0
-   #' @param ordering_raw a vector with the names of the nodes without the appended "_t_0"
-   #' @param max_size maximum number of timeslices of the DBN
-   #' @param v_probs vector of probabilities for the velocity sampling
-   #' @param p parameter of the truncated geometric distribution 
-   #' @return A new 'natParticle' object
-   initialize = function(nodes, ordering, ordering_raw, max_size, v_probs, p, score){
-     private$ps <- natPosition$new(nodes, ordering, ordering_raw, max_size, p)
-     private$vl <- natVelocity$new(ordering, ordering_raw, max_size)
-     private$vl$randomize_velocity(v_probs, p)
-     private$lb <- -Inf
-     private$score <- score
-   },
+   public = list(
+      #' @description 
+      #' Constructor of the 'natParticle' class
+      #' @param nodes a vector with the names of the nodes
+      #' @param ordering a vector with the names of the nodes in t_0
+      #' @param ordering_raw a vector with the names of the nodes without the appended "_t_0"
+      #' @param max_size maximum number of timeslices of the DBN
+      #' @param v_probs vector of probabilities for the velocity sampling
+      #' @param p parameter of the truncated geometric distribution 
+      #' @param score bnlearn score function used
+      #' @return A new 'natParticle' object
+      initialize = function(nodes, ordering, ordering_raw, max_size, v_probs, p, score){
+         private$ps <- natPosition$new(nodes, ordering, ordering_raw, max_size, p)
+         private$vl <- natVelocity$new(ordering, ordering_raw, max_size)
+         private$vl$randomize_velocity(v_probs, p)
+         private$vl_gb <- natVelocity$new(ordering, ordering_raw, max_size)
+         private$vl_lb <- natVelocity$new(ordering, ordering_raw, max_size)
+         private$lb <- -Inf
+         private$score <- score
+      },
+      
+      #' @description 
+      #' Evaluate the score of the particle's position
+      #' 
+      #' Evaluate the score of the particle's position.
+      #' Updates the local best if the new one is better.
+      #' @param dt dataset to evaluate the fitness of the particle
+      #' @return The score of the current position
+      eval_ps = function(dt){
+         struct <- private$ps$bn_translate()
+         score <- bnlearn::score(struct, dt, type = private$score,
+                                 check.args = F, targets = private$ps$ordering) # For now, unoptimized scores. Any Gaussian score could be used
+         
+         if(score > private$lb){
+            private$lb <- score 
+            private$lb_ps <- private$ps
+         }
+         
+         return(score)
+      },
+      
+      #' @description 
+      #' Update the position of the particle with the velocity
+      #' 
+      #' Update the position of the particle given the constants after calculating
+      #' the new velocity
+      #' @param in_cte parameter that varies the effect of the inertia
+      #' @param gb_cte parameter that varies the effect of the global best
+      #' @param gb_ps position of the global best
+      #' @param lb_cte parameter that varies the effect of the local best
+      #' @param r_probs vector that defines the range of random variation of gb_cte and lb_cte
+      update_state = function(in_cte, gb_cte, gb_ps, lb_cte, r_probs){ # max_vl = 20
+         # 1.- Inertia of previous velocity
+         private$vl$cte_times_velocity(in_cte)
+         # 2.- Velocity from global best
+         op1 <- gb_cte * runif(1, r_probs[1], r_probs[2])
+         private$vl_gb$subtract_positions(private$ps, gb_ps)
+         private$vl_gb$cte_times_velocity(op1)
+         # 3.- Velocity from local best
+         op2 <- lb_cte * runif(1, r_probs[1], r_probs[2])
+         private$vl_lb$subtract_positions(private$ps, private$lb_ps)
+         private$vl_lb$cte_times_velocity(op2)
+         # 4.- New velocity
+         private$vl$add_velocity(private$vl_gb)
+         private$vl$add_velocity(private$vl_lb)
+         # 5.- Reduce velocity if higher than maximum. Awful results when the limit is low, so dropped for now.
+         # if(private$vl$get_abs_op() > max_vl)
+         #    private$vl$cte_times_velocity(max_vl / private$vl$get_abs_op())
+         # 6.- New position
+         private$ps$add_velocity(private$vl)
+         # 7.- If a node has more parents than the maximum, reduce them (TODO)
+      },
+      
+      get_ps = function(){return(private$ps)},
+      
+      get_vl = function(){return(private$vl)},
+      
+      get_lb = function(){return(private$lb)},
+      
+      get_lb_ps = function(){return(private$lb_ps)}
+   ),
    
-   #' @description 
-   #' Evaluate the score of the particle's position
-   #' 
-   #' Evaluate the score of the particle's position.
-   #' Updates the local best if the new one is better.
-   #' @param dt dataset to evaluate the fitness of the particle
-   #' @return The score of the current position
-   eval_ps = function(dt){
-     struct <- private$ps$bn_translate() # --ICO-Improve a custom bge score could avoid translating and could perform the score over the nat vector
-     score <- bnlearn::score(struct, dt, type = private$score) # For now, unoptimized score functions like BGe or Gaussian BIC
-     
-     if(score > private$lb){
-       private$lb <- score 
-       private$lb_ps <- private$ps
-     }
-     
-     return(score)
-   },
-   
-   #' @description 
-   #' Update the position of the particle with the velocity
-   #' 
-   #' Update the position of the particle given the constants after calculating
-   #' the new velocity
-   #' @param in_cte parameter that varies the effect of the inertia
-   #' @param gb_cte parameter that varies the effect of the global best
-   #' @param gb_ps position of the global best
-   #' @param lb_cte parameter that varies the effect of the local best
-   #' @param r_probs vector that defines the range of random variation of gb_cte and lb_cte
-   update_state = function(in_cte, gb_cte, gb_ps, lb_cte, r_probs){ # max_vl = 20
-     # 1.- Inertia of previous velocity
-     private$vl$cte_times_velocity(in_cte)
-     # 2.- Velocity from global best
-     op1 <- gb_cte * runif(1, r_probs[1], r_probs[2])
-     vl1 <- gb_ps$subtract_position(private$ps)
-     vl1$cte_times_velocity(op1)
-     # 3.- Velocity from local best
-     op2 <- lb_cte * runif(1, r_probs[1], r_probs[2])
-     vl2 <- private$lb_ps$subtract_position(private$ps)
-     vl2$cte_times_velocity(op2)
-     # 4.- New velocity
-     private$vl$add_velocity(vl1)
-     private$vl$add_velocity(vl2)
-     # 5.- Reduce velocity if higher than maximum. Awful results when the limit is low, so dropped for now.
-     # if(private$vl$get_abs_op() > max_vl)
-     #    private$vl$cte_times_velocity(max_vl / private$vl$get_abs_op())
-     # 6.- New position
-     private$ps$add_velocity(private$vl)
-     # 7.- If a node has more parents than the maximum, reduce them (TODO)
-   },
-   
-   get_ps = function(){return(private$ps)},
-   
-   get_vl = function(){return(private$vl)},
-   
-   get_lb = function(){return(private$lb)},
-   
-   get_lb_ps = function(){return(private$lb_ps)}
-  ),
-  
-  private = list(
-   #' @field ps position of the particle
-   ps = NULL,
-   #' @field cl velocity of the particle
-   vl = NULL,
-   #' @field lb local best score obtained
-   lb = NULL,
-   #' @field lb_ps local best position found
-   lb_ps = NULL,
-   #' @field score bnlearn score function used
-   score = NULL
-  )
+   private = list(
+      #' @field ps position of the particle
+      ps = NULL,
+      #' @field cl velocity of the particle
+      vl = NULL,
+      #' @field velocity that takes the particle to the global best
+      vl_gb = NULL, # Just to avoid instantiating thousands of velocities
+      #' @field velocity that takes the particle to the local best
+      vl_lb = NULL,
+      #' @field lb local best score obtained
+      lb = NULL,
+      #' @field lb_ps local best position found
+      lb_ps = NULL,
+      #' @field score bnlearn score function used
+      score = NULL
+   )
 )
 
 # -----------------------------------------------------------------------------
@@ -422,9 +413,9 @@ natParticle <- R6::R6Class("natParticle",
 #' The controller will encapsulate the particles and run the algorithm. This
 #' time, it extends the class "PsoCtrl" in the "structure_learning_psoho.R"
 #' file, because both controllers are practically the same. The particles,
-#' positions and velocities though are too different to extend one another.
+#' positions and velocities are too different to extend one another though.
 natPsoCtrl <- R6::R6Class("natPsoCtrl",
-   inherit = natCauslist,
+   inherit = PsoCtrl,
    public = list(
      #' @description 
      #' Constructor of the 'natPsoCtrl' class
@@ -465,7 +456,7 @@ natPsoCtrl <- R6::R6Class("natPsoCtrl",
      #' @param ordering a vector with the names of the nodes in t_0
      #' @return the ordering with the names cropped
      crop_names = function(ordering){
-        sapply(ordering, function(x){gsub("_t_0", "", x)}, USE.NAMES = F)
+        crop_names_cpp(ordering)
      },
      
      #' @description 
@@ -478,8 +469,8 @@ natPsoCtrl <- R6::R6Class("natPsoCtrl",
      #' @param p parameter of the truncated geometric distribution for sampling edges
      #' @param score bnlearn score function used
      initialize_particles = function(nodes, ordering, max_size, n_inds, v_probs, p, score){
-        private$parts <- vector(mode = "list", length = n_inds)
         ordering_raw <- private$crop_names(ordering)
+        private$parts <- vector(mode = "list", length = n_inds)
         for(i in 1:n_inds)
            private$parts[[i]] <- natParticle$new(nodes, ordering, ordering_raw, max_size, v_probs, p, score)
      }
