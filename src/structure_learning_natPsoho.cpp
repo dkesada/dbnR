@@ -14,7 +14,7 @@
 // @param ordering a list with the order of the variables in t_0
 // @param node the node to insert
 // @param i the causal unit in which to insert.
-void insert_node_natcl(Rcpp::NumericVector &cl, const StringVector &ordering, std::string node, unsigned int i){
+void insert_node_natcl(Rcpp::NumericVector &cl, const Rcpp::StringVector &ordering, std::string node, unsigned int i){
   Rcpp::StringVector tuple = find_name_and_index(node);
   std::string tmp;
   tmp = tuple[1];
@@ -40,7 +40,7 @@ void insert_node_natcl(Rcpp::NumericVector &cl, const StringVector &ordering, st
 //' @param ordering a vector with the names of the variables in order
 //' @return the natCauslist equivalent to the DBN
 // [[Rcpp::export]]
-Rcpp::NumericVector create_natcauslist_cpp(Rcpp::NumericVector &cl, Rcpp::List &net, StringVector &ordering) {
+Rcpp::NumericVector create_natcauslist_cpp(Rcpp::NumericVector &cl, Rcpp::List &net, Rcpp::StringVector &ordering) {
   Rcpp::List aux;
   Rcpp::StringVector parents;
   std::string node;
@@ -478,7 +478,7 @@ Rcpp::NumericVector init_cl_cpp(int n_nodes){
 //' @return the vector with the names cropped
 // [[Rcpp::export]]
 Rcpp::StringVector crop_names_cpp(const Rcpp::StringVector &names){
-  StringVector res = Rcpp::clone(names);
+  Rcpp::StringVector res = Rcpp::clone(names);
   std::string tmp;
   std::size_t pos;
   

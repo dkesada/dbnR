@@ -190,7 +190,6 @@ natPosition <- R6::R6Class("natPosition",
       #' @param p the parameter of the sampling truncated geometric distribution
       #' If lesser or equal to 0, a uniform distribution will be used instead. 
       #' @return A new 'natPosition' object
-      #' @importFrom dbnR fold_dt
       initialize = function(nodes, ordering, ordering_raw, max_size, p = 0.06){
          super$initialize(ordering, ordering_raw)
          private$nodes <- nodes

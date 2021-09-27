@@ -185,7 +185,7 @@ nodes_gen_exp <- function(ordering, size){
   tmp <- matrix(nrow = size, ncol = length(ordering))
   tmp <- as.data.table(tmp)
   names(tmp) <- ordering
-  tmp <- dbnR::fold_dt(tmp, size)
+  tmp <- fold_dt(tmp, size)
   res$nodes <- names(tmp)
   
   return(res)
