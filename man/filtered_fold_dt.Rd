@@ -13,7 +13,7 @@ filtered_fold_dt(dt, size, id_var, clear_id_var = TRUE)
 
 \item{id_var}{the variable that labels each individual instance of the time-series}
 
-\item{clear_id_var}{boolean that decides wether or not the id_var column is deleted}
+\item{clear_id_var}{boolean that decides whether or not the id_var column is deleted}
 }
 \value{
 the filtered dataset

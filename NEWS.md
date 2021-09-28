@@ -6,7 +6,6 @@
 
 * Removed unused rand import in C++
 
-
 #dbnR 0.7.0
 
 * Added new order invariant particle swarm structure learning algorithm: natPSOHO
@@ -47,7 +46,7 @@
 
 # dbnR 0.5.5
 
-* Removed obsolete and time consuming security checks. The psoho initial checks were supposed to secure the separate usage of the 'Position' and 'Velocity' classes, but they are not exported, and consequently they cannot be missused in the sense that the checks prevented. They also were O(n) on the size of the ordering, and were run each time some operation was performed over positions or velocities.
+* Removed obsolete and time consuming security checks. The psoho initial checks were supposed to secure the separate usage of the 'Position' and 'Velocity' classes, but they are not exported, and consequently they cannot be misused in the sense that the checks prevented. They also were O(n) on the size of the ordering, and were run each time some operation was performed over positions or velocities.
 
 # dbnR 0.5.4
 
@@ -57,7 +56,7 @@
 
 * Added an auxiliary function to fold a dataset and not allow instances from different labeled series to be in the same row
 
-* Added the possibility to introduce a previously folded dataset to the structure learning. This helps when the dataset has several iterations of the same process separated by id. If you fold the dataset directly, data from 2 or more different processes will appear in some rows, giving the impression to the model that the ending and the begining of the processes merge into each other, which most likely is not true
+* Added the possibility to introduce a previously folded dataset to the structure learning. This helps when the dataset has several iterations of the same process separated by id. If you fold the dataset directly, data from 2 or more different processes will appear in some rows, giving the impression to the model that the ending and the beginning of the processes merge into each other, which most likely is not true
 
 # dbnR 0.5.3
 

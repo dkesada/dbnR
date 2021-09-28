@@ -52,7 +52,7 @@ nat_pos_plus_vel_cpp <- function(cl, vl, vl_neg, n_arcs) {
     .Call('_dbnR_nat_pos_plus_vel_cpp', PACKAGE = 'dbnR', cl, vl, vl_neg, n_arcs)
 }
 
-#' Substracts two natPositions to obtain the natVelocity that transforms ps1 into ps2
+#' Subtracts two natPositions to obtain the natVelocity that transforms ps1 into ps2
 #' 
 #' @param ps1 the first position's causal list
 #' @param ps2 the second position's causal list
@@ -188,7 +188,7 @@ randomize_vl_cpp <- function(vl, probs) {
     .Call('_dbnR_randomize_vl_cpp', PACKAGE = 'dbnR', vl, probs)
 }
 
-#' Substracts two Positions to obtain the Velocity that transforms one into the other
+#' Subtracts two Positions to obtain the Velocity that transforms one into the other
 #' 
 #' @param cl the first position's causal list
 #' @param ps the second position's causal list

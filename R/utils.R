@@ -96,7 +96,7 @@ filter_same_cycle <- function(f_dt, size, id_var){
 #' @param dt data.table to be folded
 #' @param size the size of the data.table
 #' @param id_var the variable that labels each individual instance of the time-series
-#' @param clear_id_var boolean that decides wether or not the id_var column is deleted 
+#' @param clear_id_var boolean that decides whether or not the id_var column is deleted 
 #' @return the filtered dataset
 #' @export
 filtered_fold_dt <- function(dt, size, id_var, clear_id_var = TRUE){

@@ -110,7 +110,7 @@ dynamic_ordering <- function(structure){
 #' Extends the names of the nodes in t_0 to t_(max-1)
 #'
 #' This method extends the names of the nodes to the given maximum and
-#' mantains the order of the nodes in each slice, so as to plotting
+#' maintains the order of the nodes in each slice, so as to plotting
 #' the nodes in all slices relative to their homonyms in the first slice.
 #' @param name the names of the nodes in the t_0 slice
 #' @param acc accumulator of the resulting names in the recursion

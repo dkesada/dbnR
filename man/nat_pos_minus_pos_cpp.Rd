@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{nat_pos_minus_pos_cpp}
 \alias{nat_pos_minus_pos_cpp}
-\title{Substracts two natPositions to obtain the natVelocity that transforms ps1 into ps2}
+\title{Subtracts two natPositions to obtain the natVelocity that transforms ps1 into ps2}
 \usage{
 nat_pos_minus_pos_cpp(ps1, ps2, vl, vl_neg)
 }
@@ -19,5 +19,5 @@ nat_pos_minus_pos_cpp(ps1, ps2, vl, vl_neg)
 the velocity's causal lists by reference and the number of operations by return
 }
 \description{
-Substracts two natPositions to obtain the natVelocity that transforms ps1 into ps2
+Subtracts two natPositions to obtain the natVelocity that transforms ps1 into ps2
 }

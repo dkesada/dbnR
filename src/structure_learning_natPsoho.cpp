@@ -122,7 +122,7 @@ int nat_pos_plus_vel_cpp(Rcpp::NumericVector &cl, const Rcpp::NumericVector &vl,
 // Velocity
 // ----------------------------------------------------------------------------
 
-//' Substracts two natPositions to obtain the natVelocity that transforms ps1 into ps2
+//' Subtracts two natPositions to obtain the natVelocity that transforms ps1 into ps2
 //' 
 //' @param ps1 the first position's causal list
 //' @param ps2 the second position's causal list
