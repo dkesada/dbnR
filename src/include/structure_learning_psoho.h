@@ -9,7 +9,6 @@ using namespace Rcpp;
 #define psoho_op
 
 #include <regex>
-#include <random>
 
 Rcpp::List initialize_cl_cpp(StringVector &ordering, unsigned int size);
 void insert_node_cl(Rcpp::List &cl, std::string node, unsigned int i);

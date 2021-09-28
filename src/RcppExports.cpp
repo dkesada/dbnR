@@ -5,6 +5,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // calc_mu_cpp
 std::map<std::string, float> calc_mu_cpp(Rcpp::List& fit, Rcpp::StringVector& order);
 RcppExport SEXP _dbnR_calc_mu_cpp(SEXP fitSEXP, SEXP orderSEXP) {
