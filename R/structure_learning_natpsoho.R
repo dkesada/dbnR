@@ -93,7 +93,7 @@ natVelocity <- R6::R6Class("natVelocity",
       #' @param probs the weight of each value {-1,0,1}. They define the probability that each of them will be picked 
       #' @param p the parameter of the geometric distribution
       randomize_velocity = function(probs = c(10, 65, 25), p = 0.06){
-         numeric_prob_vector_check(probs)
+         numeric_prob_vector_check(probs, 3)
          
          for(i in 1:length(private$cl)){
             op <- rmultinom(n = 1, size = 1, prob = probs)
@@ -208,8 +208,8 @@ natPosition <- R6::R6Class("natPosition",
       #' @return a dbn object
       bn_translate = function(){
          arc_mat <- natcl_to_arc_matrix_cpp(private$cl, private$ordering_raw, private$n_arcs)
-         net <- bnlearn::empty.graph(private$nodes, check.args = FALSE) # Quite inefficient with bnlearn security checks
-         bnlearn::arcs(net, check.cycles = FALSE, check.illegal = FALSE, check.bypass = TRUE) <- arc_mat # Quite inefficient with bnlearn security checks
+         net <- bnlearn::empty.graph(private$nodes) # Quite inefficient with bnlearn security checks
+         bnlearn::arcs(net, check.cycles = FALSE, check.illegal = FALSE) <- arc_mat # Quite inefficient with bnlearn security checks
          
          return(net)
       },
@@ -335,8 +335,7 @@ natParticle <- R6::R6Class("natParticle",
       #' @return The score of the current position
       eval_ps = function(dt){
          struct <- private$ps$bn_translate()
-         score <- bnlearn::score(struct, dt, type = private$score,
-                                 check.args = F, targets = private$ps$ordering) # For now, unoptimized scores. Any Gaussian score could be used
+         score <- bnlearn::score(struct, dt, type = private$score) # For now, unoptimized scores. Any Gaussian score could be used
          
          if(score > private$lb){
             private$lb <- score 
@@ -484,7 +483,7 @@ natPsoCtrl <- R6::R6Class("natPsoCtrl",
 #' structure ready to be fitted.
 #' Original algorithm at https://link.springer.com/chapter/10.1007/978-3-030-86271-8_14
 #' @param dt a data.table with the data of the network to be trained
-#' @param max_size Maximum number of timeslices of the DBN allowed. Markovian order 1 equals size 2, and so on
+#' @param size Maximum number of timeslices of the DBN allowed. Markovian order 1 equals size 2, and so on
 #' @param n_inds Number of particles used in the algorithm
 #' @param n_it Maximum number of iterations that the algorithm can perform
 #' @param in_cte parameter that varies the effect of the inertia
@@ -497,7 +496,7 @@ natPsoCtrl <- R6::R6Class("natPsoCtrl",
 #' @param p parameter of the truncated geometric distribution for sampling edges
 #' @param cte a boolean that determines whether the inertia, global best and local best parameters remain constant or vary as the algorithm progresses. Inertia and local best values decrease as the global best increases, to favor exploration at first and exploitation at the end
 #' @return A 'dbn' object with the structure of the best network found
-natPsoho <- function(dt, max_size, f_dt = NULL, n_inds = 50, n_it = 50,
+natPsoho <- function(dt, size, f_dt = NULL, n_inds = 50, n_it = 50,
                   in_cte = 1, gb_cte = 0.5, lb_cte = 0.5,
                   v_probs = c(10, 65, 25), r_probs = c(-0.5, 1.5), 
                   score = "bge", p = 0.06, cte = TRUE){
@@ -506,13 +505,13 @@ natPsoho <- function(dt, max_size, f_dt = NULL, n_inds = 50, n_it = 50,
    numeric_prob_vector_check(r_probs, 2)
    logical_arg_check(cte)
    
-   nodes <- names(dt)
    if(is.null(f_dt)){
       dt <- time_rename(dt)
-      f_dt <- fold_dt_rec(dt, names(dt), max_size)
+      f_dt <- fold_dt_rec(dt, names(dt), size)
    }
+   nodes <- names(f_dt)
    
-   ctrl <- natPsoCtrl$new(nodes, max_size, n_inds, n_it, in_cte, gb_cte, lb_cte,
+   ctrl <- natPsoCtrl$new(nodes, size, n_inds, n_it, in_cte, gb_cte, lb_cte,
                        v_probs, p, r_probs, score, cte)
    ctrl$run(f_dt)
    

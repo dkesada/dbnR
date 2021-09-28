@@ -484,7 +484,7 @@ Rcpp::StringVector crop_names_cpp(const Rcpp::StringVector &names){
   
   for(int i = 0; i < res.size(); i++){
     tmp = res[i];
-    pos = tmp.find("_");
+    pos = tmp.find("_t_0");
     tmp = tmp.substr(0, pos);
     res[i] = tmp;
   }

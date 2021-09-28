@@ -6,7 +6,7 @@
 \usage{
 natPsoho(
   dt,
-  max_size,
+  size,
   f_dt = NULL,
   n_inds = 50,
   n_it = 50,
@@ -23,7 +23,7 @@ natPsoho(
 \arguments{
 \item{dt}{a data.table with the data of the network to be trained}
 
-\item{max_size}{Maximum number of timeslices of the DBN allowed. Markovian order 1 equals size 2, and so on}
+\item{size}{Maximum number of timeslices of the DBN allowed. Markovian order 1 equals size 2, and so on}
 
 \item{f_dt}{previously folded dataset, in case some specific rows have to be removed after the folding}
 

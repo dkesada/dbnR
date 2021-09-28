@@ -1,3 +1,12 @@
+#dbnR 0.7.1
+
+* natPsoho algorithm fixed and working 
+
+* Fixed check results
+
+* Removed unused rand import in C++
+
+
 #dbnR 0.7.0
 
 * Added new order invariant particle swarm structure learning algorithm: natPSOHO
