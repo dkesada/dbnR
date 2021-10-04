@@ -1,4 +1,8 @@
-#dbnR 0.7.1
+# dbnR 0.7.2
+
+* Added authors and doi of the structure learning algorithms to the description field as per request of CRAN maintainers.
+
+# dbnR 0.7.1
 
 * natPsoho algorithm fixed and working 
 
@@ -6,7 +10,7 @@
 
 * Removed unused rand import in C++
 
-#dbnR 0.7.0
+# dbnR 0.7.0
 
 * Added new order invariant particle swarm structure learning algorithm: natPSOHO
 
