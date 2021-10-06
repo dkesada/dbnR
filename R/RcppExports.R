@@ -21,6 +21,114 @@ calc_sigma_cpp <- function(fit, order) {
     .Call('_dbnR_calc_sigma_cpp', PACKAGE = 'dbnR', fit, order)
 }
 
+#' Create a natural causal list from a DBN. This is the C++ backend of the function.
+#' 
+#' @param cl an initialized causality list
+#' @param net a dbn object treated as a list of lists
+#' @param ordering a vector with the names of the variables in order
+#' @return the natCauslist equivalent to the DBN
+create_natcauslist_cpp <- function(cl, net, ordering) {
+    .Call('_dbnR_create_natcauslist_cpp', PACKAGE = 'dbnR', cl, net, ordering)
+}
+
+#' Create a matrix with the arcs defined in a causlist object
+#' 
+#' @param cl a causal list
+#' @param ordering a list with the order of the variables in t_0
+#' @param rows number of arcs in the network
+#' @return a StringMatrix with the parent nodes and the children nodes
+natcl_to_arc_matrix_cpp <- function(cl, ordering, rows) {
+    .Call('_dbnR_natcl_to_arc_matrix_cpp', PACKAGE = 'dbnR', cl, ordering, rows)
+}
+
+#' Add a velocity to a position
+#' 
+#' @param cl the position's causal list
+#' @param vl the velocity's positive causal list
+#' @param vl_neg velocity's negative causal list
+#' @param n_arcs number of arcs present in the position. Remainder: can't return integers by reference, they get casted to 1 sized vectors
+#' @return the new position by reference and the new number of arcs by return
+nat_pos_plus_vel_cpp <- function(cl, vl, vl_neg, n_arcs) {
+    .Call('_dbnR_nat_pos_plus_vel_cpp', PACKAGE = 'dbnR', cl, vl, vl_neg, n_arcs)
+}
+
+#' Subtracts two natPositions to obtain the natVelocity that transforms ps1 into ps2
+#' 
+#' @param ps1 the first position's causal list
+#' @param ps2 the second position's causal list
+#' @param vl the natVelocity's positive causal list
+#' @param vl_neg the natVelocity's negative causal list
+#' @return the velocity's causal lists by reference and the number of operations by return
+nat_pos_minus_pos_cpp <- function(ps1, ps2, vl, vl_neg) {
+    .Call('_dbnR_nat_pos_minus_pos_cpp', PACKAGE = 'dbnR', ps1, ps2, vl, vl_neg)
+}
+
+#' Adds two natVelocities 
+#' 
+#' Adds two natVelocities represented as two numeric vectors: one with the
+#' positive part and one with the negative part. Adding them is a process that
+#' does a bitwise 'or' with both the positive and negative parts of the two
+#' velocities, adjusts the new abs_op, removes duplicated arcs in the final
+#' velocity by using a bitwise 'xor' with both parts and adjusts the final abs_op.
+#' The results are returned via modifying the original vl1 and vl1_neg by
+#' reference and returning the final abs_op normally. I can't have an integer
+#' edited by reference because it automatically gets casted and cannot be used
+#' to return values. 
+#' 
+#' @param vl1 the first Velocity's positive part 
+#' @param vl1_neg the first Velocity's negative part 
+#' @param vl2 the second Velocity's positive part
+#' @param vl2_neg the first Velocity's negative part 
+#' @param abs_op1 the number of {1,-1} operations in the first velocity
+#' @param abs_op2 the number of {1,-1} operations in the second velocity
+#' @return the total number of resulting operations
+nat_vel_plus_vel_cpp <- function(vl1, vl1_neg, vl2, vl2_neg, abs_op1, abs_op2) {
+    .Call('_dbnR_nat_vel_plus_vel_cpp', PACKAGE = 'dbnR', vl1, vl1_neg, vl2, vl2_neg, abs_op1, abs_op2)
+}
+
+#' Multiply a Velocity by a constant real number
+#' 
+#' @param k the constant real number
+#' @param vl the Velocity's positive causal list
+#' @param vl_neg the Velocity's negative causal list
+#' @param abs_op the final number of {1,-1} operations
+#' @param max_size the maximum size of the network
+#' @return the new total number of operations 
+nat_cte_times_vel_cpp <- function(k, vl, vl_neg, abs_op, max_size) {
+    .Call('_dbnR_nat_cte_times_vel_cpp', PACKAGE = 'dbnR', k, vl, vl_neg, abs_op, max_size)
+}
+
+#' One-hot encoder for natural numbers without the 0
+#' 
+#' Given a natural number, return the natural number equivalent to its
+#' one-hot encoding. Instead of pow, the '<<' operator will be used.
+#' Examples: 3 -> 100 -> 4, 5 -> 10000 -> 16
+#' @param nat the natural number to convert
+#' @return the converted number
+one_hot_cpp <- function(nat) {
+    .Call('_dbnR_one_hot_cpp', PACKAGE = 'dbnR', nat)
+}
+
+bitcount <- function(x) {
+    .Call('_dbnR_bitcount', PACKAGE = 'dbnR', x)
+}
+
+#' Initialize the nodes vector
+#' 
+#' Initialize the vector in C++
+#' @param n_nodes number of receiving nodes
+#' @return a list with the randomly initialized particles
+init_cl_cpp <- function(n_nodes) {
+    .Call('_dbnR_init_cl_cpp', PACKAGE = 'dbnR', n_nodes)
+}
+
+#' If the names of the nodes have "_t_0" appended at the end, remove it
+#' @param names a vector with the names of the nodes in t_0
+#' @return the vector with the names cropped
+crop_names_cpp <- function(names) {
+    .Call('_dbnR_crop_names_cpp', PACKAGE = 'dbnR', names)
+}
+
 #' Create a causality list and initialize it
 #' 
 #' @param ordering a list with the order of the variables in t_0
@@ -80,7 +188,7 @@ randomize_vl_cpp <- function(vl, probs) {
     .Call('_dbnR_randomize_vl_cpp', PACKAGE = 'dbnR', vl, probs)
 }
 
-#' Substracts two Positions to obtain the Velocity that transforms one into the other
+#' Subtracts two Positions to obtain the Velocity that transforms one into the other
 #' 
 #' @param cl the first position's causal list
 #' @param ps the second position's causal list

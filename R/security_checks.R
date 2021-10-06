@@ -49,7 +49,7 @@ numeric_arg_check <- function(...){
     if(!is.numeric(x))
       stop(sprintf("%s has to be numeric.", deparse(substitute(x))))
     if(length(x) > 1)
-      stop(sprintf("%s can not be a vector.", deparse(substitute(x))))
+      stop(sprintf("%s cannot be a vector.", deparse(substitute(x))))
   }))
 }
 
@@ -58,7 +58,7 @@ logical_arg_check <- function(...){
     if(!is.logical(x))
       stop(sprintf("%s has to be logical", deparse(substitute(x))))
     if(length(x) > 1)
-      stop(sprintf("%s can not be a vector.", deparse(substitute(x))))
+      stop(sprintf("%s cannot be a vector.", deparse(substitute(x))))
   }))
 }
 
@@ -224,23 +224,14 @@ obj_prov_check <- function(obj_vars, prov_ev){
 
 struc_learning_methods <- function(){
   ret <- c("dmmhc",
-           "psoho")
+           "psoho",
+           "natPsoho")
   return(ret)
 }
 
 initial_learning_method_check <- function(obj){
   if(!obj %in% struc_learning_methods())
     stop(paste("unknown structure learning method. Valid methods are:", Reduce(function(acu,x){paste(acu, x, sep = ", ")}, struc_learning_methods())))
-}
-
-is_causlist <- function(obj){
-  return(inherits(obj, "causlist"))
-}
-
-initial_causlist_check <- function(obj){
-  if(!is_causlist(obj))
-    stop(sprintf("%s must be of class 'causlist'.",
-                 deparse(substitute(obj))))
 }
 
 no_intraslice_check <- function(net){

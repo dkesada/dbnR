@@ -21,7 +21,10 @@ algorithm are implemented:
   - A variation on Ghada Trabelsi’s dynamic max-min hill climbing
     (<https://tel.archives-ouvertes.fr/tel-00996061/document>).
   - A particle swarm optimization algorithm for higher-order DBNs
-    (<https://doi.org/10.1109/BRC.2014.6880957>)
+    (<https://doi.org/10.1109/BRC.2014.6880957>)  
+  - A scalable, order invariant particle swarm optimization algorithm
+    for higher-order DBNs
+    (<https://link.springer.com/chapter/10.1007/978-3-030-86271-8_14>)
 
 Inference is performed either via the particle filtering offered by
 bnlearn or by doing exact inference over the multivariate Gaussian

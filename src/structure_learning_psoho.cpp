@@ -1,4 +1,4 @@
-#include "include/psoho_structure_learning.h"
+#include "include/structure_learning_psoho.h"
 
 // All the C++ code of the psoho algorithm has also been condensed into one
 // source file and one header.
@@ -219,7 +219,7 @@ Rcpp::List randomize_vl_cpp(Rcpp::List &vl, NumericVector &probs) {
   return res;
 }
 
-//' Substracts two Positions to obtain the Velocity that transforms one into the other
+//' Subtracts two Positions to obtain the Velocity that transforms one into the other
 //' 
 //' @param cl the first position's causal list
 //' @param ps the second position's causal list

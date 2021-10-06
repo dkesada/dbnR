@@ -324,7 +324,7 @@ Particle <- R6::R6Class("Particle",
     #' @return The score of the current position
     eval_ps = function(dt){
       struct <- private$ps$bn_translate()
-      score <- bnlearn::score(struct, dt, type = private$score) # Careful with bge score, it returns NaNs for big networks
+      score <- bnlearn::score(struct, dt, type = private$score)
       if(score > private$lb){
         private$lb <- score 
         private$lb_ps <- private$ps
@@ -542,7 +542,7 @@ PsoCtrl <- R6::R6Class("PsoCtrl",
 #' @param f_dt previously folded dataset, in case some specific rows have to be removed after the folding
 #' @param score bnlearn score function used
 #' @param cte a boolean that determines whether the inertia, global best and local best parameters remain constant or vary as the algorithm progresses. Inertia and local best values decrease as the global best increases, to favor exploration at first and exploitation at the end.
-#' @return A 'bn' object with the structure of the best network found
+#' @return A 'dbn' object with the structure of the best network found
 psoho <- function(dt, size, f_dt = NULL, n_inds = 50, n_it = 50,
                                     in_cte = 1, gb_cte = 0.5, lb_cte = 0.5,
                                     v_probs = c(10, 65, 25), 
@@ -551,6 +551,7 @@ psoho <- function(dt, size, f_dt = NULL, n_inds = 50, n_it = 50,
   numeric_arg_check(n_inds, n_it, in_cte, gb_cte, lb_cte)
   numeric_prob_vector_check(v_probs, 3)
   numeric_prob_vector_check(r_probs, 2)
+  logical_arg_check(cte)
   
   if(is.null(f_dt)){
     ordering <- names(dt)

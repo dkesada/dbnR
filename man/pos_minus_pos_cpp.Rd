@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{pos_minus_pos_cpp}
 \alias{pos_minus_pos_cpp}
-\title{Substracts two Positions to obtain the Velocity that transforms one into the other}
+\title{Subtracts two Positions to obtain the Velocity that transforms one into the other}
 \usage{
 pos_minus_pos_cpp(cl, ps, vl)
 }
@@ -17,5 +17,5 @@ pos_minus_pos_cpp(cl, ps, vl)
 a list with the Velocity's causal list and the number of operations
 }
 \description{
-Substracts two Positions to obtain the Velocity that transforms one into the other
+Subtracts two Positions to obtain the Velocity that transforms one into the other
 }

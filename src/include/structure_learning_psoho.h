@@ -4,11 +4,12 @@
 using namespace Rcpp;
 #endif
 
-#include <regex>
-#include <random>
 
 #ifndef psoho_op
 #define psoho_op
+
+#include <regex>
+
 Rcpp::List initialize_cl_cpp(StringVector &ordering, unsigned int size);
 void insert_node_cl(Rcpp::List &cl, std::string node, unsigned int i);
 Rcpp::List create_causlist_cpp(Rcpp::List &cl, Rcpp::List &net, unsigned int size, StringVector &ordering);

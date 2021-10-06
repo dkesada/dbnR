@@ -40,7 +40,7 @@ the results of the smoothing
 }
 \description{
 Given a dbn.fit object, the size of the net and a folded data.set,
-performs a smoothing of a trayectory. Smoothing is the opposite of 
+performs a smoothing of a trajectory. Smoothing is the opposite of 
 forecasting: given a starting point, predict backwards in time to obtain
-the time series that generated that poing.
+the time series that generated that point.
 }

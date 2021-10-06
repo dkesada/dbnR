@@ -40,6 +40,7 @@ net <- dbnR::learn_dbn_struc(dt_train, size, method = "dmmhc", blacklist = black
                              maximize.args = list(score = "bic-g", maxp = 10))
 
 #net <- dbnR::learn_dbn_struc(dt_train, size, method = "psoho")
+#net <- dbnR::learn_dbn_struc(dt_train, size, method = "natPsoho")
 ```
 
 The 'blacklist' parameter is a 2 column matrix where the first column is the 'from' and the second is the 'to'. It's important to append the "_t_0" to the names of the nodes, because they are renamed inside the algorithm to that format. A 'whitelist' parameter can also be provided to force some arcs to be present with the same format as the blacklist, but it can sometimes increase the execution time greatly. Only include arcs in t_0 in both the blacklist and whitelist, for now those two are only available for the static network learning, not the transition one. 
@@ -47,6 +48,8 @@ The 'blacklist' parameter is a 2 column matrix where the first column is the 'fr
 Another interesting parameter is 'f_dt'. It allows the user to provide an already folded dataset, mainly so that some instances can be removed. We can also avoid learning intra-slice arcs with the 'intra' parameter: if TRUE, intra-slice arcs will be learnt as normal, but if it is set to FALSE we can skip the learning of the static structure in the DBN.
 
 The particle swarm optimization for higher-order DBNs (psoho) algorithm can also be used to learn the DBN structure. Parameters such as the number of particles and the number of iterations can be tuned. It returns a specific type of structures where no intra-slice arcs are present and the only arcs allowed are those that end in t_0. With the default parameters, it takes quite longer than the dmmhc algorithm to learn the structure on small datasets, but the results are sometimes more interesting. On bigger datasets, the execution time of both algorithms is very similar.
+
+The optimized order-invariant natPsoho algorithm is also available. Like the psoho algorithm, it employs particle swarm optimization to search over the space of possible transition networks, but this algorithm is faster, finds better solutions and scales better with size due to its encoding.
 
 ## Parameter learning
 
