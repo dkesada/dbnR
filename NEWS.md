@@ -1,3 +1,7 @@
+# dbnR 0.7.3
+
+* Added the possibility of passing a blacklist_tr parameter to the dmmhc algorithm in order to avoid certain inter-slice arcs.
+
 # dbnR 0.7.2
 
 * Added authors and doi of the structure learning algorithms to the description field as per request of CRAN maintainers.

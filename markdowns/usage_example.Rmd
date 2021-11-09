@@ -34,8 +34,10 @@ dt_train <- motor[1:2800]
 dt_val <- motor[2801:3000]
 blacklist <- c("motor_speed_t_0", "i_d_t_0")
 blacklist <- rbind(blacklist, c("motor_speed_t_0", "i_q_t_0"))
+blacklist_tr <- c("stator_tooth_t_1", "coolant_t_0")
+blacklist_tr <- rbind(blacklist_tr, c("stator_tooth_t_2", "coolant_t_1"))
 net <- dbnR::learn_dbn_struc(dt_train, size, method = "dmmhc", blacklist = blacklist,
-                             restrict = "mmpc", maximize = "hc",
+                             blacklist_tr = blacklist_tr, restrict = "mmpc", maximize = "hc",
                              restrict.args = list(test = "cor"),
                              maximize.args = list(score = "bic-g", maxp = 10))
 
@@ -43,11 +45,11 @@ net <- dbnR::learn_dbn_struc(dt_train, size, method = "dmmhc", blacklist = black
 #net <- dbnR::learn_dbn_struc(dt_train, size, method = "natPsoho")
 ```
 
-The 'blacklist' parameter is a 2 column matrix where the first column is the 'from' and the second is the 'to'. It's important to append the "_t_0" to the names of the nodes, because they are renamed inside the algorithm to that format. A 'whitelist' parameter can also be provided to force some arcs to be present with the same format as the blacklist, but it can sometimes increase the execution time greatly. Only include arcs in t_0 in both the blacklist and whitelist, for now those two are only available for the static network learning, not the transition one. 
+The 'blacklist' parameter is a 2 column matrix where the first column is the 'from' and the second is the 'to'. It's important to append the "_t_0" to the names of the nodes, because they are renamed inside the algorithm to that format. A 'whitelist' parameter can also be provided to force some arcs to be present with the same format as the blacklist, but it can sometimes increase the execution time greatly. Only include arcs in t_0 in both the blacklist and whitelist, given that this parameter specifies them for the static network learning, not the transition one. For intra-slice arcs of the transition network, use the 'blacklist_tr' parameter. It has the same syntax as the other blacklist, but here you can exclude arcs that go from one time slice to another. Note that the blacklist and whitelist parameters are only available in the dmmhc algorithm, not in the others.
 
 Another interesting parameter is 'f_dt'. It allows the user to provide an already folded dataset, mainly so that some instances can be removed. We can also avoid learning intra-slice arcs with the 'intra' parameter: if TRUE, intra-slice arcs will be learnt as normal, but if it is set to FALSE we can skip the learning of the static structure in the DBN.
 
-The particle swarm optimization for higher-order DBNs (psoho) algorithm can also be used to learn the DBN structure. Parameters such as the number of particles and the number of iterations can be tuned. It returns a specific type of structures where no intra-slice arcs are present and the only arcs allowed are those that end in t_0. With the default parameters, it takes quite longer than the dmmhc algorithm to learn the structure on small datasets, but the results are sometimes more interesting. On bigger datasets, the execution time of both algorithms is very similar.
+The particle swarm optimization for higher-order DBNs (psoho) algorithm can also be used to learn the DBN structure. Parameters such as the number of particles and the number of iterations can be tuned. It returns a specific type of structures where no intra-slice arcs are present and the only arcs allowed are those that end in t_0. With the default parameters, it takes quite longer than the dmmhc algorithm to learn the structure on low Markovian order networks, but the results are sometimes more interesting. On high order networks, the psoho algorithm scales much better than the dmmhc.
 
 The optimized order-invariant natPsoho algorithm is also available. Like the psoho algorithm, it employs particle swarm optimization to search over the space of possible transition networks, but this algorithm is faster, finds better solutions and scales better with size due to its encoding.
 
