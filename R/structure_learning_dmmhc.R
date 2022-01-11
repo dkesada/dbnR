@@ -69,11 +69,13 @@ merge_nets <- function(net0, netCP1, size, acc = NULL, slice = 1){
 #' @param f_dt previously folded dataset, in case some specific rows have to be removed after the folding
 #' @param blacklist an optional matrix indicating forbidden arcs between nodes
 #' @param intra if TRUE, the intra-slice arcs of the network will be learnt. If FALSE, they will be ignored
+#' @param blacklist_tr an optional matrix indicating forbidden intra-slice arcs between nodes 
 #' @param ... additional parameters for \code{\link{rsmax2}} function
 #' @return the structure of the net
 #' @import data.table
 #' @importFrom methods "hasArg"
-dmmhc <- function(dt, size = 2, f_dt = NULL, blacklist = NULL, intra = TRUE, ...){
+dmmhc <- function(dt, size = 2, f_dt = NULL, blacklist = NULL, intra = TRUE,
+                  blacklist_tr = NULL, ...){
   dt_null_check(dt, intra)
   
   if(!is.null(dt)){
@@ -88,8 +90,9 @@ dmmhc <- function(dt, size = 2, f_dt = NULL, blacklist = NULL, intra = TRUE, ...
     f_dt <- fold_dt_rec(dt, names(dt), size)
   
   blacklist <- create_blacklist(names(f_dt), size)
+  blacklist <- rbind(blacklist, blacklist_tr)
   
-  net <- bnlearn::rsmax2(x = f_dt, blacklist = blacklist, ...) # kTBN
+  net <- bnlearn::rsmax2(x = f_dt, blacklist = blacklist, ...) # Transition network
   check_empty_net(net)
   
   if(intra && !warn_empty_net(net0))

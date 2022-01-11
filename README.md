@@ -15,8 +15,8 @@ v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/li
 This package offers an implementation of Gaussian dynamic Bayesian
 networks (GDBN) structure learning and inference based partially on
 Marco Scutari’s package bnlearn (<https://www.bnlearn.com/>). It also
-allows the construction of higher-order DBNs. Two structure learning
-algorithm are implemented:
+allows the construction of higher-order DBNs. Three structure learning
+algorithms are implemented:
 
 -   A variation on Ghada Trabelsi’s dynamic max-min hill climbing
     (<https://tel.archives-ouvertes.fr/tel-00996061/document>).
