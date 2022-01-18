@@ -4,12 +4,14 @@
 \alias{plot_dynamic_network}
 \title{Plots a dynamic Bayesian network in a hierarchical way}
 \usage{
-plot_dynamic_network(structure, offset = 200)
+plot_dynamic_network(structure, offset = 200, subset_nodes = NULL)
 }
 \arguments{
 \item{structure}{the structure or fit of the network.}
 
 \item{offset}{the blank space between time slices}
+
+\item{subset_nodes}{a vector containing the names of the subset of nodes to plot}
 }
 \value{
 the visualization of the DBN

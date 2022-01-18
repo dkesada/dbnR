@@ -136,6 +136,7 @@ expand_time_nodes <- function(name, acc, max, i){
 #' represents the present time.
 #' @param structure the structure or fit of the network.
 #' @param offset the blank space between time slices
+#' @param subset_nodes a vector containing the names of the subset of nodes to plot
 #' @return the visualization of the DBN
 #' @examples 
 #' \donttest{
@@ -146,7 +147,7 @@ expand_time_nodes <- function(name, acc, max, i){
 #' }
 #' @importFrom magrittr "%>%"
 #' @export
-plot_dynamic_network <- function(structure, offset = 200){
+plot_dynamic_network <- function(structure, offset = 200, subset_nodes = NULL){
   check_opt_pkgs_available()
   initial_dbn_check(structure)
   numeric_arg_check(offset)
@@ -198,6 +199,11 @@ plot_dynamic_network <- function(structure, offset = 200){
                       #smooth = TRUE,
                       shadow = FALSE,
                       color = "black")
+  
+  if(!is.null(subset_nodes)){
+    nodes <- subset(nodes, id %in% subset_nodes) # Can be switched to data.table if this is too slow
+    edges <- subset(edges, (to %in% subset_nodes) & (from %in% subset_nodes))
+  }
 
   ret <- visNetwork::visNetwork(nodes, edges) %>%
     visNetwork::visOptions(highlightNearest = list(enabled = T, hover = T),
