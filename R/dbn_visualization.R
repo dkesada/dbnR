@@ -47,6 +47,7 @@ plot_network <- function(structure){
   nodes_uniq <- bnlearn::node.ordering(structure)
   nodes <- data.frame(id = nodes_uniq,
                       label = nodes_uniq,
+                      #font.size = 24,
                       level = node_levels(structure, nodes_uniq)[2,],
                       color.background = grDevices::rgb(red = 0.196, blue = 0.627,
                                              green = 0.302, alpha = 0.8),
