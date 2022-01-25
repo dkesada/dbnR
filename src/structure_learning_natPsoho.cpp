@@ -67,7 +67,7 @@ Rcpp::NumericVector create_natcauslist_cpp(Rcpp::NumericVector &cl, Rcpp::List &
 //' @param rows number of arcs in the network
 //' @return a StringMatrix with the parent nodes and the children nodes
 // [[Rcpp::export]]
-Rcpp::CharacterMatrix natcl_to_arc_matrix_cpp(const Rcpp::NumericVector &cl, Rcpp::CharacterVector &ordering,
+Rcpp::CharacterMatrix nat_cl_to_arc_matrix_cpp(const Rcpp::NumericVector &cl, Rcpp::CharacterVector &ordering,
                                            unsigned int rows){
   Rcpp::StringMatrix res (rows, 2);
   int slice, j, k;

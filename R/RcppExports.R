@@ -37,8 +37,8 @@ create_natcauslist_cpp <- function(cl, net, ordering) {
 #' @param ordering a list with the order of the variables in t_0
 #' @param rows number of arcs in the network
 #' @return a StringMatrix with the parent nodes and the children nodes
-natcl_to_arc_matrix_cpp <- function(cl, ordering, rows) {
-    .Call('_dbnR_natcl_to_arc_matrix_cpp', PACKAGE = 'dbnR', cl, ordering, rows)
+nat_cl_to_arc_matrix_cpp <- function(cl, ordering, rows) {
+    .Call('_dbnR_nat_cl_to_arc_matrix_cpp', PACKAGE = 'dbnR', cl, ordering, rows)
 }
 
 #' Add a velocity to a position

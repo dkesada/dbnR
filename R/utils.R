@@ -150,7 +150,7 @@ trunc_geom <- function(p, max){
 #' @param nodes the name of all the nodes in the network
 #' @return a bn object
 bn_translate_exp = function(ps, ordering_raw, n_arcs, nodes){
-  arc_mat <- cl_to_arc_matrix_cpp(ps, ordering_raw, n_arcs)
+  arc_mat <- nat_cl_to_arc_matrix_cpp(ps, ordering_raw, n_arcs)
   
   net <- bnlearn::empty.graph(nodes)
   bnlearn::arcs(net) <- arc_mat

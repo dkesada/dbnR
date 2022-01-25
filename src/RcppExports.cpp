@@ -47,16 +47,16 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// natcl_to_arc_matrix_cpp
-Rcpp::CharacterMatrix natcl_to_arc_matrix_cpp(const Rcpp::NumericVector& cl, Rcpp::CharacterVector& ordering, unsigned int rows);
-RcppExport SEXP _dbnR_natcl_to_arc_matrix_cpp(SEXP clSEXP, SEXP orderingSEXP, SEXP rowsSEXP) {
+// nat_cl_to_arc_matrix_cpp
+Rcpp::CharacterMatrix nat_cl_to_arc_matrix_cpp(const Rcpp::NumericVector& cl, Rcpp::CharacterVector& ordering, unsigned int rows);
+RcppExport SEXP _dbnR_nat_cl_to_arc_matrix_cpp(SEXP clSEXP, SEXP orderingSEXP, SEXP rowsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type cl(clSEXP);
     Rcpp::traits::input_parameter< Rcpp::CharacterVector& >::type ordering(orderingSEXP);
     Rcpp::traits::input_parameter< unsigned int >::type rows(rowsSEXP);
-    rcpp_result_gen = Rcpp::wrap(natcl_to_arc_matrix_cpp(cl, ordering, rows));
+    rcpp_result_gen = Rcpp::wrap(nat_cl_to_arc_matrix_cpp(cl, ordering, rows));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -297,7 +297,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_dbnR_calc_mu_cpp", (DL_FUNC) &_dbnR_calc_mu_cpp, 2},
     {"_dbnR_calc_sigma_cpp", (DL_FUNC) &_dbnR_calc_sigma_cpp, 2},
     {"_dbnR_create_natcauslist_cpp", (DL_FUNC) &_dbnR_create_natcauslist_cpp, 3},
-    {"_dbnR_natcl_to_arc_matrix_cpp", (DL_FUNC) &_dbnR_natcl_to_arc_matrix_cpp, 3},
+    {"_dbnR_nat_cl_to_arc_matrix_cpp", (DL_FUNC) &_dbnR_nat_cl_to_arc_matrix_cpp, 3},
     {"_dbnR_nat_pos_plus_vel_cpp", (DL_FUNC) &_dbnR_nat_pos_plus_vel_cpp, 4},
     {"_dbnR_nat_pos_minus_pos_cpp", (DL_FUNC) &_dbnR_nat_pos_minus_pos_cpp, 4},
     {"_dbnR_nat_vel_plus_vel_cpp", (DL_FUNC) &_dbnR_nat_vel_plus_vel_cpp, 6},
