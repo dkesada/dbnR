@@ -207,7 +207,7 @@ natPosition <- R6::R6Class("natPosition",
       #' Uses this object private cl and transforms it into a DBN.
       #' @return a dbn object
       bn_translate = function(){
-         arc_mat <- natcl_to_arc_matrix_cpp(private$cl, private$ordering_raw, private$n_arcs)
+         arc_mat <- nat_cl_to_arc_matrix_cpp(private$cl, private$ordering_raw, private$n_arcs)
          net <- bnlearn::empty.graph(private$nodes) # Quite inefficient with bnlearn security checks
          bnlearn::arcs(net, check.cycles = FALSE, check.illegal = FALSE) <- arc_mat # Quite inefficient with bnlearn security checks
          
