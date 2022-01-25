@@ -154,6 +154,7 @@ bn_translate_exp = function(ps, ordering_raw, n_arcs, nodes){
   
   net <- bnlearn::empty.graph(nodes)
   bnlearn::arcs(net) <- arc_mat
+  class(net) <- c("dbn", class(net))
   
   return(net)
 }
@@ -223,6 +224,13 @@ ordering_gen_exp <- function(n){
 #' @export
 generate_random_network_exp <- function(n_vars, size, min_mu, max_mu,
                                         min_sd, max_sd, min_coef, max_coef, seed = NULL){
+  positive_arg_check(n_vars, min_sd, max_sd)
+  initial_size_check(size)
+  numeric_arg_check(min_mu, max_mu, min_coef, max_coef, seed)
+  lesser_than_arg_check(max_mu, min_mu)
+  lesser_than_arg_check(max_sd, min_sd)
+  lesser_than_arg_check(max_coef, min_coef)
+  
   res <- list(net = NULL, f_dt = NULL)
   if(!is.null(seed))
     set.seed(seed)
@@ -257,6 +265,16 @@ generate_random_network_exp <- function(n_vars, size, min_mu, max_mu,
   }
   
   res$f_dt <- dt
+  
+  return(res)
+}
+
+# For internal use of the security_check functions. I'm fed up with giving 
+# errors without the names of the variables due to substitute + deparse + ellipsis 
+# shenanigans
+deparse_names <- function(...){
+  res <- substitute(list(...))
+  res <- sapply(res, deparse)[-1]
   
   return(res)
 }

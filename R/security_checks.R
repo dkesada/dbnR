@@ -45,28 +45,36 @@ initial_df_check <- function(obj){
 }
 
 numeric_arg_check <- function(...){
-  invisible(sapply(list(...), function(x){
-    if(!is.numeric(x))
-      stop(sprintf("%s has to be numeric.", deparse(substitute(x))))
-    if(length(x) > 1)
-      stop(sprintf("%s cannot be a vector.", deparse(substitute(x))))
-  }))
+  var_names <- deparse_names(...)
+  arg_list <- list(...)
+  
+  for(i in 1:length(var_names)){
+    if(!is.numeric(arg_list[[i]]))
+      stop(sprintf("%s has to be numeric.", var_names[i]))
+    if(length(arg_list[[i]]) > 1)
+      stop(sprintf("%s cannot be a vector.", var_names[i]))
+  }
 }
 
 logical_arg_check <- function(...){
-  invisible(sapply(list(...), function(x){
-    if(!is.logical(x))
-      stop(sprintf("%s has to be logical", deparse(substitute(x))))
-    if(length(x) > 1)
-      stop(sprintf("%s cannot be a vector.", deparse(substitute(x))))
-  }))
+  var_names <- deparse_names(...)
+  arg_list <- list(...)
+  
+  for(i in 1:length(var_names)){
+    if(!is.logical(arg_list[[i]]))
+      stop(sprintf("%s has to be logical.", var_names[i]))
+    if(length(arg_list[[i]]) > 1)
+      stop(sprintf("%s cannot be a vector.", var_names[i]))
+  }
 }
 
 character_arg_check <- function(...){
-  invisible(sapply(list(...), function(x){
-    if(!is.character(x))
-      stop(sprintf("%s has to be of type character.", deparse(substitute(x))))
-  }))
+  var_names <- deparse_names(...)
+  arg_list <- list(...)
+  
+  for(i in 1:length(var_names))
+    if(!is.character(arg_list[[i]]))
+      stop(sprintf("%s has to be of type character.", var_names[i]))
 }
 
 null_or_character_arg_check <- function(...){
@@ -270,4 +278,20 @@ initial_null_dt_check <- function(dt, f_dt){
 dt_null_check <- function(dt, intra){
   if(is.null(dt) && intra)
     stop("the unfolded training dataset is NULL, so intra-slice arcs cannot be learnt.")
+}
+
+positive_arg_check <- function(...){
+  numeric_arg_check(...)
+  var_names <- deparse_names(...)
+  arg_list <- list(...)
+  
+  for(i in 1:length(var_names)){
+    if(arg_list[[i]] <= 0)
+      stop(sprintf("%s cannot be lesser than or equal to 0.", var_names[i]))
+  }
+}
+
+lesser_than_arg_check <- function(x1, x2){
+  if(x1 <= x2)
+    stop(sprintf("%s cannot be lesser than or equal to %s.", deparse(substitute(x1)), deparse(substitute(x2))))
 }
