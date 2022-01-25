@@ -2,6 +2,8 @@
 
 * Added the possibility of plotting only a subset of the nodes with the visualization tool.
 
+* More informative error messages in security_checks.R when dealing with ellipsis.
+
 # dbnR 0.7.3
 
 * Added the possibility of passing a blacklist_tr parameter to the dmmhc algorithm in order to avoid certain inter-slice arcs.
