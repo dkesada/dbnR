@@ -47,7 +47,7 @@ add_attr_to_fit <- function(fit){
 
 #' Fits a markovian n DBN model
 #'
-#' Fits the parameters of the DBN via MLE or BGE. The "mu" vector of means 
+#' Fits the parameters of the DBN via MLE. The "mu" vector of means 
 #' and the "sigma" covariance matrix are set as attributes of the dbn.fit 
 #' object for future exact inference. 
 #' @param net the structure of the DBN

@@ -17,7 +17,7 @@ fit_dbn_params(net, f_dt, ...)
 the fitted net
 }
 \description{
-Fits the parameters of the DBN via MLE or BGE. The "mu" vector of means 
+Fits the parameters of the DBN via MLE. The "mu" vector of means 
 and the "sigma" covariance matrix are set as attributes of the dbn.fit 
 object for future exact inference.
 }
