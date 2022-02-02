@@ -1,0 +1,113 @@
+---
+title: "Partial evidence forecasting"
+author: "David Quesada"
+date: "2/2/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+Sometimes, we want to perform inference over only some specific subset of variables, and we may not have the values of all variables in previous instants. In this case, we can use the exact inference in Gaussian DBNs to obtain the values of not only the variables in the future instant $t_0$, but also in previous ones.
+
+To illustrate this case, imagine that we have the usual 'motor' dataset included in the package and used in other examples:
+
+```{r motor, echo=TRUE}
+library(dbnR)
+library(data.table)
+data(motor)
+summary(motor)
+```
+
+Now, we want to perform inference and forecasting with this data, but *only* using the values of the variables _pm_ and _stator_tooth_, for example. This means that after folding the dataset to size 2, we only have the values of _pm_t_1_ and _stator_tooth_t_1_ available. We are going to do this example with size 2 networks for simplicity's sake, but it works the same with bigger sizes.
+
+## Inference with partial evidence
+
+### Preparing the data and the model
+
+First, we learn the DBN structure as usual:
+
+```{r inference, echo=TRUE}
+  size = 3
+  dt_train <- motor[200:2500]
+  obj <- c("pm_t_0")
+  
+  net <- learn_dbn_struc(dt_train, size)
+  f_dt_train <- fold_dt(dt_train, size)
+  
+  fit <- fit_dbn_params(net, f_dt_train)
+```
+
+We now have the structure and the parameters of the network, and it is ready to perform inference. To simulate our partial data scenario, we are going to extract a row from our dataset with only the two variables available to us:
+
+```{r partial_data, echo=TRUE}
+  dt_val <- motor[2501:3000]
+  f_dt_val <- fold_dt(dt_val, size)
+  ev_vars <- c("pm_t_1", "stator_tooth_t_1")
+  ev_dt <- f_dt_val[1, .SD, .SDcols = ev_vars]
+  ev_dt
+  
+```
+Our dataset _ev_dt_ only has a single row with the values of _pm_t_1_ and _stator_tooth_t_1_, and now we will use it to infer the values of the rest of the variables in an instance and forecast 10 instants into the future.
+
+### Inference
+
+We will be using the _mvn_inference()_ function for the first inference step. This function allows us to infer the value of any subset of variables in our network based on another subset of variables. This function makes exact inference with the equivalent multivariate Gaussian distribution of the network, so we will be using the $\mathbf{\mu}$ vector and $\mathbf{\Sigma}$ matrix included as attributes in the 'fit' object:
+
+```{r inference_mvn, echo=TRUE}
+  as_named_vector <- function(dt){
+    res <- as.numeric(dt)
+    names(res) <- names(dt)
+
+    return(res)
+  }
+
+  ev <- f_dt_val[1, .SD, .SDcols = ev_vars]
+
+  pred <- mvn_inference(attr(fit, "mu"), attr(fit, "sigma"), as_named_vector(ev))
+  
+  pred$mu_p
+  
+```
+
+With this, we obtained the mean value of the variables given the two variables we provided as evidence. Normally, when doing forecasting we do this same procedure but providing as evidence all the variables in old time slices, but this is done automatically inside the 'forecast_ts' function. This time, we need to do a little bit of work manually in this first step and perform the inference over only our available variables. Notice the 'as_named_vector()' auxiliary function: it converts our 1 row data.table into a named vector, which is needed to perform the mvn inference. Also notice that in the degenerated case where we have no evidence whatsoever of any variable, the value of the inference would be the $\mathbf{\mu}$ vector of the network. 
+
+This procedure can also be used to use the network as a simulator and see the effects that certain interventions have on the future by fixing some variables to specific values:
+
+```{r intervention, echo=TRUE}
+  ev_i <- f_dt_val[1, .SD, .SDcols = ev_vars]
+  ev_i[1, pm_t_1 := 0.8]
+  
+  sprintf("We intervene the 'pm_t_1' variable, so that its new value is %.1f", ev_i[1, pm_t_1])
+  
+  pred_i <- mvn_inference(attr(fit, "mu"), attr(fit, "sigma"), as_named_vector(ev_i))
+  
+  pred_i$mu_p
+  cat("\n")
+  sprintf("The previous value for 'pm_t_0' is %f, and after the intervention it changes to %f", pred$mu_p[30], pred_i$mu_p[30])
+  
+```
+
+### Forecasting
+
+After the inference step, if we build a full vector we can go on and forecast up to some desired point in time:
+
+```{r forecasting, echo=TRUE}
+  full_dt_1 <- as.data.table(t(pred$mu_p)) # Transform our predictions into the desired data.table format
+  full_dt_1 <- cbind(full_dt_1, ev) # We need to include our evidence in the full vector
+  obj = "pm_t_0"
+  
+  res <- dbnR::forecast_ts(full_dt_1, fit, 2, obj, ini = 1, len = 10, print_res = F)
+  
+  full_dt_2 <- as.data.table(t(pred_i$mu_p))
+  full_dt_2 <- cbind(full_dt_2, ev_i)
+  
+  res_i <- dbnR::forecast_ts(full_dt_2, fit, 2, obj, ini = 1, len = 10, print_res = F)
+  
+```
+
+In the last example, we forecasted both the normal evidence case and the intervention case. We can see the effects that the intervention has in the following 10 instants of time, and the forecasting can be done as usual once we build the full instances. 
+
