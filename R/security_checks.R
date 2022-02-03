@@ -38,6 +38,12 @@ initial_dbn_check <- function(obj){
                  deparse(substitute(obj))))
 }
 
+initial_bn_or_dbn_check <- function(obj){
+  if(!is_dbn_or_dbnfit(obj) && !is_bn_or_bnfit(obj))
+    stop(sprintf("%s must be of class 'bn', 'bn.fit', 'dbn' or 'dbn.fit'.",
+                 deparse(substitute(obj))))
+}
+
 initial_df_check <- function(obj){
   if(!is.data.frame(obj))
     stop(sprintf("%s must be of class 'data.frame' or 'data.table'.",

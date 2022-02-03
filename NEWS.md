@@ -2,6 +2,8 @@
 
 * Added the possibility of plotting only a subset of the nodes with the visualization tool.
 
+* Unified the 'plot_network' function for visualizing BNs and the 'plot_dynamic_network' function for visualizing DBNs into a single one.
+
 * More informative error messages in security_checks.R when dealing with ellipsis.
 
 # dbnR 0.7.3
