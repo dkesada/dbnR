@@ -7,7 +7,7 @@
 forecast_ts(
   dt,
   fit,
-  size,
+  size = NULL,
   obj_vars,
   ini = 1,
   len = dim(dt)[1] - ini,
@@ -24,7 +24,7 @@ forecast_ts(
 
 \item{fit}{dbn.fit object}
 
-\item{size}{number of time slices of the net}
+\item{size}{number of time slices of the net. Deprecated, will be removed in the future}
 
 \item{obj_vars}{variables to be predicted}
 
@@ -61,6 +61,6 @@ net <- learn_dbn_struc(dt_train, size)
 f_dt_train <- fold_dt(dt_train, size)
 f_dt_val <- fold_dt(dt_val, size)
 fit <- fit_dbn_params(net, f_dt_train, method = "mle")
-res <- suppressWarnings(forecast_ts(f_dt_val, fit, size, 
+res <- suppressWarnings(forecast_ts(f_dt_val, fit, 
         obj_vars = obj, print_res = FALSE, plot_res = FALSE))
 }

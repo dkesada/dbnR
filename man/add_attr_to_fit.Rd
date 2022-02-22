@@ -4,15 +4,18 @@
 \alias{add_attr_to_fit}
 \title{Adds the mu vector and sigma matrix as attributes to the bn.fit or dbn.fit object}
 \usage{
-add_attr_to_fit(fit)
+add_attr_to_fit(fit, size)
 }
 \arguments{
 \item{fit}{a fitted bn or dbn}
+
+\item{size}{number of time slices of the net}
 }
 \value{
 the fitted net with attributes
 }
 \description{
 Adds the mu vector and sigma matrix as attributes to the bn.fit or dbn.fit 
-object to allow performing exact MVN inference on both cases.
+object to allow performing exact MVN inference on both cases. It also adds
+the number of time slices of the net for future inference.
 }

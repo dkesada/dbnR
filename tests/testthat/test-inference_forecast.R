@@ -6,6 +6,10 @@ test_that("exact dt_inference works with bn.fit", {
   distX4 <- list(coef = c("(Intercept)" = 1, "X2" = 2, "X3" = -1), sd = sqrt(3))
   cfit <- bnlearn::custom.fit(net, dist = list(X1 = distX1, X3 = distX3,
                                                X2 = distX2, X4 = distX4))
+  attr(cfit, "size") <- 2
+  attr(cfit, "mu") <- dbnR::calc_mu(cfit)
+  attr(cfit, "sigma") <- dbnR::calc_sigma(cfit)
+  
   dt_ev_x4 <- data.table(X1 = c(1,2,5), X2 = c(2,3,3), 
                          X3 = c(3,1,4), X4 = c(2,6,3))
   res_ev_x4 <- predict_dt(cfit, dt_ev_x4, "X4", verbose = F)
@@ -41,7 +45,10 @@ test_that("exact dt_inference works with dbn.fit", {
                                                X1_t_1 = distX1_t_1, X3_t_1 = distX3_t_1,
                                                X2_t_1 = distX2_t_1, X4_t_1 = distX4_t_1))
   class(cfit) <- c("dbn.fit", class(cfit))
-
+  attr(cfit, "size") <- 2
+  attr(cfit, "mu") <- dbnR::calc_mu(cfit)
+  attr(cfit, "sigma") <- dbnR::calc_sigma(cfit)
+  
   dt_ev_fore <- data.table(X1_t_1 = c(1,2,5), X2_t_1 = c(2,3,3),
                            X3_t_1 = c(3,1,4), X4_t_1 = c(2,5,3),
                            X1_t_0 = c(NA,NA,NA), X2_t_0 = c(NA,NA,NA),
@@ -83,6 +90,9 @@ test_that("exact forecasting works", {
                                                X1_t_1 = distX1_t_1, X3_t_1 = distX3_t_1,
                                                X2_t_1 = distX2_t_1, X4_t_1 = distX4_t_1))
   class(cfit) <- c("dbn.fit", class(cfit))
+  attr(cfit, "size") <- 2
+  attr(cfit, "mu") <- dbnR::calc_mu(cfit)
+  attr(cfit, "sigma") <- dbnR::calc_sigma(cfit)
   
   dt_ev_fore <- data.table(X1_t_1 = 1, X2_t_1 = 2, 
                            X3_t_1 = 3, X4_t_1 = 2,
@@ -95,7 +105,7 @@ test_that("exact forecasting works", {
                        X4_t_0 = c(-2.58, -5.55, -4.51, -0.11, 6.29),
                        exec = c(1,1,1,1,1))
   
-  res_fore <- dbnR::forecast_ts(dt_ev_fore, cfit, size = 2, 
+  res_fore <- dbnR::forecast_ts(dt_ev_fore, cfit,
                                 obj_vars = c("X1_t_0","X2_t_0","X3_t_0","X4_t_0"),
                                 len = 5, print_res = F, plot_res = F)
   res_fore$pred[, names(res_fore$pred) := round(.SD, 2)]

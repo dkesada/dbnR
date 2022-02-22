@@ -100,12 +100,14 @@ After the inference step, if we build a full vector we can go on and forecast up
   full_dt_1 <- cbind(full_dt_1, ev) # We need to include our evidence in the full vector
   obj = "pm_t_0"
   
-  res <- dbnR::forecast_ts(full_dt_1, fit, 2, obj, ini = 1, len = 10, print_res = F)
+  res <- dbnR::forecast_ts(full_dt_1, fit, obj_vars = obj, ini = 1, len = 5, print_res = F, plot_res = F)
+  plot(ts(res$pred$pm_t_0), col = "red", ylab = "pm_t_0")
   
   full_dt_2 <- as.data.table(t(pred_i$mu_p))
   full_dt_2 <- cbind(full_dt_2, ev_i)
   
-  res_i <- dbnR::forecast_ts(full_dt_2, fit, 2, obj, ini = 1, len = 10, print_res = F)
+  res_i <- dbnR::forecast_ts(full_dt_2, fit, obj_vars = obj, ini = 1, len = 5, print_res = F, plot_res = F)
+  plot(ts(res_i$pred$pm_t_0), col = "red", ylab = "pm_t_0")
   
 ```
 
