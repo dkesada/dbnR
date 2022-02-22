@@ -1,3 +1,7 @@
+# dbnR 0.7.5
+
+* Deprecated the 'size' argument in 'forecast_ts' and 'smooth_ts'.
+
 # dbnR 0.7.4
 
 * Added the possibility of plotting only a subset of the nodes with the visualization tool.
