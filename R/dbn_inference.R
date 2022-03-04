@@ -22,7 +22,7 @@ predict_bn <- function(fit, evidence){
   n <- names(fit)
   obj_nodes <- n[which(!(n %in% names(evidence)))]
   
-  pred <- mvn_inference(attr(fit,"mu"), attr(fit,"sigma"), as_named_vector(evidence))
+  pred <- mvn_inference(attr(fit,"mu"), attr(fit,"sigma"), evidence)
   pred <- as.data.table(t(pred$mu_p[,1]))
   if(length(obj_nodes) == 1)
     setnames(pred, names(pred), obj_nodes)
@@ -204,7 +204,7 @@ exact_inference <- function(dt, fit, obj_vars, ini, len, prov_ev){
   evidence <- dt[ini, .SD, .SDcols = c(vars_ev, prov_ev)]
 
   for(j in 1:len){
-    particles <- exact_prediction_step(fit, vars_pred, as_named_vector(evidence))
+    particles <- exact_prediction_step(fit, vars_pred, evidence)
     
     if(is.null(names(particles$mu_p)))
       names(particles$mu_p) <- obj_vars # If only 1 variable is obtained from the inference, no name is returned
@@ -328,7 +328,7 @@ exact_inference_backwards <- function(dt, fit, obj_vars, ini, len, prov_ev){
   evidence <- dt[ini, .SD, .SDcols = c(vars_ev, prov_ev)]
   
   for(j in 1:len){
-    particles <- exact_prediction_step(fit, vars_pred, as_named_vector(evidence))
+    particles <- exact_prediction_step(fit, vars_pred, evidence)
     
     if(is.null(names(particles$mu_p)))
       names(particles$mu_p) <- obj_vars

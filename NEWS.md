@@ -2,6 +2,10 @@
 
 * Deprecated the 'size' argument in 'forecast_ts' and 'smooth_ts'.
 
+* A named vector is no longer the only option required for the 'mvn_inference' function. It now also takes a single row data.table and makes the conversion to named vector inside. This avoids the user needing to have an external auxiliary function.
+
+* New security check to confirm that a data.table has only one row. This is also needed in the inference, because we can only provide one row of evidence. It gave a non-descriptive error before, now it warns about using more than one row in the evidence data.table. 
+
 # dbnR 0.7.4
 
 * Added the possibility of plotting only a subset of the nodes with the visualization tool.

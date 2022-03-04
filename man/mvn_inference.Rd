@@ -11,7 +11,7 @@ mvn_inference(mu, sigma, evidence)
 
 \item{sigma}{the covariance matrix}
 
-\item{evidence}{a named vector with the values and names of the variables given as evidence}
+\item{evidence}{a single row data.table or a named vector with the values and names of the variables given as evidence}
 }
 \value{
 the posterior mean and covariance matrix
@@ -24,12 +24,6 @@ kind of inference can be performed. It's recommended to use the
 you need the posterior mean vector and covariance matrix.
 }
 \examples{
-as_named_vector <- function(dt){
-  res <- as.numeric(dt)
-  names(res) <- names(dt)
-
-  return(res)
-}
 size = 3
 data(motor)
 dt_train <- motor[200:2500]
@@ -42,5 +36,5 @@ f_dt_val <- fold_dt(dt_val, size)
 ev <- f_dt_val[1, .SD, .SDcols = obj]
 fit <- fit_dbn_params(net, f_dt_train, method = "mle")
 
-pred <- mvn_inference(calc_mu(fit), calc_sigma(fit), as_named_vector(ev))
+pred <- mvn_inference(calc_mu(fit), calc_sigma(fit), ev)
 }

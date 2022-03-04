@@ -27,9 +27,25 @@ plot_results <- function(dt, results, obj_vars){
   invisible(sapply(obj_vars, function(x){plot_single_result(dt, results, x)}))
 }
 
+#' Converts a single row data.table into a named vector
+#' 
+#' Given a single row data.table, convert it into a named vector. Used in the
+#' mvn_inference, to obtain an evidence named vector. For this case, the 
+#' data.table should contain only the evidence that we want to provide. If a
+#' named vector is provided instead of a data.table, nothing will be done and
+#' the named vector will be returned.
+#' @param dt a 1 row data.table or a named vector
+#' @return a vector with the values and the variable names
 as_named_vector <- function(dt){
-  res <- as.numeric(dt)
-  names(res) <- names(dt)
+  if(is.data.frame(dt)){
+    initial_onerow_dt_check(dt)
+    res <- as.numeric(dt)
+    names(res) <- names(dt)
+  }
+  else{
+    check_named_vector(dt)
+    res <- dt
+  }
   
   return(res)
 }

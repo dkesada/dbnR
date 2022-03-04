@@ -301,3 +301,9 @@ lesser_than_arg_check <- function(x1, x2){
   if(x1 <= x2)
     stop(sprintf("%s cannot be lesser than or equal to %s.", deparse(substitute(x1)), deparse(substitute(x2))))
 }
+
+initial_onerow_dt_check <- function(obj){
+  initial_df_check(obj)
+  if(!dim(obj)[1] == 1)
+    stop("the data.frame provided needs to have only one row.")
+}
