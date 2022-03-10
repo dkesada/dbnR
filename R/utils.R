@@ -294,3 +294,15 @@ deparse_names <- function(...){
   
   return(res)
 }
+
+# Calculates the size of a 'dbn.fit' based on its node names. The size is 
+# stored automatically after fitting the net, it should only need to be calculated
+# when learning a network without using the 'fit_dbn_params' function.
+calc_size <- function(fit){
+  res <- 0
+  
+  if(is_dbn_or_dbnfit(fit))
+    res <- as.numeric(max(sapply(names(fit), function(x){strsplit(x, "_t_")[[1]][2]}, USE.NAMES = F)))
+  
+  return(res)
+}

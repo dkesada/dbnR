@@ -225,8 +225,8 @@ initial_mode_check <- function(obj){
 }
 
 initial_attr_check <- function(fit){
-  if(is.null(attr(fit, "mu")) || is.null(attr(fit, "sigma")))
-    fit <- add_attr_to_fit(fit)
+  if(is.null(attr(fit, "mu")) || is.null(attr(fit, "sigma")) || is.null(attr(fit, "size")))
+    fit <- add_attr_to_fit(fit, calc_size(fit))
   
   return(fit)
 }
