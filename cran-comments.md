@@ -3,7 +3,7 @@ Update from version 0.7.1 to 0.7.5. In this update, I added more flexibility for
 
 ## Test environments
 * Windows 10 (x64), R 4.1.3 (local)
-* Ubuntu 18.04 (x64), R 4.1.3 (local)
+* Ubuntu 18.04 (x64), R 4.1.2 (local)
 * Rhub
 * win-builder (devel, release and oldrelease)
 
