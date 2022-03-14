@@ -35,9 +35,8 @@ The main functionality of the package is running and working. In order of import
   
   * To refractor the DMMHC algorithm into R6 for consistency with the PSOHO algorithm and with any new structure learning algorithms.
   * To add an automatically generated shiny interface of the net. This makes interacting with the network easier and allows for simulation prototypes.
-  * To provide a visualization tool of some sub-network. Many times, you end up with quite a big BN or DBN and you are interested in only a few of the nodes. We sketched a function to plot the Markov blanket of a node, but it needs further parametrization.
 
-For now, the dbn.fit object as an extension of bnlearn's bn.fit object will stay the same except for the "mu" and "sigma" attributes added to it. This way, it remains easy to call bnlearn's methods on the dbn.fit object and I can store the MVN transformation inside the same object. Not an elegant solution, but its simplicity is enough. What should be addressed is having to perform the folding of a dataset outside the predict function. The size of the network should be added as an attribute to avoid having the user performing the folding.
+For now, the dbn.fit object as an extension of bnlearn's bn.fit object will stay the same except for the "mu" and "sigma" attributes added to it. This way, it remains easy to call bnlearn's methods on the dbn.fit object and I can store the MVN transformation inside the same object. Not an elegant solution, but its simplicity is enough. What should be addressed is having to perform the folding of a dataset outside the predict function.
 
 ## Getting Started
 

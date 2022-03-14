@@ -37,7 +37,7 @@ main_forecast_profile <- function(dt, size, n_rep, ini_fore, len_fore){
     
     net <- learn_dbn_struc(dt_train, size = size)
     fit <- fit_dbn_params(net, f_dt_train)
-    res_fore <- forecast_ts(f_dt_test, fit, size, "pm_t_0", rep = n_rep,
+    res_fore <- forecast_ts(f_dt_test, fit, obj_vars = "pm_t_0", rep = n_rep,
                       ini = ini_fore, len = len_fore)
   })
   

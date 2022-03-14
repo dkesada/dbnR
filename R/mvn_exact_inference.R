@@ -7,15 +7,9 @@
 #' you need the posterior mean vector and covariance matrix.
 #' @param sigma the covariance matrix
 #' @param mu the mean vector
-#' @param evidence a named vector with the values and names of the variables given as evidence
+#' @param evidence a single row data.table or a named vector with the values and names of the variables given as evidence
 #' @return the posterior mean and covariance matrix
 #' @examples 
-#' as_named_vector <- function(dt){
-#'   res <- as.numeric(dt)
-#'   names(res) <- names(dt)
-#' 
-#'   return(res)
-#' }
 #' size = 3
 #' data(motor)
 #' dt_train <- motor[200:2500]
@@ -28,10 +22,11 @@
 #' ev <- f_dt_val[1, .SD, .SDcols = obj]
 #' fit <- fit_dbn_params(net, f_dt_train, method = "mle")
 #' 
-#' pred <- mvn_inference(calc_mu(fit), calc_sigma(fit), as_named_vector(ev))
+#' pred <- mvn_inference(calc_mu(fit), calc_sigma(fit), ev)
 #' @export
 mvn_inference <- function(mu, sigma, evidence){
   initial_mu_sigma_check(mu, sigma)
+  evidence <- as_named_vector(evidence)
   initial_evidence_check(evidence, names(mu))
   
   mu <- mu[rownames(sigma)] # Avoid positioning bugs

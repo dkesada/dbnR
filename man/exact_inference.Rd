@@ -4,14 +4,12 @@
 \alias{exact_inference}
 \title{Performs exact inference forecasting with the GDBN over a data set}
 \usage{
-exact_inference(dt, fit, size, obj_vars, ini, len, prov_ev)
+exact_inference(dt, fit, obj_vars, ini, len, prov_ev)
 }
 \arguments{
 \item{dt}{data.table object with the TS data}
 
 \item{fit}{bn.fit object}
-
-\item{size}{number of time slices of the net}
 
 \item{obj_vars}{variables to be predicted}
 

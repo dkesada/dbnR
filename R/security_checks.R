@@ -38,6 +38,12 @@ initial_dbn_check <- function(obj){
                  deparse(substitute(obj))))
 }
 
+initial_bn_or_dbn_check <- function(obj){
+  if(!is_dbn_or_dbnfit(obj) && !is_bn_or_bnfit(obj))
+    stop(sprintf("%s must be of class 'bn', 'bn.fit', 'dbn' or 'dbn.fit'.",
+                 deparse(substitute(obj))))
+}
+
 initial_df_check <- function(obj){
   if(!is.data.frame(obj))
     stop(sprintf("%s must be of class 'data.frame' or 'data.table'.",
@@ -219,8 +225,8 @@ initial_mode_check <- function(obj){
 }
 
 initial_attr_check <- function(fit){
-  if(is.null(attr(fit, "mu")) || is.null(attr(fit, "sigma")))
-    fit <- add_attr_to_fit(fit)
+  if(is.null(attr(fit, "mu")) || is.null(attr(fit, "sigma")) || is.null(attr(fit, "size")))
+    fit <- add_attr_to_fit(fit, calc_size(fit))
   
   return(fit)
 }
@@ -294,4 +300,10 @@ positive_arg_check <- function(...){
 lesser_than_arg_check <- function(x1, x2){
   if(x1 <= x2)
     stop(sprintf("%s cannot be lesser than or equal to %s.", deparse(substitute(x1)), deparse(substitute(x2))))
+}
+
+initial_onerow_dt_check <- function(obj){
+  initial_df_check(obj)
+  if(!dim(obj)[1] == 1)
+    stop("the data.frame provided needs to have only one row.")
 }

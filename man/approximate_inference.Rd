@@ -4,14 +4,12 @@
 \alias{approximate_inference}
 \title{Performs approximate inference forecasting with the GDBN over a data set}
 \usage{
-approximate_inference(dt, fit, size, obj_vars, ini, rep, len, num_p)
+approximate_inference(dt, fit, obj_vars, ini, rep, len, num_p)
 }
 \arguments{
 \item{dt}{data.table object with the TS data}
 
 \item{fit}{bn.fit object}
-
-\item{size}{number of time slices of the net}
 
 \item{obj_vars}{variables to be predicted}
 

@@ -85,9 +85,9 @@ One should be careful when performing point-wise prediction on time-series model
 Next, we will forecast some of the variables in the validation dataset:
 
 ```{r forecast}
-res_fore <- suppressWarnings(dbnR::forecast_ts(f_dt_val, fit, size, obj_vars = c("pm_t_0", "stator_winding_t_0"), ini = 100, len = 70))
+res_fore <- suppressWarnings(dbnR::forecast_ts(f_dt_val, fit, obj_vars = c("pm_t_0", "stator_winding_t_0"), ini = 100, len = 70))
 set.seed(42)
-res_fore <- suppressWarnings(dbnR::forecast_ts(f_dt_val, fit, size, obj_vars = c("pm_t_0"), ini = 100, len = 70, mode = "approx", num_p = 150, rep = 3))
+res_fore <- suppressWarnings(dbnR::forecast_ts(f_dt_val, fit, obj_vars = c("pm_t_0"), ini = 100, len = 70, mode = "approx", num_p = 150, rep = 3))
 ```
 
 With DBNs, all variables in the next time step are predicted from the values in the previous slices. If no evidence is provided, all the variables in t_0 will be forecasted and moved to t_1 in the next prediction step. The 'obj_var' parameter is used to return the forecasting results of the variables we are interested in. The forecasting length and starting point can be modified as showed in the example.
@@ -97,7 +97,7 @@ There are two forecasting modes: exact and approximate inference. Exact inferenc
 We can also perform evidenced forecasting with our models. We call 'evidenced forecasting' to the special case when we already know the values that some variables are going to take in the future, and so we set those values and predict the rest. This is very useful if we want our models to serve as simulators, fixing some variables to certain values to see the effect that those have on the forecasting.
 
 ```{r forecast_ev_1}
-res_fore <- suppressWarnings(dbnR::forecast_ts(f_dt_val, fit, size, obj_vars = c("pm_t_0"), ini = 100, len = 70, prov_ev = c("stator_winding_t_0", "u_q_t_0")))
+res_fore <- suppressWarnings(dbnR::forecast_ts(f_dt_val, fit, obj_vars = c("pm_t_0"), ini = 100, len = 70, prov_ev = c("stator_winding_t_0", "u_q_t_0")))
 ```
 
 Several variables can be provided as evidence. In each prediction step, the values in t_0 of these variables will be fixed with the ones provided in f_dt_val. If we want to set an intervention and see its effect, we can do it as follows:
@@ -105,7 +105,7 @@ Several variables can be provided as evidence. In each prediction step, the valu
 ```{r forecast_ev_2}
 inter_dt <- copy(f_dt_val)
 inter_dt[, stator_winding_t_0 := 0.32]
-res_fore <- suppressWarnings(dbnR::forecast_ts(inter_dt, fit, size, obj_vars = c("pm_t_0"), ini = 100, len = 70, prov_ev = c("stator_winding_t_0", "u_q_t_0")))
+res_fore <- suppressWarnings(dbnR::forecast_ts(inter_dt, fit, obj_vars = c("pm_t_0"), ini = 100, len = 70, prov_ev = c("stator_winding_t_0", "u_q_t_0")))
 ```
 
 There is no need to change 'stator_winding_t_1' and 'stator_winding_t_2', because on the next steps they will take the values fixed for t_0. This way, we can intervene multiple variables in the way we want and see the effects that it will have. The values are fixed in each time step, so we can make the interventions gradual increases, decreases or whatever we need them to do. As a simulation tool, this is very powerful. We have made some prototypes with shiny and in the future we intend to provide the capability to automatically generate a visual simulation interface with it.
@@ -117,13 +117,13 @@ Another type of inference that can be done with dynamic Bayesian networks is smo
 To perform smoothing, we follow almost the same procedure as to perform forecasting with the network, but in this case all our objective variables are in the oldest time slice, not in t_0. Take care with the 'ini' and 'len' parameters, because we are now going backwards. Should you start smoothing at ini = 50 and len = 20, you would end up predicting up to the instance 30, for example.
 
 ```{r smoothing}
-res_smooth <- suppressWarnings(dbnR::smooth_ts(f_dt_val, fit, size, obj_vars = c("stator_winding_t_2"), ini = 70, len = 20))
+res_smooth <- suppressWarnings(dbnR::smooth_ts(f_dt_val, fit, obj_vars = c("stator_winding_t_2"), ini = 70, len = 20))
 ```
 
 In this case, only exact inference is implemented. Evidenced smoothing is also supported, and it works in the same way as in the forecasting case. Again, take care to provide the evidenced named accordingly to the oldest time slice, depending on the size that was used for training the model.
 
 ```{r smoothing_ev}
-res_smooth <- suppressWarnings(dbnR::smooth_ts(f_dt_val, fit, size, obj_vars = c("stator_winding_t_2"), ini = 70, len = 20,
+res_smooth <- suppressWarnings(dbnR::smooth_ts(f_dt_val, fit, obj_vars = c("stator_winding_t_2"), ini = 70, len = 20,
                                                prov_ev = c("stator_tooth_t_2")))
 ```
 

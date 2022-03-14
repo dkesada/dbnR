@@ -7,7 +7,7 @@
 smooth_ts(
   dt,
   fit,
-  size,
+  size = NULL,
   obj_vars,
   ini = dim(dt)[1],
   len = ini - 1,
@@ -21,7 +21,7 @@ smooth_ts(
 
 \item{fit}{dbn.fit object}
 
-\item{size}{number of time slices of the net}
+\item{size}{number of time slices of the net. Deprecated, will be removed in the future}
 
 \item{obj_vars}{variables to be predicted. Should be in the oldest time step}
 

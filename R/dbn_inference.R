@@ -22,7 +22,7 @@ predict_bn <- function(fit, evidence){
   n <- names(fit)
   obj_nodes <- n[which(!(n %in% names(evidence)))]
   
-  pred <- mvn_inference(attr(fit,"mu"), attr(fit,"sigma"), as_named_vector(evidence))
+  pred <- mvn_inference(attr(fit,"mu"), attr(fit,"sigma"), evidence)
   pred <- as.data.table(t(pred$mu_p[,1]))
   if(length(obj_nodes) == 1)
     setnames(pred, names(pred), obj_nodes)
@@ -136,18 +136,17 @@ exact_prediction_step <- function(fit, variables, evidence){
 #' initial evidence taken from the data set.
 #' @param dt data.table object with the TS data
 #' @param fit bn.fit object
-#' @param size number of time slices of the net
 #' @param obj_vars variables to be predicted
 #' @param ini starting point in the data set to forecast.
 #' @param rep number of repetitions to be performed of the approximate inference
 #' @param len length of the forecast
 #' @param num_p number of particles to be used by bnlearn
 #' @return the results of the forecast
-approximate_inference <- function(dt, fit, size, obj_vars, ini, rep, len, num_p){
+approximate_inference <- function(dt, fit, obj_vars, ini, rep, len, num_p){
   var_names <- names(dt)
   vars_pred_idx <- grep("t_0", var_names)
   vars_subs_idx <- grep("t_1", var_names)
-  vars_last_idx <- grep(paste0("t_", size-1), var_names)
+  vars_last_idx <- grep(paste0("t_", attr(fit, "size")-1), var_names)
   vars_pred <- var_names[vars_pred_idx]
   vars_subs <- var_names[vars_subs_idx]
   vars_prev <- var_names[-c(vars_pred_idx, vars_subs_idx)]
@@ -181,19 +180,18 @@ approximate_inference <- function(dt, fit, size, obj_vars, ini, rep, len, num_p)
 #' performs exact forecasting over the initial evidence taken from the data set.
 #' @param dt data.table object with the TS data
 #' @param fit bn.fit object
-#' @param size number of time slices of the net
 #' @param obj_vars variables to be predicted
 #' @param ini starting point in the data set to forecast.
 #' @param len length of the forecast
 #' @param prov_ev variables to be provided as evidence in each forecasting step
 #' @return the results of the forecast
-exact_inference <- function(dt, fit, size, obj_vars, ini, len, prov_ev){
+exact_inference <- function(dt, fit, obj_vars, ini, len, prov_ev){
   fit <- initial_attr_check(fit)
 
   var_names <- names(dt)
   vars_pred_idx <- grep("t_0", var_names)
   vars_subs_idx <- grep("t_1", var_names)
-  vars_last_idx <- grep(paste0("t_", size-1), var_names)
+  vars_last_idx <- grep(paste0("t_", attr(fit, "size")-1), var_names)
   vars_pred <- var_names[vars_pred_idx]
   vars_prev <- var_names[-c(vars_pred_idx, vars_subs_idx)]
   vars_post <- var_names[-c(vars_pred_idx, vars_last_idx)]
@@ -206,7 +204,7 @@ exact_inference <- function(dt, fit, size, obj_vars, ini, len, prov_ev){
   evidence <- dt[ini, .SD, .SDcols = c(vars_ev, prov_ev)]
 
   for(j in 1:len){
-    particles <- exact_prediction_step(fit, vars_pred, as_named_vector(evidence))
+    particles <- exact_prediction_step(fit, vars_pred, evidence)
     
     if(is.null(names(particles$mu_p)))
       names(particles$mu_p) <- obj_vars # If only 1 variable is obtained from the inference, no name is returned
@@ -232,7 +230,7 @@ exact_inference <- function(dt, fit, size, obj_vars, ini, len, prov_ev){
 #' performs a forecast over the initial evidence taken from the data set.
 #' @param dt data.table object with the TS data
 #' @param fit dbn.fit object
-#' @param size number of time slices of the net
+#' @param size number of time slices of the net. Deprecated, will be removed in the future
 #' @param obj_vars variables to be predicted
 #' @param ini starting point in the data set to forecast.
 #' @param len length of the forecast
@@ -253,29 +251,32 @@ exact_inference <- function(dt, fit, size, obj_vars, ini, len, prov_ev){
 #' f_dt_train <- fold_dt(dt_train, size)
 #' f_dt_val <- fold_dt(dt_val, size)
 #' fit <- fit_dbn_params(net, f_dt_train, method = "mle")
-#' res <- suppressWarnings(forecast_ts(f_dt_val, fit, size, 
+#' res <- suppressWarnings(forecast_ts(f_dt_val, fit, 
 #'         obj_vars = obj, print_res = FALSE, plot_res = FALSE))
 #' @export
-forecast_ts <- function(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1]-ini,
+forecast_ts <- function(dt, fit, size = NULL, obj_vars, ini = 1, len = dim(dt)[1]-ini,
                         rep = 1, num_p = 50, print_res = TRUE, plot_res = TRUE,
                         mode = "exact", prov_ev = NULL){
   initial_folded_dt_check(dt)
   initial_dbnfit_check(fit)
-  numeric_arg_check(size, ini, len, rep, num_p)
+  numeric_arg_check(ini, len, rep, num_p)
   character_arg_check(obj_vars)
   null_or_character_arg_check(prov_ev)
   obj_prov_check(obj_vars, prov_ev)
   logical_arg_check(print_res, plot_res)
   initial_mode_check(mode)
   
+  if(!is.null(size)) # Retain deprecation warning until version 0.8.0
+    warning("The size argument is deprecated and  will be removed in the future. It is already stored inside the 'dbn.fit' object after learning the parameters of the network.")
+  
   dt <- as.data.table(dt)
 
   exec_time <- Sys.time()
   
   if(mode == "exact")
-    test <- exact_inference(dt, fit, size, obj_vars, ini, len, prov_ev)
+    test <- exact_inference(dt, fit, obj_vars, ini, len, prov_ev)
   else if (mode == "approx")
-    test <- approximate_inference(dt, fit, size, obj_vars, ini, rep, len, num_p)
+    test <- approximate_inference(dt, fit, obj_vars, ini, rep, len, num_p)
 
   exec_time <- exec_time - Sys.time()
 
@@ -303,32 +304,31 @@ forecast_ts <- function(dt, fit, size, obj_vars, ini = 1, len = dim(dt)[1]-ini,
 #' forecasting.
 #' @param dt data.table object with the TS data
 #' @param fit bn.fit object
-#' @param size number of time slices of the net
 #' @param obj_vars variables to be predicted. Should be in the oldest time step
 #' @param ini starting point in the data set to smooth
 #' @param len length of the smoothing
 #' @param prov_ev variables to be provided as evidence in each forecasting step. Should be in the oldest time step
 #' @return the results of the smoothing
-exact_inference_backwards <- function(dt, fit, size, obj_vars, ini, len, prov_ev){
+exact_inference_backwards <- function(dt, fit, obj_vars, ini, len, prov_ev){
   fit <- initial_attr_check(fit)
   
   var_names <- names(dt)
-  vars_pred_idx <- grep(paste0("t_", size-1), var_names)
-  vars_subs_idx <- grep(paste0("t_", size-2), var_names)
+  vars_pred_idx <- grep(paste0("t_", attr(fit, "size")-1), var_names)
+  vars_subs_idx <- grep(paste0("t_", attr(fit, "size")-2), var_names)
   vars_last_idx <- grep("t_0", var_names)
-  vars_pred <- var_names[vars_pred_idx] # In this case, we predict the oldes time slice, because we are going backwards 
+  vars_pred <- var_names[vars_pred_idx] # In this case, we predict the oldest time slice, because we are going backwards 
   vars_prev <- var_names[-c(vars_pred_idx, vars_subs_idx)]
   vars_post <- var_names[-c(vars_pred_idx, vars_last_idx)]
   vars_ev <- var_names[-vars_pred_idx]
   vars_pred_crop <- vars_pred[!(vars_pred %in% prov_ev)]
-  vars_subs_crop <- sub(paste0("t_", size-1), paste0("t_", size-2), vars_pred_crop)
-  prov_ev_subs <- sub(paste0("t_", size-1), paste0("t_", size-1), prov_ev)
+  vars_subs_crop <- sub(paste0("t_", attr(fit, "size")-1), paste0("t_", attr(fit, "size")-2), vars_pred_crop)
+  prov_ev_subs <- sub(paste0("t_", attr(fit, "size")-1), paste0("t_", attr(fit, "size")-1), prov_ev)
   
   test <- NULL
   evidence <- dt[ini, .SD, .SDcols = c(vars_ev, prov_ev)]
   
   for(j in 1:len){
-    particles <- exact_prediction_step(fit, vars_pred, as_named_vector(evidence))
+    particles <- exact_prediction_step(fit, vars_pred, evidence)
     
     if(is.null(names(particles$mu_p)))
       names(particles$mu_p) <- obj_vars
@@ -356,7 +356,7 @@ exact_inference_backwards <- function(dt, fit, size, obj_vars, ini, len, prov_ev
 #' the time series that generated that point. 
 #' @param dt data.table object with the TS data
 #' @param fit dbn.fit object
-#' @param size number of time slices of the net
+#' @param size number of time slices of the net. Deprecated, will be removed in the future
 #' @param obj_vars variables to be predicted. Should be in the oldest time step
 #' @param ini starting point in the data set to smooth
 #' @param len length of the smoothing
@@ -365,21 +365,24 @@ exact_inference_backwards <- function(dt, fit, size, obj_vars, ini, len, prov_ev
 #' @param prov_ev variables to be provided as evidence in each smoothing step. Should be in the oldest time step
 #' @return the results of the smoothing
 #' @export
-smooth_ts <- function(dt, fit, size, obj_vars, ini = dim(dt)[1], len = ini-1,
+smooth_ts <- function(dt, fit, size = NULL, obj_vars, ini = dim(dt)[1], len = ini-1,
                       print_res = TRUE, plot_res = TRUE, prov_ev = NULL){
   initial_folded_dt_check(dt)
   initial_dbnfit_check(fit)
-  numeric_arg_check(size, ini, len)
+  numeric_arg_check(ini, len)
   character_arg_check(obj_vars)
   null_or_character_arg_check(prov_ev)
   obj_prov_check(obj_vars, prov_ev)
   logical_arg_check(print_res, plot_res)
   
+  if(!is.null(size)) # Retain deprecation warning until version 0.8.0
+    warning("The size argument is deprecated and  will be removed in the future. It is already stored inside the 'dbn.fit' object after learning the parameters of the network.")
+  
   dt <- as.data.table(dt)
   
   exec_time <- Sys.time()
   
-  test <- exact_inference_backwards(dt, fit, size, obj_vars, ini, len, prov_ev)
+  test <- exact_inference_backwards(dt, fit, obj_vars, ini, len, prov_ev)
   
   exec_time <- exec_time - Sys.time()
   

@@ -26,6 +26,7 @@ learn_dbn_struc <- function(dt, size = 2, method = "dmmhc", f_dt = NULL, ...){
     initial_folded_dt_check(f_dt)
   
   net <- do.call(method, list(dt = dt, size = size, f_dt = f_dt, ...))
+  attr(net, "size") <- size
   
   return(net)
 }
@@ -33,15 +34,18 @@ learn_dbn_struc <- function(dt, size = 2, method = "dmmhc", f_dt = NULL, ...){
 #' Adds the mu vector and sigma matrix as attributes to the bn.fit or dbn.fit object
 #'
 #' Adds the mu vector and sigma matrix as attributes to the bn.fit or dbn.fit 
-#' object to allow performing exact MVN inference on both cases.
+#' object to allow performing exact MVN inference on both cases. It also adds
+#' the number of time slices of the net for future inference.
 #' @param fit a fitted bn or dbn
+#' @param size number of time slices of the net
 #' @return the fitted net with attributes
-add_attr_to_fit <- function(fit){
+add_attr_to_fit <- function(fit, size){
   initial_fit_check(fit)
   
-  attr(fit,"mu") <- calc_mu(fit)
+  attr(fit, "mu") <- calc_mu(fit)
   attr(fit, "sigma") <- calc_sigma(fit)
-  
+  attr(fit, "size") <- size
+ 
   return(fit)
 }
 
@@ -68,7 +72,7 @@ fit_dbn_params <- function(net, f_dt, ...){
   fit <- bnlearn::bn.fit(net, f_dt, ...)
   class(fit)[grep("dbn", class(fit))] <- "dbn.fit"
   
-  fit <- add_attr_to_fit(fit)
+  fit <- add_attr_to_fit(fit, attr(net, "size"))
   
   return(fit)
 }

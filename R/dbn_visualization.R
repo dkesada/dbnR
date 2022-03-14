@@ -38,7 +38,7 @@ node_levels <- function(net, order, lvl = 1, acc = NULL){
 #' plot_network(fit) # Works for both the structure and the fitted net
 #' }
 #' @export
-plot_network <- function(structure){
+plot_static_network <- function(structure){
   check_opt_pkgs_available()
   initial_bn_check(structure)
   if(is_dbn_or_dbnfit(structure))
@@ -147,6 +147,7 @@ expand_time_nodes <- function(name, acc, max, i){
 #' plot_dynamic_network(net)
 #' }
 #' @importFrom magrittr "%>%"
+#' @import data.table
 #' @export
 plot_dynamic_network <- function(structure, offset = 200, subset_nodes = NULL){
   check_opt_pkgs_available()
@@ -181,7 +182,7 @@ plot_dynamic_network <- function(structure, offset = 200, subset_nodes = NULL){
 
   all_colors <- Reduce(function(acu, x){c(acu, rep(x, n_nodes_slice))}, color, NULL)
 
-  nodes <- data.frame(id = nodes_uniq,
+  nodes <- data.table(id = nodes_uniq,
                       label = nodes_uniq,
                       x = all_pos,
                       y = as.numeric(levels[2,]) * 100,
@@ -193,7 +194,7 @@ plot_dynamic_network <- function(structure, offset = 200, subset_nodes = NULL){
                       shadow = FALSE,
                       physics = FALSE)
 
-  edges <- data.frame(from = bnlearn::arcs(structure)[,1],
+  edges <- data.table(from = bnlearn::arcs(structure)[,1],
                       to = bnlearn::arcs(structure)[,2],
                       arrows = "to",
                       #color = "orange",
@@ -202,8 +203,8 @@ plot_dynamic_network <- function(structure, offset = 200, subset_nodes = NULL){
                       color = "black")
   
   if(!is.null(subset_nodes)){
-    nodes <- subset(nodes, id %in% subset_nodes) # Can be switched to data.table if this is too slow
-    edges <- subset(edges, (to %in% subset_nodes) & (from %in% subset_nodes))
+    nodes <- nodes[get("id") %in% subset_nodes] # Need the get("id") instead of simply id to remove an R CMD check note
+    edges <- edges[(get("to") %in% subset_nodes) & (get("from") %in% subset_nodes)]
   }
 
   ret <- visNetwork::visNetwork(nodes, edges) %>%
@@ -211,4 +212,19 @@ plot_dynamic_network <- function(structure, offset = 200, subset_nodes = NULL){
                            nodesIdSelection = T)
 
   return(ret)
+}
+
+#' Plots a Bayesian networks or a dynamic Bayesian network
+#'
+#' Selects the appropriate function depending on the class of the object
+#' @param structure the structure or fit of the network.
+#' @param ... additional parameters for the visualization of a DBN
+#' @export
+plot_network <- function(structure, ...){
+  initial_bn_or_dbn_check(structure)
+  
+  if(is_dbn_or_dbnfit(structure))
+    plot_dynamic_network(structure, ...)
+  else
+    plot_static_network(structure)
 }

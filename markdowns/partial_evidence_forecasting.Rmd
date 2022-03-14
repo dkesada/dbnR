@@ -58,22 +58,15 @@ Our dataset _ev_dt_ only has a single row with the values of _pm_t_1_ and _stato
 We will be using the _mvn_inference()_ function for the first inference step. This function allows us to infer the value of any subset of variables in our network based on another subset of variables. This function makes exact inference with the equivalent multivariate Gaussian distribution of the network, so we will be using the $\mathbf{\mu}$ vector and $\mathbf{\Sigma}$ matrix included as attributes in the 'fit' object:
 
 ```{r inference_mvn, echo=TRUE}
-  as_named_vector <- function(dt){
-    res <- as.numeric(dt)
-    names(res) <- names(dt)
-
-    return(res)
-  }
-
   ev <- f_dt_val[1, .SD, .SDcols = ev_vars]
 
-  pred <- mvn_inference(attr(fit, "mu"), attr(fit, "sigma"), as_named_vector(ev))
+  pred <- mvn_inference(attr(fit, "mu"), attr(fit, "sigma"), ev)
   
   pred$mu_p
   
 ```
 
-With this, we obtained the mean value of the variables given the two variables we provided as evidence. Normally, when doing forecasting we do this same procedure but providing as evidence all the variables in old time slices, but this is done automatically inside the 'forecast_ts' function. This time, we need to do a little bit of work manually in this first step and perform the inference over only our available variables. Notice the 'as_named_vector()' auxiliary function: it converts our 1 row data.table into a named vector, which is needed to perform the mvn inference. Also notice that in the degenerated case where we have no evidence whatsoever of any variable, the value of the inference would be the $\mathbf{\mu}$ vector of the network. 
+With this, we obtained the mean value of the variables given the two variables we provided as evidence. Normally, when doing forecasting we do this same procedure but providing as evidence all the variables in old time slices, but this is done automatically inside the 'forecast_ts' function. This time, we need to do a little bit of work manually in this first step and perform the inference over only our available variables. Notice that we extracted a single row data.table with the evidence variables from our folded dataset, which is needed to perform the mvn inference. We either need a one row data.table or a named vector with the names and the values of the evidence variables. Also notice that in the degenerated case where we have no evidence whatsoever of any variable, the value of the inference would be the $\mathbf{\mu}$ vector of the network. 
 
 This procedure can also be used to use the network as a simulator and see the effects that certain interventions have on the future by fixing some variables to specific values:
 
@@ -100,12 +93,14 @@ After the inference step, if we build a full vector we can go on and forecast up
   full_dt_1 <- cbind(full_dt_1, ev) # We need to include our evidence in the full vector
   obj = "pm_t_0"
   
-  res <- dbnR::forecast_ts(full_dt_1, fit, 2, obj, ini = 1, len = 10, print_res = F)
+  res <- dbnR::forecast_ts(full_dt_1, fit, obj_vars = obj, ini = 1, len = 5, print_res = F, plot_res = F)
+  plot(ts(res$pred$pm_t_0), col = "red", ylab = "pm_t_0")
   
   full_dt_2 <- as.data.table(t(pred_i$mu_p))
   full_dt_2 <- cbind(full_dt_2, ev_i)
   
-  res_i <- dbnR::forecast_ts(full_dt_2, fit, 2, obj, ini = 1, len = 10, print_res = F)
+  res_i <- dbnR::forecast_ts(full_dt_2, fit, obj_vars = obj, ini = 1, len = 5, print_res = F, plot_res = F)
+  plot(ts(res_i$pred$pm_t_0), col = "red", ylab = "pm_t_0")
   
 ```
 
