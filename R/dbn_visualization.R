@@ -157,6 +157,7 @@ plot_dynamic_network <- function(structure, offset = 200, subset_nodes = NULL, r
   check_opt_pkgs_available()
   initial_dbn_check(structure)
   numeric_arg_check(offset)
+  logical_arg_check(reverse)
   
   if(reverse)
     structure <- bnlearn::rename.nodes(structure, reverse_names(names(structure$nodes), attr(structure, "size")))
