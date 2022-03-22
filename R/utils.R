@@ -306,3 +306,13 @@ calc_size <- function(fit){
   
   return(res)
 }
+
+# Reverses the naming convention of a vector of nodes. This function transforms 
+# t_0 into t_n , t_1 into t_n-1 and so on. 
+reverse_names <- function(old_names, size){
+  sapply(old_names, function(x){
+    elems <- strsplit(x, "_t_")[[1]]
+    elems[2] <- abs(size - 1 - as.numeric(elems[2]))
+    paste0(elems[1], "_t_", elems[2])
+  }, USE.NAMES = F)
+}

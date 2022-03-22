@@ -138,6 +138,10 @@ expand_time_nodes <- function(name, acc, max, i){
 #' @param structure the structure or fit of the network.
 #' @param offset the blank space between time slices
 #' @param subset_nodes a vector containing the names of the subset of nodes to plot
+#' @param reverse reverse to the classic naming convention of the nodes. 
+#' The oldest time-slice will now be t_0 and the most recent one t_n. 
+#' Only for visualization purposes, the network is unmodified underneath. If
+#' using subset_nodes, remember that t_0 is now the oldest time-slice.
 #' @return the visualization of the DBN
 #' @examples 
 #' \donttest{
@@ -149,11 +153,14 @@ expand_time_nodes <- function(name, acc, max, i){
 #' @importFrom magrittr "%>%"
 #' @import data.table
 #' @export
-plot_dynamic_network <- function(structure, offset = 200, subset_nodes = NULL){
+plot_dynamic_network <- function(structure, offset = 200, subset_nodes = NULL, reverse = FALSE){
   check_opt_pkgs_available()
   initial_dbn_check(structure)
   numeric_arg_check(offset)
-
+  
+  if(reverse)
+    structure <- bnlearn::rename.nodes(structure, reverse_names(names(structure$nodes), attr(structure, "size")))
+  
   # Static net positioning
   nodes_uniq <- dynamic_ordering(structure)
   levels <- node_levels(structure, nodes_uniq)
@@ -167,6 +174,8 @@ plot_dynamic_network <- function(structure, offset = 200, subset_nodes = NULL){
 
   # Relative position of the nodes
   nodes_uniq <- expand_time_nodes(nodes_uniq, nodes_uniq, ord, 1)
+  if(reverse)
+    nodes_uniq <- reverse_names(nodes_uniq, attr(structure, "size"))
   
   all_pos <- Reduce(function(acu, x){
     c(acu, (positions * 100 + x * 100 * max_consec + x * offset))}, 
