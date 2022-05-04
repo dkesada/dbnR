@@ -2,6 +2,10 @@
 
 * Added an option to reverse the naming convention of the nodes when plotting a DBN. It transforms t_0 into t_n, t_1 into t_n-1 and so on. In the literature, t_0 is the oldest time-slice, and we reversed that in dbnR. This option lets users plot the networks following convention, but changes nothing of the models underneath.
 
+* Fixed interaction between 'sapply' and some time series in the 'plot_single_result' function that caused the 'lines' function to take a very long time to execute.
+
+* Fixed plots not showing the predictions line when the predictions where outside the range of the original time series values.
+
 # dbnR 0.7.5
 
 * Deprecated the 'size' argument in 'forecast_ts' and 'smooth_ts'.

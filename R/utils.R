@@ -18,9 +18,11 @@ print_metrics <- function(metrics, obj_vars){
 }
 
 plot_single_result <- function(dt, results, var){
-  plot(ts(dt[, .SD, .SDcols = var]))
-  invisible(sapply(1:max(results[get("exec")]), function(x){
-    lines(results[get("exec") == x, .SD, .SDcols = var], col = "red")}))
+  min_val <- min(c(dt[, get(var)], results[, get(var)]))
+  max_val <- max(c(dt[, get(var)], results[, get(var)]))
+  plot(ts(dt[, get(var)]), ylim = c(min_val, max_val), ylab = var)
+  for(i in results[, unique(exec)])
+    lines(results[exec == i, get(var)], col = "red")
 }
 
 plot_results <- function(dt, results, obj_vars){
