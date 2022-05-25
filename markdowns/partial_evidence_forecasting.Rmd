@@ -76,7 +76,7 @@ This procedure can also be used to use the network as a simulator and see the ef
   
   sprintf("We intervene the 'pm_t_1' variable, so that its new value is %.1f", ev_i[1, pm_t_1])
   
-  pred_i <- mvn_inference(attr(fit, "mu"), attr(fit, "sigma"), as_named_vector(ev_i))
+  pred_i <- mvn_inference(attr(fit, "mu"), attr(fit, "sigma"), ev_i)
   
   pred_i$mu_p
   cat("\n")
