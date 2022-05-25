@@ -1,3 +1,7 @@
+# dbnR 0.7.7
+
+* New auxiliary function that moves the values of the variables backwards in time. Useful to shift the last row of evidence in a dataset and predict in a real world scenario.
+
 # dbnR 0.7.6
 
 * Added an option to reverse the naming convention of the nodes when plotting a DBN. It transforms t_0 into t_n, t_1 into t_n-1 and so on. In the literature, t_0 is the oldest time-slice, and we reversed that in dbnR. This option lets users plot the networks following convention, but changes nothing of the models underneath.

@@ -318,3 +318,28 @@ reverse_names <- function(old_names, size){
     paste0(elems[1], "_t_", elems[2])
   }, USE.NAMES = F)
 }
+
+#' Function that moves the window of values backwards in a folded dataset row
+#' 
+#' Move the values in t_0, t_1, ..., t_n-1 in a folded dataset row to
+#' t_1, t_2, ..., t_n. This is useful to predict the values in the last row
+#' of a folded dataset
+#' @param f_dt a folded dataset
+#' @param row the row that is going to be processed
+#' @return the shifted row
+#' @export
+shift_values <- function(f_dt, row){
+  var_names <- names(f_dt)
+  max_size <- max(simplify2array(strsplit(var_names, "^.*_t_")))
+  vars_first_idx <- grep("t_0", var_names)
+  vars_last_idx <- grep(paste0("t_", max_size), var_names)
+  vars_t0 <- var_names[vars_first_idx]
+  vars_first <- var_names[-vars_last_idx]
+  vars_last <- var_names[-vars_first_idx]
+  res = copy(f_dt[row])
+  
+  res[, (vars_last) := .SD, .SDcols = vars_first]
+  res[, (vars_t0) := NA]
+  
+  return(res)
+}
