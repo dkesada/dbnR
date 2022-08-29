@@ -224,17 +224,24 @@ plot_dynamic_network <- function(structure, offset = 200, subset_nodes = NULL, r
   return(ret)
 }
 
-#' Plots a Bayesian networks or a dynamic Bayesian network
+#' Plots a dynamic Bayesian network
 #'
-#' Selects the appropriate function depending on the class of the object
-#' @param structure the structure or fit of the network.
+#' Generic method for plotting the "dbn" S3 objects. Calls 
+#' \code{\link{plot_dynamic_network}} underneath.
+#' @param structure the structure of the network.
 #' @param ... additional parameters for the visualization of a DBN
 #' @export
-plot_network <- function(structure, ...){
-  initial_bn_or_dbn_check(structure)
-  
-  if(is_dbn_or_dbnfit(structure))
-    plot_dynamic_network(structure, ...)
-  else
-    plot_static_network(structure)
+plot.dbn <- function(structure, ...){
+  plot_dynamic_network(structure, ...)
+}
+
+#' Plots a fitted dynamic Bayesian network
+#'
+#' Generic method for plotting the "dbn.fit" S3 objects. Calls 
+#' \code{\link{plot_dynamic_network}} underneath.
+#' @param structure the structure of the network.
+#' @param ... additional parameters for the visualization of a DBN
+#' @export
+plot.dbn.fit <- function(structure, ...){
+  plot_dynamic_network(structure, ...)
 }

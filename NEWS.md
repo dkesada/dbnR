@@ -1,3 +1,17 @@
+# dbnR 0.7.8
+
+* Bringing the package overall status up to scratch for publication on a journal.
+
+* Generic methods have been added for the "dbn" and "dbn.fit" S3 classes.
+
+* Documentation of the exported functions is now more accurate and follows a more stricter standard.
+
+* Non-exported functions are now excluded from the man pages.
+
+* Regular 'print' in low-level, internal functions has been swapped with 'cat'.
+
+* All of bnlearn mothods for the classes "bn" and "bn.fit" have been extended to the "dbn" and "dbn.fit" classes in independent functions to ensure compatibility. All these methods are contained in the "bnlearn_compat.R" file.
+
 # dbnR 0.7.7
 
 * New auxiliary function that moves the values of the variables backwards in time. Useful to shift the last row of evidence in a dataset and predict in a real world scenario.
