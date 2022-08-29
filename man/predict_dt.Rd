@@ -4,7 +4,7 @@
 \alias{predict_dt}
 \title{Performs inference over a test data set with a GBN}
 \usage{
-predict_dt(fit, dt, obj_nodes, verbose = T)
+predict_dt(fit, dt, obj_nodes, verbose = T, look_ahead = F)
 }
 \arguments{
 \item{fit}{the fitted bn}
@@ -14,6 +14,8 @@ predict_dt(fit, dt, obj_nodes, verbose = T)
 \item{obj_nodes}{the nodes that are going to be predicted. They are all predicted at the same time}
 
 \item{verbose}{if TRUE, displays the metrics and plots the real values against the predictions}
+
+\item{look_ahead}{boolean that defines whether or not the values of the variables in t_0 should be used when predicting, even if they are not present in obj_nodes. This decides if look-ahead bias is introduced or not.}
 }
 \value{
 the prediction results
@@ -23,17 +25,6 @@ Performs inference over a test data set, plots the results
 and gives metrics of the accuracy of the results.
 }
 \examples{
-size = 3
-data(motor)
-dt_train <- motor[200:2500]
-dt_val <- motor[2501:3000]
-
-# With a DBN 
-obj <- c("pm_t_0")
-net <- learn_dbn_struc(dt_train, size)
-f_dt_train <- fold_dt(dt_train, size)
-f_dt_val <- fold_dt(dt_val, size)
-fit <- fit_dbn_params(net, f_dt_train, method = "mle")
 res <- suppressWarnings(predict_dt(fit, f_dt_val, obj_nodes = obj, verbose = FALSE))
 
 # With a Gaussian BN directly from bnlearn

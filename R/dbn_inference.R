@@ -38,19 +38,20 @@ predict_bn <- function(fit, evidence){
 #' @param dt the test data set
 #' @param obj_nodes the nodes that are going to be predicted. They are all predicted at the same time
 #' @param verbose if TRUE, displays the metrics and plots the real values against the predictions
+#' @param look_ahead boolean that defines whether or not the values of the variables in t_0 should be used when predicting, even if they are not present in obj_nodes. This decides if look-ahead bias is introduced or not.
 #' @return the prediction results
 #' @examples
-#' size = 3
-#' data(motor)
-#' dt_train <- motor[200:2500]
-#' dt_val <- motor[2501:3000]
-#' 
-#' # With a DBN 
-#' obj <- c("pm_t_0")
-#' net <- learn_dbn_struc(dt_train, size)
-#' f_dt_train <- fold_dt(dt_train, size)
-#' f_dt_val <- fold_dt(dt_val, size)
-#' fit <- fit_dbn_params(net, f_dt_train, method = "mle")
+# size = 3
+# data(motor)
+# dt_train <- motor[200:2500]
+# dt_val <- motor[2501:3000]
+# 
+# # With a DBN
+# obj <- c("pm_t_0")
+# net <- learn_dbn_struc(dt_train, size)
+# f_dt_train <- fold_dt(dt_train, size)
+# f_dt_val <- fold_dt(dt_val, size)
+# fit <- fit_dbn_params(net, f_dt_train, method = "mle")
 #' res <- suppressWarnings(predict_dt(fit, f_dt_val, obj_nodes = obj, verbose = FALSE))
 #' 
 #' # With a Gaussian BN directly from bnlearn
@@ -61,15 +62,23 @@ predict_bn <- function(fit, evidence){
 #' @importFrom graphics "plot" "lines" 
 #' @importFrom stats "ts"
 #' @export
-predict_dt <- function(fit, dt, obj_nodes, verbose = T){
+predict_dt <- function(fit, dt, obj_nodes, verbose = T, look_ahead = F){
   initial_fit_check(fit)
   initial_df_check(dt)
   fit <- initial_attr_check(fit)
   
+  if(!look_ahead){
+    vars_t_0 <- names(fit)[grepl("t_0", names(fit))]
+    obj_nodes_full <- c(obj_nodes, vars_t_0[!(vars_t_0 %in% obj_nodes)])
+  }
+  
+  else
+    obj_nodes_full <- obj_nodes
+  
   dt <- as.data.table(dt)
-  obj_dt <- dt[, .SD, .SDcols = obj_nodes]
+  obj_dt <- dt[, .SD, .SDcols = obj_nodes_full]
   ev_dt <- copy(dt)
-  ev_dt[, (obj_nodes) := NULL]
+  ev_dt[, (obj_nodes_full) := NULL]
   
   res <- ev_dt[, predict_bn(fit, .SD), by = 1:nrow(ev_dt)]
   
