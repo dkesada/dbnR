@@ -41,17 +41,17 @@ predict_bn <- function(fit, evidence){
 #' @param look_ahead boolean that defines whether or not the values of the variables in t_0 should be used when predicting, even if they are not present in obj_nodes. This decides if look-ahead bias is introduced or not.
 #' @return the prediction results
 #' @examples
-# size = 3
-# data(motor)
-# dt_train <- motor[200:2500]
-# dt_val <- motor[2501:3000]
-# 
-# # With a DBN
-# obj <- c("pm_t_0")
-# net <- learn_dbn_struc(dt_train, size)
-# f_dt_train <- fold_dt(dt_train, size)
-# f_dt_val <- fold_dt(dt_val, size)
-# fit <- fit_dbn_params(net, f_dt_train, method = "mle")
+#' size = 3
+#' data(motor)
+#' dt_train <- motor[200:2500]
+#' dt_val <- motor[2501:3000]
+#' 
+#' # With a DBN
+#' obj <- c("pm_t_0")
+#' net <- learn_dbn_struc(dt_train, size)
+#' f_dt_train <- fold_dt(dt_train, size)
+#' f_dt_val <- fold_dt(dt_val, size)
+#' fit <- fit_dbn_params(net, f_dt_train, method = "mle")
 #' res <- suppressWarnings(predict_dt(fit, f_dt_val, obj_nodes = obj, verbose = FALSE))
 #' 
 #' # With a Gaussian BN directly from bnlearn
@@ -98,6 +98,21 @@ predict_dt <- function(fit, dt, obj_nodes, verbose = T, look_ahead = F){
   }
 
   return(res)
+}
+
+#' Predicts the values in t_0 of every row in a dataset with a dynamic Bayesian network
+#'
+#' Generic method for predicting a dataset with a "dbn.fit" S3 objects. Calls 
+#' \code{\link{predict_dt}} underneath.
+#' @param object the fitted bn
+#' @param dt the test data set
+#' @param obj_nodes the nodes that are going to be predicted. They are all predicted at the same time
+#' @param verbose if TRUE, displays the metrics and plots the real values against the predictions
+#' @param look_ahead boolean that defines whether or not the values of the variables in t_0 should be used when predicting, even if they are not present in obj_nodes. This decides if look-ahead bias is introduced or not.
+#' @return the prediction results
+#' @export
+predict.dbn.fit <- function(object, dt, obj_nodes, verbose = T, look_ahead = F){
+   predict_dt(fit, dt, obj_nodes, verbose, look_ahead)
 }
 
 #' Performs approximate inference in a time slice of the dbn
