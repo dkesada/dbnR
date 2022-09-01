@@ -33,9 +33,9 @@ node_levels <- function(net, order, lvl = 1, acc = NULL){
 #' \donttest{
 #' dt_train <- dbnR::motor[200:2500]
 #' net <- bnlearn::mmhc(dt_train)
-#' plot_network(net)
+#' plot_static_network(net)
 #' fit <- bnlearn::bn.fit(net, dt_train, method = "mle")
-#' plot_network(fit) # Works for both the structure and the fitted net
+#' plot_static_network(fit) # Works for both the structure and the fitted net
 #' }
 #' @export
 plot_static_network <- function(structure){
@@ -228,20 +228,20 @@ plot_dynamic_network <- function(structure, offset = 200, subset_nodes = NULL, r
 #'
 #' Generic method for plotting the "dbn" S3 objects. Calls 
 #' \code{\link{plot_dynamic_network}} underneath.
-#' @param structure the structure of the network.
+#' @param x the structure of the network.
 #' @param ... additional parameters for the visualization of a DBN
 #' @export
-plot.dbn <- function(structure, ...){
-  plot_dynamic_network(structure, ...)
+plot.dbn <- function(x, ...){
+  plot_dynamic_network(x, ...)
 }
 
 #' Plots a fitted dynamic Bayesian network
 #'
 #' Generic method for plotting the "dbn.fit" S3 objects. Calls 
 #' \code{\link{plot_dynamic_network}} underneath.
-#' @param structure the structure of the network.
+#' @param x the structure of the network.
 #' @param ... additional parameters for the visualization of a DBN
 #' @export
-plot.dbn.fit <- function(structure, ...){
-  plot_dynamic_network(structure, ...)
+plot.dbn.fit <- function(x, ...){
+  plot_dynamic_network(x, ...)
 }

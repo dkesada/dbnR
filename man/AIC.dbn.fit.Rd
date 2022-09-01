@@ -4,21 +4,19 @@
 \alias{AIC.dbn.fit}
 \title{Calculate the AIC of a dynamic Bayesian network}
 \usage{
-\method{AIC}{dbn.fit}(object, dt, k = 1)
+\method{AIC}{dbn.fit}(object, ..., k)
 }
 \arguments{
-\item{object}{the structure of the network.}
-
-\item{k}{the penalty parameter}
-
-\item{data}{the dataset to calculate the score of the network}
+\item{object}{the fitted network}
 
 \item{...}{additional parameters for the network scoring}
+
+\item{k}{the penalty parameter}
 }
 \value{
 the prediction results
 }
 \description{
 Generic method for calculating the Akaike information criterion (AIC) of a 
-"dbn" S3 object given some data. Calls \code{\link{AIC}} underneath.
+"dbn.fit" S3 object given some data. Calls bnlearn's \code{\link{AIC}} underneath.
 }

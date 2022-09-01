@@ -4,18 +4,12 @@
 \alias{predict.dbn.fit}
 \title{Predicts the values in t_0 of every row in a dataset with a dynamic Bayesian network}
 \usage{
-\method{predict}{dbn.fit}(object, dt, obj_nodes, verbose = T, look_ahead = F)
+\method{predict}{dbn.fit}(object, ...)
 }
 \arguments{
-\item{object}{the fitted bn}
+\item{object}{a "dbn.fit" object}
 
-\item{dt}{the test data set}
-
-\item{obj_nodes}{the nodes that are going to be predicted. They are all predicted at the same time}
-
-\item{verbose}{if TRUE, displays the metrics and plots the real values against the predictions}
-
-\item{look_ahead}{boolean that defines whether or not the values of the variables in t_0 should be used when predicting, even if they are not present in obj_nodes. This decides if look-ahead bias is introduced or not.}
+\item{...}{additional parameters for the inference process}
 }
 \value{
 the prediction results

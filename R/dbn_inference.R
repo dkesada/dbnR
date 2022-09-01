@@ -104,15 +104,12 @@ predict_dt <- function(fit, dt, obj_nodes, verbose = T, look_ahead = F){
 #'
 #' Generic method for predicting a dataset with a "dbn.fit" S3 objects. Calls 
 #' \code{\link{predict_dt}} underneath.
-#' @param object the fitted bn
-#' @param dt the test data set
-#' @param obj_nodes the nodes that are going to be predicted. They are all predicted at the same time
-#' @param verbose if TRUE, displays the metrics and plots the real values against the predictions
-#' @param look_ahead boolean that defines whether or not the values of the variables in t_0 should be used when predicting, even if they are not present in obj_nodes. This decides if look-ahead bias is introduced or not.
+#' @param object a "dbn.fit" object
+#' @param ... additional parameters for the inference process
 #' @return the prediction results
 #' @export
-predict.dbn.fit <- function(object, dt, obj_nodes, verbose = T, look_ahead = F){
-   predict_dt(fit, dt, obj_nodes, verbose, look_ahead)
+predict.dbn.fit <- function(object, ...){
+   predict_dt(object, ...)
 }
 
 #' Performs approximate inference in a time slice of the dbn

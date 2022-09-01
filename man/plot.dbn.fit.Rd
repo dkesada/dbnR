@@ -4,10 +4,10 @@
 \alias{plot.dbn.fit}
 \title{Plots a fitted dynamic Bayesian network}
 \usage{
-\method{plot}{dbn.fit}(structure, ...)
+\method{plot}{dbn.fit}(x, ...)
 }
 \arguments{
-\item{structure}{the structure of the network.}
+\item{x}{the structure of the network.}
 
 \item{...}{additional parameters for the visualization of a DBN}
 }

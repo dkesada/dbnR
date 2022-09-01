@@ -17,8 +17,8 @@ layout in visNetwork.
 \donttest{
 dt_train <- dbnR::motor[200:2500]
 net <- bnlearn::mmhc(dt_train)
-plot_network(net)
+plot_static_network(net)
 fit <- bnlearn::bn.fit(net, dt_train, method = "mle")
-plot_network(fit) # Works for both the structure and the fitted net
+plot_static_network(fit) # Works for both the structure and the fitted net
 }
 }

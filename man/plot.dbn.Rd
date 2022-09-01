@@ -4,10 +4,10 @@
 \alias{plot.dbn}
 \title{Plots a dynamic Bayesian network}
 \usage{
-\method{plot}{dbn}(structure, ...)
+\method{plot}{dbn}(x, ...)
 }
 \arguments{
-\item{structure}{the structure of the network.}
+\item{x}{the structure of the network.}
 
 \item{...}{additional parameters for the visualization of a DBN}
 }

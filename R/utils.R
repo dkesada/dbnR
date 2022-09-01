@@ -21,8 +21,9 @@ plot_single_result <- function(dt, results, var){
   min_val <- min(c(dt[, get(var)], results[, get(var)]))
   max_val <- max(c(dt[, get(var)], results[, get(var)]))
   plot(ts(dt[, get(var)]), ylim = c(min_val, max_val), ylab = var)
-  for(i in results[, unique(exec)])
-    lines(results[exec == i, get(var)], col = "red")
+  idx <- "exec"
+  for(i in results[, unique(get(idx))])
+    lines(results[eval(idx) == i, get(var)], col = "red")
 }
 
 plot_results <- function(dt, results, obj_vars){

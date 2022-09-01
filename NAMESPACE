@@ -2,6 +2,11 @@
 
 S3method(AIC,dbn)
 S3method(AIC,dbn.fit)
+S3method(all,equal.dbn)
+S3method(all,equal.dbn.fit)
+S3method(as.character,dbn)
+S3method(logLik,dbn)
+S3method(logLik,dbn.fit)
 S3method(plot,dbn)
 S3method(plot,dbn.fit)
 S3method(predict,dbn.fit)
