@@ -123,10 +123,41 @@ as.character.dbn <- function(x, ...){
 #' @param Nodes which nodes to check
 #' @param ... additional parameters
 #' @return the prediction results
-#' @importFrom bnlearn degree
+#' @importMethodsFrom bnlearn degree
+#' @method degree bn
+#' @export
+degree.bn <- function(object, Nodes, ...){
+  bnlearn::degree(object, Nodes, ...)
+}
+
+#' Convert a network structure into a model string 
+#'
+#' Generic method for converting a "dbn" S3 object into a string.
+#' Calls bnlearn's \code{\link{degree}} underneath.
+#' @param object a "dbn" object
+#' @param Nodes which nodes to check
+#' @param ... additional parameters
+#' @return the prediction results
+#' @importMethodsFrom bnlearn degree
 #' @method degree dbn
 #' @export
 degree.dbn <- function(object, Nodes, ...){
+  class(object) <- "bn" # The degree function specifically checks for a bn object. This won't be reflected outside the call
   bnlearn::degree(object, Nodes, ...)
+}
+
+#' Convert a network structure into a model string 
+#'
+#' Generic method for converting a "dbn" S3 object into a string.
+#' Calls bnlearn's \code{\link{degree}} underneath. I have to redefine the
+#' generic and mask the original for it to work on both bn and dbn objects.
+#' @param object a "dbn" object
+#' @param Nodes which nodes to check
+#' @param ... additional parameters
+#' @return the prediction results
+#' @importFrom bnlearn degree
+#' @export
+degree <- function(object, Nodes, ...){
+  UseMethod("degree")
 }
 
