@@ -27,6 +27,6 @@ dt_val <- motor[2501:3000]
 net <- learn_dbn_struc(dt_train, size)
 f_dt_train <- fold_dt(dt_train, size)
 f_dt_val <- fold_dt(dt_val, size)
-fit <- fit_dbn_params(net, f_dt_train, method = "mle")
+fit <- fit_dbn_params(net, f_dt_train, method = "mle-g")
 res <- f_dt_val[, predict_bn(fit, .SD), by = 1:nrow(f_dt_val)]
 }

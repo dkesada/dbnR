@@ -60,7 +60,7 @@ Once we have the structure of the DBN, we have to fold our dataset and fit the p
 ```{r params}
 f_dt_train <- fold_dt(dt_train, size)
 f_dt_val <- fold_dt(dt_val, size)
-fit <- dbnR::fit_dbn_params(net, f_dt_train, method = "mle")
+fit <- dbnR::fit_dbn_params(net, f_dt_train, method = "mle-g")
 ```
 
 ## Visualization
@@ -149,6 +149,6 @@ net <- dbnR::learn_dbn_struc(noisy_dt_train, size, restrict = "mmpc", maximize =
                              restrict.args = list(test = "mi-g"),
                              maximize.args = list(score = "bge", maxp = 8))
 noisy_f_dt_train <- fold_dt(dt_train, size)
-fit <- dbnR::fit_dbn_params(net, noisy_f_dt_train, method = "mle")
+fit <- dbnR::fit_dbn_params(net, noisy_f_dt_train, method = "mle-g")
 print(paste0("The determinant of the noisy data is: ", det(calc_sigma(fit))))
 ```

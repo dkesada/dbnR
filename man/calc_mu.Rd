@@ -20,6 +20,6 @@ of a C++ function.
 \examples{
 dt_train <- dbnR::motor[200:2500]
 net <- bnlearn::mmhc(dt_train)
-fit <- bnlearn::bn.fit(net, dt_train, method = "mle")
+fit <- bnlearn::bn.fit(net, dt_train, method = "mle-g")
 mu <- calc_mu(fit)
 }

@@ -92,7 +92,7 @@ plot_dynamic_network(net)
 
 ```{r fit, echo=TRUE, eval=FALSE}
 f_dt_train <- fold_dt(dt_train, size)
-fit <- fit_dbn_params(net, f_dt_train, method = "mle")
+fit <- fit_dbn_params(net, f_dt_train, method = "mle-g")
 ```
 
 After learning the net, two different types of inference can be performed: point-wise inference over a dataset and forecasting to some horizon. Point-wise inference uses the folded dt to try and predict the objective variables in each row. Forecasting to some horizon, on the other hand, tries to predict the behaviour in the future M instants given some initial evidence of the variables.

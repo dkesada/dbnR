@@ -6,7 +6,7 @@
 #' @examples
 #' dt_train <- dbnR::motor[200:2500]
 #' net <- bnlearn::mmhc(dt_train)
-#' fit <- bnlearn::bn.fit(net, dt_train, method = "mle")
+#' fit <- bnlearn::bn.fit(net, dt_train, method = "mle-g")
 #' mu <- calc_mu(fit)
 #' @export
 calc_mu <- function(fit){
@@ -23,7 +23,7 @@ calc_mu <- function(fit){
 #' @examples
 #' dt_train <- dbnR::motor[200:2500]
 #' net <- bnlearn::mmhc(dt_train)
-#' fit <- bnlearn::bn.fit(net, dt_train, method = "mle")
+#' fit <- bnlearn::bn.fit(net, dt_train, method = "mle-g")
 #' sigma <- calc_sigma(fit)
 #' @export
 calc_sigma <- function(fit){

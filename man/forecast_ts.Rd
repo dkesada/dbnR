@@ -60,7 +60,7 @@ obj <- c("pm_t_0")
 net <- learn_dbn_struc(dt_train, size)
 f_dt_train <- fold_dt(dt_train, size)
 f_dt_val <- fold_dt(dt_val, size)
-fit <- fit_dbn_params(net, f_dt_train, method = "mle")
+fit <- fit_dbn_params(net, f_dt_train, method = "mle-g")
 res <- suppressWarnings(forecast_ts(f_dt_val, fit, 
         obj_vars = obj, print_res = FALSE, plot_res = FALSE))
 }

@@ -6,6 +6,7 @@
 #' @param ... additional parameters for the network scoring
 #' @param k the penalty parameter
 #' @return the prediction results
+#' @importFrom stats AIC
 #' @export
 AIC.dbn <- function(object, ..., k){
   NextMethod()
@@ -24,6 +25,31 @@ AIC.dbn.fit <- function(object, ..., k){
   NextMethod()
 }
 
+#' Calculate the BIC of a dynamic Bayesian network
+#'
+#' Generic method for calculating the Akaike information criterion (BIC) of a 
+#' "dbn" S3 object given some data. Calls bnlearn's \code{\link{BIC}} underneath.
+#' @param object the structure of the network
+#' @param ... additional parameters for the network scoring
+#' @return the prediction results
+#' @importFrom stats BIC
+#' @export
+BIC.dbn <- function(object, ...){
+  NextMethod()
+}
+
+#' Calculate the BIC of a dynamic Bayesian network
+#'
+#' Generic method for calculating the Akaike information criterion (BIC) of a 
+#' "dbn.fit" S3 object given some data. Calls bnlearn's \code{\link{BIC}} underneath.
+#' @param object the fitted network
+#' @param ... additional parameters for the network scoring
+#' @return the prediction results
+#' @export
+BIC.dbn.fit <- function(object, ...){
+  NextMethod()
+}
+
 #' Calculate the log-likelihood of a dynamic Bayesian network
 #'
 #' Generic method for calculating the log-likelihood of a 
@@ -32,6 +58,7 @@ AIC.dbn.fit <- function(object, ..., k){
 #' @param dt the dataset to calculate the score of the network
 #' @param ... additional parameters for the network scoring
 #' @return the prediction results
+#' @importFrom stats logLik
 #' @export
 logLik.dbn <- function(object, dt, ...){
   NextMethod()
@@ -87,3 +114,19 @@ all.equal.dbn.fit <- function(target, current, ...){
 as.character.dbn <- function(x, ...){
   NextMethod()
 }
+
+#' Convert a network structure into a model string 
+#'
+#' Generic method for converting a "dbn" S3 object into a string.
+#' Calls bnlearn's \code{\link{degree}} underneath.
+#' @param object a "dbn" object
+#' @param Nodes which nodes to check
+#' @param ... additional parameters
+#' @return the prediction results
+#' @importFrom bnlearn degree
+#' @method degree dbn
+#' @export
+degree.dbn <- function(object, Nodes, ...){
+  bnlearn::degree(object, Nodes, ...)
+}
+

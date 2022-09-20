@@ -20,7 +20,7 @@
 #' f_dt_train <- fold_dt(dt_train, size)
 #' f_dt_val <- fold_dt(dt_val, size)
 #' ev <- f_dt_val[1, .SD, .SDcols = obj]
-#' fit <- fit_dbn_params(net, f_dt_train, method = "mle")
+#' fit <- fit_dbn_params(net, f_dt_train, method = "mle-g")
 #' 
 #' pred <- mvn_inference(calc_mu(fit), calc_sigma(fit), ev)
 #' @export

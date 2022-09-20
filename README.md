@@ -132,7 +132,7 @@ text](https://raw.githubusercontent.com/dkesada/dbnR/master/media/dbn_plot.png)
 
 ``` r
 f_dt_train <- fold_dt(dt_train, size)
-fit <- fit_dbn_params(net, f_dt_train, method = "mle")
+fit <- fit_dbn_params(net, f_dt_train, method = "mle-g")
 ```
 
 After learning the net, two different types of inference can be
