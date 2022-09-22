@@ -115,49 +115,219 @@ as.character.dbn <- function(x, ...){
   NextMethod()
 }
 
-#' Convert a network structure into a model string 
+#' Calculates the degree of a list of nodes
 #'
-#' Generic method for converting a "dbn" S3 object into a string.
-#' Calls bnlearn's \code{\link{degree}} underneath.
+#' Generic method for calculating the degree of a list of nodes in a
+#' "bn" S3 object. Calls bnlearn's \code{\link{degree}} underneath.
 #' @param object a "dbn" object
 #' @param Nodes which nodes to check
 #' @param ... additional parameters
-#' @return the prediction results
-#' @importMethodsFrom bnlearn degree
-#' @method degree bn
+#' @return the degree of the nodes
 #' @export
 degree.bn <- function(object, Nodes, ...){
   bnlearn::degree(object, Nodes, ...)
 }
 
-#' Convert a network structure into a model string 
+#' Calculates the degree of a list of nodes
 #'
-#' Generic method for converting a "dbn" S3 object into a string.
-#' Calls bnlearn's \code{\link{degree}} underneath.
+#' Generic method for calculating the degree of a list of nodes in a
+#' "dbn" S3 object. Calls bnlearn's \code{\link{degree}} underneath.
+#' The degree function is specifically coded to look for either the "bn"
+#' or the "bn.fit" method inside bnlearn, so I have to cast the "dbn" class
+#' into "bn" for it to work.
 #' @param object a "dbn" object
 #' @param Nodes which nodes to check
 #' @param ... additional parameters
-#' @return the prediction results
-#' @importMethodsFrom bnlearn degree
-#' @method degree dbn
+#' @return the degree of the nodes
 #' @export
 degree.dbn <- function(object, Nodes, ...){
-  class(object) <- "bn" # The degree function specifically checks for a bn object. This won't be reflected outside the call
+  class(object) <- "bn" # This won't be reflected outside the call
   bnlearn::degree(object, Nodes, ...)
 }
 
-#' Convert a network structure into a model string 
+#' Calculates the degree of a list of nodes
 #'
-#' Generic method for converting a "dbn" S3 object into a string.
-#' Calls bnlearn's \code{\link{degree}} underneath. I have to redefine the
-#' generic and mask the original for it to work on both bn and dbn objects.
+#' #' Generic method for calculating the degree of a list of nodes in a
+#' "bn.fit" S3 object. Calls bnlearn's \code{\link{degree}} underneath.
 #' @param object a "dbn" object
 #' @param Nodes which nodes to check
 #' @param ... additional parameters
-#' @return the prediction results
+#' @return the degree of the nodes
+#' @export
+degree.bn.fit <- function(object, Nodes, ...){
+  bnlearn::degree(object, Nodes, ...)
+}
+
+#' Calculates the degree of a list of nodes
+#'
+#' #' Generic method for calculating the degree of a list of nodes in a
+#' "dbn.fit" S3 object. Calls bnlearn's \code{\link{degree}} underneath.
+#' @param object a "dbn" object
+#' @param Nodes which nodes to check
+#' @param ... additional parameters
+#' @return the degree of the nodes
+#' @export
+degree.dbn.fit <- function(object, Nodes, ...){
+  class(object) <- "bn.fit" # The degree function specifically checks for a bn object. This won't be reflected outside the call
+  bnlearn::degree(object, Nodes, ...)
+}
+
+#' Calculates the degree of a list of nodes
+#'
+#' #' Generic method for calculating the degree of a list of nodes in a
+#' BN or a DBN. Calls bnlearn's \code{\link{degree}} underneath. 
+#' I have to redefine the generic and mask the original for it to work on both 
+#' bn and dbn objects without the user having to import bnlearn.
+#' @param object a "bn", "dbn", "bn.fit" or "dbn.fit" object
+#' @param Nodes which nodes to check
+#' @param ... additional parameters
+#' @return the degree of the nodes
 #' @importFrom bnlearn degree
 #' @export
 degree <- function(object, Nodes, ...){
   UseMethod("degree")
 }
+
+#' Returns a list with the names of the nodes of a BN or a DBN
+#'
+#' Generic method for obtaining the names of the nodes in "bn" S3 object.
+#' Calls bnlearn's \code{\link{nodes}} underneath.
+#' @param object a "bn" object
+#' @param ... additional parameters
+#' @return the names of the nodes
+#' @export
+nodes.bn <- function(object, ...){
+  bnlearn::nodes(object, ...)
+}
+
+#' Returns a list with the names of the nodes of a BN or a DBN
+#'
+#' Generic method for obtaining the names of the nodes in "dbn" S3 object.
+#' Calls bnlearn's \code{\link{nodes}} underneath.
+#' The nodes function is specifically coded to look for either the "bn"
+#' or the "bn.fit" method inside bnlearn, so I have to cast the "dbn" class
+#' into "bn" for it to work.
+#' @param object a "dbn" object
+#' @param ... additional parameters
+#' @return the names of the nodes
+#' @export
+nodes.dbn <- function(object, ...){
+  class(object) <- "bn"
+  bnlearn::nodes(object, ...)
+}
+
+#' Returns a list with the names of the nodes of a BN or a DBN
+#'
+#' Generic method for obtaining the names of the nodes in "bn.fit" S3 object.
+#' Calls bnlearn's \code{\link{nodes}} underneath.
+#' @param object a "bn.fit" object
+#' @param ... additional parameters
+#' @return the names of the nodes
+#' @export
+nodes.bn.fit <- function(object, ...){
+  bnlearn::nodes(object, ...)
+}
+
+#' Returns a list with the names of the nodes of a BN or a DBN
+#'
+#' Generic method for obtaining the names of the nodes in "dbn.fit" S3 object.
+#' Calls bnlearn's \code{\link{nodes}} underneath.
+#' @param object a "dbn.fit" object
+#' @param ... additional parameters
+#' @return the names of the nodes
+#' @export
+nodes.dbn.fit <- function(object, ...){
+  class(object) <- "bn.fit"
+  bnlearn::nodes(object, ...)
+}
+
+#' Returns a list with the names of the nodes of a BN or a DBN
+#'
+#' Generic method for obtaining the names of the nodes in a BN or a DBN.
+#' Calls bnlearn's \code{\link{nodes}} underneath. 
+#' I have to redefine the generic and mask the original for it to work on both 
+#' bn and dbn objects without the user having to import bnlearn.
+#' @param object a "bn", "dbn", "bn.fit" or "dbn.fit" object
+#' @param ... additional parameters
+#' @return the names of the nodes
+#' @importFrom bnlearn nodes
+#' @export
+nodes <- function(object, ...){
+  UseMethod("nodes")
+}
+
+#' Relabel the names of the nodes of a BN or a DBN
+#'
+#' Generic method for renaming the nodes in a "bn" S3 object.
+#' Calls bnlearn's \code{\link{nodes<-}} underneath.
+#' @param object a "bn" object
+#' @param value a list with the new names
+#' @return the modified object
+#' @export
+`nodes<-.bn` <- function(object, value){
+  bnlearn::`nodes<-`(object, value)
+}
+
+#' Relabel the names of the nodes of a BN or a DBN
+#'
+#' Generic method for renaming the nodes in a "bn" S3 object.
+#' Calls bnlearn's \code{\link{nodes<-}} underneath.
+#' @param object a "dbn" object
+#' @param value a list with the new names
+#' @return the modified object
+#' @export
+`nodes<-.dbn` <- function(object, value){
+  prev <- class(object)
+  class(object) <- "bn"
+  object <- bnlearn::`nodes<-`(object, value)
+  class(object) <- prev
+  
+  return(object)
+}
+
+#' Relabel the names of the nodes of a BN or a DBN
+#'
+#' Generic method for renaming the nodes in a "bn.fit" S3 object.
+#' Calls bnlearn's \code{\link{nodes<-}} underneath.
+#' @param object a "bn.fit" object
+#' @param value a list with the new names
+#' @return the modified object
+#' @export
+`nodes<-.bn.fit` <- function(object, value){
+  bnlearn::`nodes<-`(object, value)
+}
+
+#' Relabel the names of the nodes of a BN or a DBN
+#'
+#' Generic method for renaming the nodes in a "bn" S3 object.
+#' Calls bnlearn's \code{\link{nodes<-}} underneath.
+#' @param object a "dbn" object
+#' @param value a list with the new names
+#' @return the modified object
+#' @export
+`nodes<-.dbn.fit` <- function(object, value){
+  prev <- class(object)
+  class(object) <- "bn.fit"
+  object <- bnlearn::`nodes<-`(object, value)
+  class(object) <- prev
+  
+  return(object)
+}
+
+
+#' Relabel the names of the nodes of a BN or a DBN
+#'
+#' Generic method for renaming the nodes in a BN or a DBN.
+#' Calls bnlearn's \code{\link{nodes<-}} underneath. 
+#' I have to redefine the generic and mask the original for it to work on both 
+#' bn and dbn objects without the user having to import bnlearn.
+#' @param object a "bn", "dbn", "bn.fit" or "dbn.fit" object
+#' @param value a list with the new names
+#' @return the modified object
+#' @importFrom bnlearn `nodes<-`
+#' @export
+`nodes<-` <- function(object, value){
+  UseMethod("nodes<-")
+}
+
 

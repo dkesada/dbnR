@@ -2,7 +2,7 @@
 % Please edit documentation in R/bnlearn_compat.R
 \name{degree.bn}
 \alias{degree.bn}
-\title{Convert a network structure into a model string}
+\title{Calculates the degree of a list of nodes}
 \usage{
 \method{degree}{bn}(object, Nodes, ...)
 }
@@ -14,9 +14,9 @@
 \item{...}{additional parameters}
 }
 \value{
-the prediction results
+the degree of the nodes
 }
 \description{
-Generic method for converting a "dbn" S3 object into a string.
-Calls bnlearn's \code{\link{degree}} underneath.
+Generic method for calculating the degree of a list of nodes in a
+"bn" S3 object. Calls bnlearn's \code{\link{degree}} underneath.
 }
