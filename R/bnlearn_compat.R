@@ -330,4 +330,170 @@ nodes <- function(object, ...){
   UseMethod("nodes<-")
 }
 
+#' Computes the score of a BN or a DBN
+#'
+#' Generic method for computing the score of a "bn" S3 object.
+#' Calls bnlearn's \code{\link{score}} underneath.
+#' @param object a "bn" object
+#' @param ... additional parameters
+#' @return the score of the network
+#' @export
+score.bn <- function(object, ...){
+  bnlearn::score(object, ...)
+}
 
+#' Computes the score of a BN or a DBN
+#'
+#' Generic method for computing the score of a "dbn" S3 object.
+#' Calls bnlearn's \code{\link{score}} underneath.
+#' The nodes function is specifically coded to look for either the "bn"
+#' or the "bn.fit" method inside bnlearn, so I have to cast the "dbn" class
+#' into "bn" for it to work.
+#' @param object a "dbn" object
+#' @param ... additional parameters
+#' @return the score of the network
+#' @export
+score.dbn <- function(object, ...){
+  class(object) <- "bn"
+  bnlearn::score(object, ...)
+}
+
+#' Computes the score of a BN or a DBN
+#'
+#' Generic method for computing the score of a BN or a DBN.
+#' Calls bnlearn's \code{\link{nodes}} underneath. 
+#' I have to redefine the generic and mask the original for it to work on both 
+#' bn and dbn objects without the user having to import bnlearn.
+#' @param object a "bn" or "dbn" object
+#' @param ... additional parameters
+#' @return the score of the network
+#' @importFrom bnlearn score
+#' @export
+score <- function(object, ...){
+  UseMethod("score")
+}
+
+#' Print method for "dbn" objects
+#'
+#' Generic print method for "dbn" S3 objects. Calls bnlearn's print underneath
+#' @param x the "dbn" object
+#' @param ... additional parameters
+#' @export
+print.dbn <- function(x, ...){
+  NextMethod()
+}
+
+#' Print method for "dbn.fit" objects
+#'
+#' Generic print method for "dbn.fit" S3 objects. Calls bnlearn's print underneath
+#' @param x the "dbn.fit" object
+#' @param ... additional parameters
+#' @export
+print.dbn.fit <- function(x, ...){
+  NextMethod()
+}
+
+#' Average the parameters of multiple dbn.fit objects with identical structures
+#'
+#' Generic method for "dbn.fit" S3 objects. 
+#' Calls bnlearn underneath.
+#' @param object the fitted network
+#' @param ... additional parameters
+#' @param weights optional weights
+#' @return the averaged parameters
+#' @export
+mean.dbn.fit <- function(object, ..., k){
+  NextMethod()
+}
+
+#' Simulates random samples from a fitted DBN
+#'
+#' Generic method for "dbn.fit" S3 objects. 
+#' Calls bnlearn's \code{\link{rbn}} underneath.
+#' @param object the fitted network
+#' @param ... additional parameters
+#' @param weights optional weights
+#' @return the averaged parameters
+#' @importFrom bnlearn rbn
+#' @export
+rbn.dbn.fit <- function(object, ..., weights){
+  NextMethod()
+}
+
+#' Returns the residuals from fitting a DBN
+#'
+#' Generic method for "dbn.fit" S3 objects. 
+#' Calls bnlearn underneath.
+#' @param object the fitted network
+#' @param ... additional parameters
+#' @return the residuals of fitting the network
+#' @importFrom stats residuals
+#' @export
+residuals.dbn.fit <- function(object, ...){
+  NextMethod()
+}
+
+#' Returns the standard deviation of the residuals from fitting a DBN
+#'
+#' Generic method for "dbn.fit" S3 objects. 
+#' Calls bnlearn underneath.
+#' @param object the fitted network
+#' @param ... additional parameters
+#' @return the standard deviation residuals of fitting the network
+#' @importFrom stats sigma
+#' @export
+sigma.dbn.fit <- function(object, ...){
+  NextMethod()
+}
+
+#' Extracts the coefficients of a DBN
+#'
+#' Generic method for "dbn.fit" S3 objects. 
+#' Calls bnlearn underneath.
+#' @param object the fitted network
+#' @param ... additional parameters
+#' @return the coefficients of the network
+#' @importFrom stats coef
+#' @export
+coef.dbn.fit <- function(object, ...){
+  NextMethod()
+}
+
+#' Extracts the fitted values of a DBN
+#'
+#' Generic method for "dbn.fit" S3 objects. 
+#' Calls bnlearn underneath.
+#' @param object the fitted network
+#' @param ... additional parameters
+#' @return the fitted values of the network
+#' @importFrom stats fitted
+#' @export
+fitted.dbn.fit <- function(object, ...){
+  NextMethod()
+}
+
+#' Replacement function for parameters inside DBNs
+#'
+#' Generic parameter replacement method for "dbn.fit" S3 objects. 
+#' Calls bnlearn underneath.
+#' @param x the fitted network
+#' @param name name of the node to replace its parameters
+#' @param value the new parameters
+#' @return the modified network
+#' @export
+`$<-.dbn.fit` <- function(x, name, value){
+  NextMethod()
+}
+
+#' Replacement function for parameters inside DBNs
+#'
+#' Generic parameter replacement method for "dbn.fit" S3 objects. 
+#' Calls bnlearn underneath.
+#' @param x the fitted network
+#' @param name name of the node to replace its parameters
+#' @param value the new parameters
+#' @return the modified network
+#' @export
+`[[<-.dbn.fit` <- function(x, name, value){
+  NextMethod()
+}
