@@ -78,3 +78,4 @@ Markovian order of the network and a specific node ordering.
 \item{\code{nodes}}{Names of the nodes in the network}
 }}
 
+\keyword{internal}

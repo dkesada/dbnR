@@ -39,6 +39,7 @@ time_rename <- function(dt){
 #' @param slice the current time slice being treated. Should not be modified
 #' when first calling.
 #' @return the extended data.table
+#' @keywords internal
 fold_dt_rec <- function(dt, n_prev, size, slice = 1){
   if(size > slice){
     n <- sapply(n_prev,sub, pattern = paste0("_t_", slice-1),

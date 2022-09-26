@@ -17,3 +17,4 @@ Given a natural number, return the natural number equivalent to its
 one-hot encoding. Instead of pow, the '<<' operator will be used.
 Examples: 3 -> 100 -> 4, 5 -> 10000 -> 16
 }
+\keyword{internal}

@@ -18,3 +18,4 @@ the score of the network
 Generic method for computing the score of a "bn" S3 object.
 Calls bnlearn's \code{\link{score}} underneath.
 }
+\keyword{internal}

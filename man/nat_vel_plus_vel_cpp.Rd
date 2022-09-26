@@ -33,3 +33,4 @@ reference and returning the final abs_op normally. I can't have an integer
 edited by reference because it automatically gets casted and cannot be used
 to return values.
 }
+\keyword{internal}

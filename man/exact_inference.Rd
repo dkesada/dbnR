@@ -26,3 +26,4 @@ the results of the forecast
 Given a bn.fit object, the size of the net and a data.set,
 performs exact forecasting over the initial evidence taken from the data set.
 }
+\keyword{internal}

@@ -20,3 +20,4 @@ the degree of the nodes
 Generic method for calculating the degree of a list of nodes in a
 "bn" S3 object. Calls bnlearn's \code{\link{degree}} underneath.
 }
+\keyword{internal}

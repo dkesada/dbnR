@@ -19,3 +19,4 @@ a list with a CharacterVector and a NumericVector
 \description{
 Create a matrix with the arcs defined in a causlist object
 }
+\keyword{internal}

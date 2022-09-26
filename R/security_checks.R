@@ -116,13 +116,14 @@ initial_size_slice_check <- function(size, slice){
   initial_slice_check(slice)
 }
 
-#' Checks if the vector of names are time formatted to t0
+#' Checks if the vector of names are time formatted to t_0
 #'
 #' This will check if the names are properly time formatted in t_0
 #' to be folded into more time slices. A vector is well formatted
 #' in t_0 when all of its column names end in '_t_0'.
 #' @param obj the vector of names
 #' @return TRUE if it is well formatted. FALSE in other case.
+#' @keywords internal
 check_time0_formatted <- function(obj){
   return(sum(grepl(".*_t_0$", names(obj))) == length(obj))
 }
@@ -263,7 +264,6 @@ no_parents_check <- function(net){
 }
 
 initial_dbn_to_causlist_check <- function(obj){
-  #initial_dbn_check(obj) --ICO-Merge
   no_parents_check(obj)
   no_intraslice_check(obj)
 }

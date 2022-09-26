@@ -19,3 +19,4 @@ data.table should contain only the evidence that we want to provide. If a
 named vector is provided instead of a data.table, nothing will be done and
 the named vector will be returned.
 }
+\keyword{internal}

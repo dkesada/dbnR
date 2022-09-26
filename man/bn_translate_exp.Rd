@@ -21,3 +21,4 @@ a bn object
 \description{
 Experimental function that translates a natPosition vector into a DBN network.
 }
+\keyword{internal}

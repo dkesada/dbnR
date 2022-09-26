@@ -123,6 +123,7 @@ as.character.dbn <- function(x, ...){
 #' @param Nodes which nodes to check
 #' @param ... additional parameters
 #' @return the degree of the nodes
+#' @keywords internal
 #' @export
 degree.bn <- function(object, Nodes, ...){
   bnlearn::degree(object, Nodes, ...)
@@ -139,6 +140,7 @@ degree.bn <- function(object, Nodes, ...){
 #' @param Nodes which nodes to check
 #' @param ... additional parameters
 #' @return the degree of the nodes
+#' @keywords internal
 #' @export
 degree.dbn <- function(object, Nodes, ...){
   class(object) <- "bn" # This won't be reflected outside the call
@@ -153,6 +155,7 @@ degree.dbn <- function(object, Nodes, ...){
 #' @param Nodes which nodes to check
 #' @param ... additional parameters
 #' @return the degree of the nodes
+#' @keywords internal
 #' @export
 degree.bn.fit <- function(object, Nodes, ...){
   bnlearn::degree(object, Nodes, ...)
@@ -166,6 +169,7 @@ degree.bn.fit <- function(object, Nodes, ...){
 #' @param Nodes which nodes to check
 #' @param ... additional parameters
 #' @return the degree of the nodes
+#' @keywords internal
 #' @export
 degree.dbn.fit <- function(object, Nodes, ...){
   class(object) <- "bn.fit" # The degree function specifically checks for a bn object. This won't be reflected outside the call
@@ -195,6 +199,7 @@ degree <- function(object, Nodes, ...){
 #' @param object a "bn" object
 #' @param ... additional parameters
 #' @return the names of the nodes
+#' @keywords internal
 #' @export
 nodes.bn <- function(object, ...){
   bnlearn::nodes(object, ...)
@@ -210,6 +215,7 @@ nodes.bn <- function(object, ...){
 #' @param object a "dbn" object
 #' @param ... additional parameters
 #' @return the names of the nodes
+#' @keywords internal
 #' @export
 nodes.dbn <- function(object, ...){
   class(object) <- "bn"
@@ -223,6 +229,7 @@ nodes.dbn <- function(object, ...){
 #' @param object a "bn.fit" object
 #' @param ... additional parameters
 #' @return the names of the nodes
+#' @keywords internal
 #' @export
 nodes.bn.fit <- function(object, ...){
   bnlearn::nodes(object, ...)
@@ -235,6 +242,7 @@ nodes.bn.fit <- function(object, ...){
 #' @param object a "dbn.fit" object
 #' @param ... additional parameters
 #' @return the names of the nodes
+#' @keywords internal
 #' @export
 nodes.dbn.fit <- function(object, ...){
   class(object) <- "bn.fit"
@@ -263,6 +271,7 @@ nodes <- function(object, ...){
 #' @param object a "bn" object
 #' @param value a list with the new names
 #' @return the modified object
+#' @keywords internal
 #' @export
 `nodes<-.bn` <- function(object, value){
   bnlearn::`nodes<-`(object, value)
@@ -275,6 +284,7 @@ nodes <- function(object, ...){
 #' @param object a "dbn" object
 #' @param value a list with the new names
 #' @return the modified object
+#' @keywords internal
 #' @export
 `nodes<-.dbn` <- function(object, value){
   prev <- class(object)
@@ -292,6 +302,7 @@ nodes <- function(object, ...){
 #' @param object a "bn.fit" object
 #' @param value a list with the new names
 #' @return the modified object
+#' @keywords internal
 #' @export
 `nodes<-.bn.fit` <- function(object, value){
   bnlearn::`nodes<-`(object, value)
@@ -304,6 +315,7 @@ nodes <- function(object, ...){
 #' @param object a "dbn" object
 #' @param value a list with the new names
 #' @return the modified object
+#' @keywords internal
 #' @export
 `nodes<-.dbn.fit` <- function(object, value){
   prev <- class(object)
@@ -337,6 +349,7 @@ nodes <- function(object, ...){
 #' @param object a "bn" object
 #' @param ... additional parameters
 #' @return the score of the network
+#' @keywords internal
 #' @export
 score.bn <- function(object, ...){
   bnlearn::score(object, ...)
@@ -352,6 +365,7 @@ score.bn <- function(object, ...){
 #' @param object a "dbn" object
 #' @param ... additional parameters
 #' @return the score of the network
+#' @keywords internal
 #' @export
 score.dbn <- function(object, ...){
   class(object) <- "bn"

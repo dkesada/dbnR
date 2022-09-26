@@ -37,3 +37,4 @@ Learns a gaussian dynamic Bayesian network from a
 dataset. It allows the creation of markovian n nets rather than only markov
 1.
 }
+\keyword{internal}

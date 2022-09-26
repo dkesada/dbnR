@@ -100,9 +100,9 @@ predict_dt <- function(fit, dt, obj_nodes, verbose = T, look_ahead = F){
   return(res)
 }
 
-#' Predicts the values in t_0 of every row in a dataset with a dynamic Bayesian network
+#' Predicts the values in t_0 of every row in a data set with a dynamic Bayesian network
 #'
-#' Generic method for predicting a dataset with a "dbn.fit" S3 objects. Calls 
+#' Generic method for predicting a data set with a "dbn.fit" S3 objects. Calls 
 #' \code{\link{predict_dt}} underneath.
 #' @param object a "dbn.fit" object
 #' @param ... additional parameters for the inference process
@@ -121,6 +121,7 @@ predict.dbn.fit <- function(object, ...){
 #' @param particles a list with the provided evidence
 #' @param n the number of particles to be used by bnlearn
 #' @return the inferred particles
+#' @keywords internal
 approx_prediction_step <- function(fit, variables, particles, n = 50){
   if(length(particles) == 0)
     particles <- TRUE
@@ -140,6 +141,7 @@ approx_prediction_step <- function(fit, variables, particles, n = 50){
 #' @param variables variables to be predicted
 #' @param evidence a list with the provided evidence
 #' @return the inferred particles
+#' @keywords internal
 exact_prediction_step <- function(fit, variables, evidence){
   if(length(evidence) == 0)
     evidence <- attr(fit,"mu")[bnlearn::root.nodes(fit)]
@@ -152,7 +154,7 @@ exact_prediction_step <- function(fit, variables, evidence){
 
 #' Performs approximate inference forecasting with the GDBN over a data set
 #'
-#' Given a bn.fit object, the size of the net and a data.set,
+#' Given a bn.fit object, the size of the net and a data set,
 #' performs approximate forecasting with bnlearns cpdist function over the 
 #' initial evidence taken from the data set.
 #' @param dt data.table object with the TS data
@@ -163,6 +165,7 @@ exact_prediction_step <- function(fit, variables, evidence){
 #' @param len length of the forecast
 #' @param num_p number of particles to be used by bnlearn
 #' @return the results of the forecast
+#' @keywords internal
 approximate_inference <- function(dt, fit, obj_vars, ini, rep, len, num_p){
   var_names <- names(dt)
   vars_pred_idx <- grep("t_0", var_names)
@@ -206,6 +209,7 @@ approximate_inference <- function(dt, fit, obj_vars, ini, rep, len, num_p){
 #' @param len length of the forecast
 #' @param prov_ev variables to be provided as evidence in each forecasting step
 #' @return the results of the forecast
+#' @keywords internal
 exact_inference <- function(dt, fit, obj_vars, ini, len, prov_ev){
   fit <- initial_attr_check(fit)
 
@@ -247,7 +251,7 @@ exact_inference <- function(dt, fit, obj_vars, ini, len, prov_ev){
 
 #' Performs forecasting with the GDBN over a data set
 #'
-#' Given a dbn.fit object, the size of the net and a folded data.set,
+#' Given a dbn.fit object, the size of the net and a folded data set,
 #' performs a forecast over the initial evidence taken from the data set.
 #' @param dt data.table object with the TS data
 #' @param fit dbn.fit object
@@ -319,7 +323,7 @@ forecast_ts <- function(dt, fit, size = NULL, obj_vars, ini = 1, len = dim(dt)[1
 
 #' Performs exact inference smoothing with the GDBN over a data set
 #'
-#' Given a bn.fit object, the size of the net and a data.set,
+#' Given a bn.fit object, the size of the net and a data set,
 #' performs exact smoothing over the initial evidence taken from the data set.
 #' Take notice that the smoothing is done backwards in time, as opposed to
 #' forecasting.
@@ -330,6 +334,7 @@ forecast_ts <- function(dt, fit, size = NULL, obj_vars, ini = 1, len = dim(dt)[1
 #' @param len length of the smoothing
 #' @param prov_ev variables to be provided as evidence in each forecasting step. Should be in the oldest time step
 #' @return the results of the smoothing
+#' @keywords internal
 exact_inference_backwards <- function(dt, fit, obj_vars, ini, len, prov_ev){
   fit <- initial_attr_check(fit)
   
@@ -371,7 +376,7 @@ exact_inference_backwards <- function(dt, fit, obj_vars, ini, len, prov_ev){
 
 #' Performs smoothing with the GDBN over a data set
 #'
-#' Given a dbn.fit object, the size of the net and a folded data.set,
+#' Given a dbn.fit object, the size of the net and a folded data set,
 #' performs a smoothing of a trajectory. Smoothing is the opposite of 
 #' forecasting: given a starting point, predict backwards in time to obtain
 #' the time series that generated that point. 

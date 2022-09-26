@@ -25,3 +25,4 @@ the merged nets
 This will join the static net and the state transition
 net by replicating the arcs in the static net in all the time slices.
 }
+\keyword{internal}

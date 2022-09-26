@@ -39,6 +39,7 @@ void insert_node_natcl(Rcpp::NumericVector &cl, const Rcpp::StringVector &orderi
 //' @param net a dbn object treated as a list of lists
 //' @param ordering a vector with the names of the variables in order
 //' @return the natCauslist equivalent to the DBN
+//' @keywords internal
 // [[Rcpp::export]]
 Rcpp::NumericVector create_natcauslist_cpp(Rcpp::NumericVector &cl, Rcpp::List &net, Rcpp::StringVector &ordering) {
   Rcpp::List aux;
@@ -66,6 +67,7 @@ Rcpp::NumericVector create_natcauslist_cpp(Rcpp::NumericVector &cl, Rcpp::List &
 //' @param ordering a list with the order of the variables in t_0
 //' @param rows number of arcs in the network
 //' @return a StringMatrix with the parent nodes and the children nodes
+//' @keywords internal
 // [[Rcpp::export]]
 Rcpp::CharacterMatrix nat_cl_to_arc_matrix_cpp(const Rcpp::NumericVector &cl, Rcpp::CharacterVector &ordering,
                                            unsigned int rows){
@@ -97,6 +99,7 @@ Rcpp::CharacterMatrix nat_cl_to_arc_matrix_cpp(const Rcpp::NumericVector &cl, Rc
 //' @param vl_neg velocity's negative causal list
 //' @param n_arcs number of arcs present in the position. Remainder: can't return integers by reference, they get casted to 1 sized vectors
 //' @return the new position by reference and the new number of arcs by return
+//' @keywords internal
 // [[Rcpp::export]]
 int nat_pos_plus_vel_cpp(Rcpp::NumericVector &cl, const Rcpp::NumericVector &vl, const Rcpp::NumericVector &vl_neg, int n_arcs){
   int pos, new_pos, vl_i, vl_neg_i, n_prev, n_post;
@@ -129,6 +132,7 @@ int nat_pos_plus_vel_cpp(Rcpp::NumericVector &cl, const Rcpp::NumericVector &vl,
 //' @param vl the natVelocity's positive causal list
 //' @param vl_neg the natVelocity's negative causal list
 //' @return the velocity's causal lists by reference and the number of operations by return
+//' @keywords internal
 // [[Rcpp::export]]
 int nat_pos_minus_pos_cpp(const Rcpp::NumericVector &ps1, const Rcpp::NumericVector &ps2, Rcpp::NumericVector &vl, Rcpp::NumericVector &vl_neg){
   int ps1_i, ps2_i, vl_i, vl_neg_i;
@@ -168,6 +172,7 @@ int nat_pos_minus_pos_cpp(const Rcpp::NumericVector &ps1, const Rcpp::NumericVec
 //' @param abs_op1 the number of {1,-1} operations in the first velocity
 //' @param abs_op2 the number of {1,-1} operations in the second velocity
 //' @return the total number of resulting operations
+//' @keywords internal
 // [[Rcpp::export]]
 int nat_vel_plus_vel_cpp(Rcpp::NumericVector &vl1, Rcpp::NumericVector &vl1_neg,
                          const Rcpp::NumericVector &vl2, const Rcpp::NumericVector &vl2_neg, 
@@ -216,6 +221,7 @@ void add_nat_vel(int &num1, int num2, int &abs_op){
 //' @param abs_op the final number of {1,-1} operations
 //' @param max_size the maximum size of the network
 //' @return the new total number of operations 
+//' @keywords internal
 // [[Rcpp::export]]
 int nat_cte_times_vel_cpp(float k, Rcpp::NumericVector &vl, Rcpp::NumericVector &vl_neg, int abs_op, int max_size){
   int res, max_op, n_op, pos, pos_neg, pos_mix, pool_idx, pos_idx, bit_idx, bit_dest, max_int;
@@ -303,6 +309,7 @@ int nat_cte_times_vel_cpp(float k, Rcpp::NumericVector &vl, Rcpp::NumericVector 
 //' Examples: 3 -> 100 -> 4, 5 -> 10000 -> 16
 //' @param nat the natural number to convert
 //' @return the converted number
+//' @keywords internal
 // [[Rcpp::export]]
 int one_hot_cpp(int nat){
   return(1 << (nat - 1));
@@ -466,6 +473,7 @@ int bitwise_sub(int x1, int x2){
 //' Initialize the vector in C++
 //' @param n_nodes number of receiving nodes
 //' @return a list with the randomly initialized particles
+//' @keywords internal
 // [[Rcpp::export]]
 Rcpp::NumericVector init_cl_cpp(int n_nodes){
   Rcpp::NumericVector res (n_nodes);
@@ -476,6 +484,7 @@ Rcpp::NumericVector init_cl_cpp(int n_nodes){
 //' If the names of the nodes have "_t_0" appended at the end, remove it
 //' @param names a vector with the names of the nodes in t_0
 //' @return the vector with the names cropped
+//' @keywords internal
 // [[Rcpp::export]]
 Rcpp::StringVector crop_names_cpp(const Rcpp::StringVector &names){
   Rcpp::StringVector res = Rcpp::clone(names);

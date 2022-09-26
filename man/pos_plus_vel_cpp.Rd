@@ -19,3 +19,4 @@ a list with the modified position and the new number of arcs
 \description{
 Add a velocity to a position
 }
+\keyword{internal}

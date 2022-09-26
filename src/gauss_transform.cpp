@@ -6,6 +6,7 @@
 //' @param fit a bn.fit object as a Rcpp::List
 //' @param order a topological ordering of the nodes as a vector of strings
 //' @return the map with the nodes and their mu. Returns as a named numeric vector
+//' @keywords internal
 // [[Rcpp::export]]
 std::map<std::string, float> calc_mu_cpp(Rcpp::List &fit, Rcpp::StringVector &order){
   std::map<std::string, float> mu;
@@ -38,6 +39,7 @@ std::map<std::string, float> calc_mu_cpp(Rcpp::List &fit, Rcpp::StringVector &or
 //' @param fit a bn.fit object as a Rcpp::List
 //' @param order a topological ordering of the nodes as a vector of strings
 //' @return the covariance matrix
+//' @keywords internal
 // [[Rcpp::export]]
 Rcpp::NumericMatrix calc_sigma_cpp(Rcpp::List &fit, Rcpp::StringVector &order){
   Rcpp::NumericMatrix sigma(order.size(), order.size());

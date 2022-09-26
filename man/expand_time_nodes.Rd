@@ -23,3 +23,4 @@ This method extends the names of the nodes to the given maximum and
 maintains the order of the nodes in each slice, so as to plotting
 the nodes in all slices relative to their homonyms in the first slice.
 }
+\keyword{internal}

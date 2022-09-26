@@ -21,3 +21,4 @@ the velocity's causal lists by reference and the number of operations by return
 \description{
 Subtracts two natPositions to obtain the natVelocity that transforms ps1 into ps2
 }
+\keyword{internal}

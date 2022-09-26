@@ -48,7 +48,7 @@ forecast_ts(
 the results of the forecast
 }
 \description{
-Given a dbn.fit object, the size of the net and a folded data.set,
+Given a dbn.fit object, the size of the net and a folded data set,
 performs a forecast over the initial evidence taken from the data set.
 }
 \examples{

@@ -19,3 +19,4 @@ a list with the renamed nodes in each timeslice
 Return a list of nodes with the time slice appended up to the desired size
 of the network
 }
+\keyword{internal}

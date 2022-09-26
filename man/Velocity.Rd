@@ -54,3 +54,4 @@ was deleted.
 \item{\code{abs_op}}{Total number of operations 1 or -1 in the velocity}
 }}
 
+\keyword{internal}

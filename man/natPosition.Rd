@@ -83,3 +83,4 @@ position.
 \item{\code{nodes}}{Names of the nodes in the network}
 }}
 
+\keyword{internal}

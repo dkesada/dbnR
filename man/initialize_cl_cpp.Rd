@@ -17,3 +17,4 @@ a causality list
 \description{
 Create a causality list and initialize it
 }
+\keyword{internal}

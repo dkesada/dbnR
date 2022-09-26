@@ -23,8 +23,9 @@ exact_inference_backwards(dt, fit, obj_vars, ini, len, prov_ev)
 the results of the smoothing
 }
 \description{
-Given a bn.fit object, the size of the net and a data.set,
+Given a bn.fit object, the size of the net and a data set,
 performs exact smoothing over the initial evidence taken from the data set.
 Take notice that the smoothing is done backwards in time, as opposed to
 forecasting.
 }
+\keyword{internal}

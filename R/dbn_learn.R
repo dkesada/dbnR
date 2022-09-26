@@ -39,6 +39,7 @@ learn_dbn_struc <- function(dt, size = 2, method = "dmmhc", f_dt = NULL, ...){
 #' @param fit a fitted bn or dbn
 #' @param size number of time slices of the net
 #' @return the fitted net with attributes
+#' @keywords internal
 add_attr_to_fit <- function(fit, size){
   initial_fit_check(fit)
   

@@ -7,6 +7,7 @@
 #' @param fit a bn.fit object as a Rcpp::List
 #' @param order a topological ordering of the nodes as a vector of strings
 #' @return the map with the nodes and their mu. Returns as a named numeric vector
+#' @keywords internal
 calc_mu_cpp <- function(fit, order) {
     .Call(`_dbnR_calc_mu_cpp`, fit, order)
 }
@@ -17,6 +18,7 @@ calc_mu_cpp <- function(fit, order) {
 #' @param fit a bn.fit object as a Rcpp::List
 #' @param order a topological ordering of the nodes as a vector of strings
 #' @return the covariance matrix
+#' @keywords internal
 calc_sigma_cpp <- function(fit, order) {
     .Call(`_dbnR_calc_sigma_cpp`, fit, order)
 }
@@ -27,6 +29,7 @@ calc_sigma_cpp <- function(fit, order) {
 #' @param net a dbn object treated as a list of lists
 #' @param ordering a vector with the names of the variables in order
 #' @return the natCauslist equivalent to the DBN
+#' @keywords internal
 create_natcauslist_cpp <- function(cl, net, ordering) {
     .Call(`_dbnR_create_natcauslist_cpp`, cl, net, ordering)
 }
@@ -37,6 +40,7 @@ create_natcauslist_cpp <- function(cl, net, ordering) {
 #' @param ordering a list with the order of the variables in t_0
 #' @param rows number of arcs in the network
 #' @return a StringMatrix with the parent nodes and the children nodes
+#' @keywords internal
 nat_cl_to_arc_matrix_cpp <- function(cl, ordering, rows) {
     .Call(`_dbnR_nat_cl_to_arc_matrix_cpp`, cl, ordering, rows)
 }
@@ -48,6 +52,7 @@ nat_cl_to_arc_matrix_cpp <- function(cl, ordering, rows) {
 #' @param vl_neg velocity's negative causal list
 #' @param n_arcs number of arcs present in the position. Remainder: can't return integers by reference, they get casted to 1 sized vectors
 #' @return the new position by reference and the new number of arcs by return
+#' @keywords internal
 nat_pos_plus_vel_cpp <- function(cl, vl, vl_neg, n_arcs) {
     .Call(`_dbnR_nat_pos_plus_vel_cpp`, cl, vl, vl_neg, n_arcs)
 }
@@ -59,6 +64,7 @@ nat_pos_plus_vel_cpp <- function(cl, vl, vl_neg, n_arcs) {
 #' @param vl the natVelocity's positive causal list
 #' @param vl_neg the natVelocity's negative causal list
 #' @return the velocity's causal lists by reference and the number of operations by return
+#' @keywords internal
 nat_pos_minus_pos_cpp <- function(ps1, ps2, vl, vl_neg) {
     .Call(`_dbnR_nat_pos_minus_pos_cpp`, ps1, ps2, vl, vl_neg)
 }
@@ -82,6 +88,7 @@ nat_pos_minus_pos_cpp <- function(ps1, ps2, vl, vl_neg) {
 #' @param abs_op1 the number of {1,-1} operations in the first velocity
 #' @param abs_op2 the number of {1,-1} operations in the second velocity
 #' @return the total number of resulting operations
+#' @keywords internal
 nat_vel_plus_vel_cpp <- function(vl1, vl1_neg, vl2, vl2_neg, abs_op1, abs_op2) {
     .Call(`_dbnR_nat_vel_plus_vel_cpp`, vl1, vl1_neg, vl2, vl2_neg, abs_op1, abs_op2)
 }
@@ -94,6 +101,7 @@ nat_vel_plus_vel_cpp <- function(vl1, vl1_neg, vl2, vl2_neg, abs_op1, abs_op2) {
 #' @param abs_op the final number of {1,-1} operations
 #' @param max_size the maximum size of the network
 #' @return the new total number of operations 
+#' @keywords internal
 nat_cte_times_vel_cpp <- function(k, vl, vl_neg, abs_op, max_size) {
     .Call(`_dbnR_nat_cte_times_vel_cpp`, k, vl, vl_neg, abs_op, max_size)
 }
@@ -105,6 +113,7 @@ nat_cte_times_vel_cpp <- function(k, vl, vl_neg, abs_op, max_size) {
 #' Examples: 3 -> 100 -> 4, 5 -> 10000 -> 16
 #' @param nat the natural number to convert
 #' @return the converted number
+#' @keywords internal
 one_hot_cpp <- function(nat) {
     .Call(`_dbnR_one_hot_cpp`, nat)
 }
@@ -118,6 +127,7 @@ bitcount <- function(x) {
 #' Initialize the vector in C++
 #' @param n_nodes number of receiving nodes
 #' @return a list with the randomly initialized particles
+#' @keywords internal
 init_cl_cpp <- function(n_nodes) {
     .Call(`_dbnR_init_cl_cpp`, n_nodes)
 }
@@ -125,6 +135,7 @@ init_cl_cpp <- function(n_nodes) {
 #' If the names of the nodes have "_t_0" appended at the end, remove it
 #' @param names a vector with the names of the nodes in t_0
 #' @return the vector with the names cropped
+#' @keywords internal
 crop_names_cpp <- function(names) {
     .Call(`_dbnR_crop_names_cpp`, names)
 }
@@ -134,6 +145,7 @@ crop_names_cpp <- function(names) {
 #' @param ordering a list with the order of the variables in t_0
 #' @param size the size of the DBN
 #' @return a causality list
+#' @keywords internal
 initialize_cl_cpp <- function(ordering, size) {
     .Call(`_dbnR_initialize_cl_cpp`, ordering, size)
 }
@@ -145,6 +157,7 @@ initialize_cl_cpp <- function(ordering, size) {
 #' @param size the size of the DBN
 #' @param ordering a list with the order of the variables in t_0
 #' @return a list with a CharacterVector and a NumericVector
+#' @keywords internal
 create_causlist_cpp <- function(cl, net, size, ordering) {
     .Call(`_dbnR_create_causlist_cpp`, cl, net, size, ordering)
 }
@@ -155,6 +168,7 @@ create_causlist_cpp <- function(cl, net, size, ordering) {
 #' @param ordering a list with the order of the variables in t_0
 #' @param rows number of arcs in the network
 #' @return a list with a CharacterVector and a NumericVector
+#' @keywords internal
 cl_to_arc_matrix_cpp <- function(cl, ordering, rows) {
     .Call(`_dbnR_cl_to_arc_matrix_cpp`, cl, ordering, rows)
 }
@@ -165,6 +179,7 @@ cl_to_arc_matrix_cpp <- function(cl, ordering, rows) {
 #' @param vl the velocity's causal list
 #' @param n_arcs number of arcs present in the position
 #' @return a list with the modified position and the new number of arcs
+#' @keywords internal
 pos_plus_vel_cpp <- function(cl, vl, n_arcs) {
     .Call(`_dbnR_pos_plus_vel_cpp`, cl, vl, n_arcs)
 }
@@ -175,6 +190,7 @@ pos_plus_vel_cpp <- function(cl, vl, n_arcs) {
 #' @param size the size of the DBN
 #' @param n_inds the number of particles
 #' @return a list with the randomly initialized particles
+#' @keywords internal
 init_list_cpp <- function(nodes, size, n_inds) {
     .Call(`_dbnR_init_list_cpp`, nodes, size, n_inds)
 }
@@ -184,6 +200,7 @@ init_list_cpp <- function(nodes, size, n_inds) {
 #' @param vl a velocity list
 #' @param probs the probabilities of each value in the set {-1,0,1}
 #' @return a velocity list with randomized values
+#' @keywords internal
 randomize_vl_cpp <- function(vl, probs) {
     .Call(`_dbnR_randomize_vl_cpp`, vl, probs)
 }
@@ -194,6 +211,7 @@ randomize_vl_cpp <- function(vl, probs) {
 #' @param ps the second position's causal list
 #' @param vl the Velocity's causal list
 #' @return a list with the Velocity's causal list and the number of operations
+#' @keywords internal
 pos_minus_pos_cpp <- function(cl, ps, vl) {
     .Call(`_dbnR_pos_minus_pos_cpp`, cl, ps, vl)
 }
@@ -204,6 +222,7 @@ pos_minus_pos_cpp <- function(cl, ps, vl) {
 #' @param vl2 the second Velocity's causal list
 #' @param abs_op the final number of {1,-1} operations
 #' @return a list with the Velocity's causal list and the number of operations
+#' @keywords internal
 vel_plus_vel_cpp <- function(vl1, vl2, abs_op) {
     .Call(`_dbnR_vel_plus_vel_cpp`, vl1, vl2, abs_op)
 }
@@ -215,6 +234,7 @@ vel_plus_vel_cpp <- function(vl1, vl2, abs_op) {
 #' @param abs_op the final number of {1,-1} operations
 #' @param max_op the maximum number of directions in the causal list
 #' @return a list with the Velocity's new causal list and number of operations
+#' @keywords internal
 cte_times_vel_cpp <- function(k, vl, abs_op, max_op) {
     .Call(`_dbnR_cte_times_vel_cpp`, k, vl, abs_op, max_op)
 }
@@ -225,6 +245,7 @@ cte_times_vel_cpp <- function(k, vl, abs_op, max_op) {
 #' @param nodes a list with the names of the nodes in the network
 #' @param size the size of the DBN
 #' @return a list with the renamed nodes in each timeslice
+#' @keywords internal
 rename_nodes_cpp <- function(nodes, size) {
     .Call(`_dbnR_rename_nodes_cpp`, nodes, size)
 }

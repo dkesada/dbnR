@@ -23,3 +23,4 @@ This will create the blacklist of arcs that are not
 to be learned in the second phase of the dmmhc. This includes arcs
 backwards in time or inside time-slices.
 }
+\keyword{internal}

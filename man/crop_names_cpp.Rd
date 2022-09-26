@@ -15,3 +15,4 @@ the vector with the names cropped
 \description{
 If the names of the nodes have "_t_0" appended at the end, remove it
 }
+\keyword{internal}

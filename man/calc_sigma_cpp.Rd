@@ -19,3 +19,4 @@ the covariance matrix
 Calculate the sigma covariance matrix of a Gaussian linear network. 
 This is the C++ backend of the function.
 }
+\keyword{internal}

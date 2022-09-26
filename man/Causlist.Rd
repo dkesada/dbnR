@@ -2,11 +2,7 @@
 % Please edit documentation in R/structure_learning_psoho.R
 \name{Causlist}
 \alias{Causlist}
-\title{This file contains all the classes needed for the PSOHO structure learning 
-algorithm. It was implemented as an independent package in
-https://github.com/dkesada/PSOHO and then merged into dbnR. All the original
-source files are merged into one to avoid bloating the R/ folder of the
-package.}
+\title{R6 class that defines causal lists in the PSO}
 \arguments{
 \item{ordering}{a vector with the names of the nodes in t_0}
 
@@ -19,11 +15,6 @@ A new 'causlist' object
 Constructor of the 'Causlist' class
 }
 \details{
-The classes are now not exported because the whole algorithm is 
-encapsulated inside the package and only the resulting dbn structure is
-wanted. As a result, many security checks have been omitted.
-R6 class that defines causal lists in the PSO
-
 The causal lists will be the base of the positions and the velocities
 in the pso part of the algorithm.
 }
@@ -37,3 +28,4 @@ in the pso part of the algorithm.
 \item{\code{ordering}}{String vector defining the order of the nodes in a timeslice}
 }}
 
+\keyword{internal}

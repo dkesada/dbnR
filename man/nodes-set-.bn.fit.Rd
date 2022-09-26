@@ -18,3 +18,4 @@ the modified object
 Generic method for renaming the nodes in a "bn.fit" S3 object.
 Calls bnlearn's \code{\link{nodes<-}} underneath.
 }
+\keyword{internal}

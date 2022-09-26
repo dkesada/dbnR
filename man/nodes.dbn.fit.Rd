@@ -18,3 +18,4 @@ the names of the nodes
 Generic method for obtaining the names of the nodes in "dbn.fit" S3 object.
 Calls bnlearn's \code{\link{nodes}} underneath.
 }
+\keyword{internal}

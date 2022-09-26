@@ -11,6 +11,7 @@
 #' @param acc accumulator of the nodes already processed
 #' @return a matrix with the names of the nodes in the first row and their
 #' level on the second
+#' @keywords internal
 node_levels <- function(net, order, lvl = 1, acc = NULL){
   ret <- acc
   if(length(order) > 0){
@@ -80,6 +81,7 @@ plot_static_network <- function(structure){
 #' @param prev the level of the previous node processed
 #' @param acc the accumulator of the index in the current sub successions
 #' @return the vector of sub successions in each level
+#' @keywords internal
 acc_successions <- function(nodes, res = NULL, prev = 0, acc = 0){
   if(length(nodes) == 0)
     return(res)
@@ -95,6 +97,7 @@ acc_successions <- function(nodes, res = NULL, prev = 0, acc = 0){
 #' time slice and then gives a topological ordering of them.
 #' @param structure the structure of the network.
 #' @return the ordered nodes of t_0
+#' @keywords internal
 dynamic_ordering <- function(structure){
 
   nodes_0 <- grep("t_0", bnlearn::node.ordering(structure), value = T)
@@ -118,6 +121,7 @@ dynamic_ordering <- function(structure){
 #' @param max number of time slices in the net
 #' @param i current slice being processed
 #' @return the extended names
+#' @keywords internal
 expand_time_nodes <- function(name, acc, max, i){
   if(i == max)
     return(acc)

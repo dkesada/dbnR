@@ -1,12 +1,12 @@
-#' This file contains all the classes needed for the PSOHO structure learning 
-#' algorithm. It was implemented as an independent package in
-#' https://github.com/dkesada/PSOHO and then merged into dbnR. All the original
-#' source files are merged into one to avoid bloating the R/ folder of the
-#' package.
-#' 
-#' The classes are now not exported because the whole algorithm is 
-#' encapsulated inside the package and only the resulting dbn structure is
-#' wanted. As a result, many security checks have been omitted.
+# This file contains all the classes needed for the PSOHO structure learning 
+# algorithm. It was implemented as an independent package in
+# https://github.com/dkesada/PSOHO and then merged into dbnR. All the original
+# source files are merged into one to avoid bloating the R/ folder of the
+# package.
+# 
+# The classes are now not exported because the whole algorithm is 
+# encapsulated inside the package and only the resulting dbn structure is
+# wanted. As a result, many security checks have been omitted.
 
 # -----------------------------------------------------------------------------
 
@@ -15,6 +15,7 @@
 #' The causal lists will be the base of the positions and the velocities
 #' in the pso part of the algorithm.
 #' @importFrom R6 "R6Class"
+#' @keywords internal
 Causlist <- R6::R6Class("Causlist",
   public = list(
     #' @description 
@@ -53,6 +54,7 @@ Causlist <- R6::R6Class("Causlist",
 #' a causal unit is a pair (v, node) with v being either 0, 1 or -1. 0 means 
 #' that arc remained the same, 1 means that arc was added and -1 means that arc 
 #' was deleted.
+#' @keywords internal
 Velocity <- R6::R6Class("Velocity",
   inherit = Causlist,
   public = list(
@@ -146,6 +148,7 @@ Velocity <- R6::R6Class("Velocity",
 #' 
 #' A causality list has a list with causal units, a size representing the
 #' Markovian order of the network and a specific node ordering.
+#' @keywords internal
 Position <- R6::R6Class("Position", 
   inherit = Causlist,
   public = list(
@@ -298,6 +301,7 @@ Position <- R6::R6Class("Position",
 #' R6 class that defines a Particle in the PSO algorithm
 #' 
 #' A particle has a Position, a Velocity and a local best
+#' @keywords internal
 Particle <- R6::R6Class("Particle",
   public = list(
     #' @description 
@@ -393,6 +397,7 @@ Particle <- R6::R6Class("Particle",
 #' R6 class that defines the PSO controller
 #' 
 #' The controller will encapsulate the particles and run the algorithm
+#' @keywords internal
 PsoCtrl <- R6::R6Class("PsoCtrl",
   public = list(
    #' @description 
@@ -543,6 +548,7 @@ PsoCtrl <- R6::R6Class("PsoCtrl",
 #' @param score bnlearn score function used
 #' @param cte a boolean that determines whether the inertia, global best and local best parameters remain constant or vary as the algorithm progresses. Inertia and local best values decrease as the global best increases, to favor exploration at first and exploitation at the end.
 #' @return A 'dbn' object with the structure of the best network found
+#' @keywords internal
 psoho <- function(dt, size, f_dt = NULL, n_inds = 50, n_it = 50,
                                     in_cte = 1, gb_cte = 0.5, lb_cte = 0.5,
                                     v_probs = c(10, 65, 25), 

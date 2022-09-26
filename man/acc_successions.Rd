@@ -23,3 +23,4 @@ This method processes the vector of node levels to get the position of
 each node inside the level. E.g. c(1,1,1,2,2,3,4,4,5,5) turns into 
 c(1,2,3,1,2,1,1,2,1,2)
 }
+\keyword{internal}

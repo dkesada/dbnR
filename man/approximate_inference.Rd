@@ -25,7 +25,8 @@ approximate_inference(dt, fit, obj_vars, ini, rep, len, num_p)
 the results of the forecast
 }
 \description{
-Given a bn.fit object, the size of the net and a data.set,
+Given a bn.fit object, the size of the net and a data set,
 performs approximate forecasting with bnlearns cpdist function over the 
 initial evidence taken from the data set.
 }
+\keyword{internal}

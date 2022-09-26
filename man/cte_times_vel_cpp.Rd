@@ -21,3 +21,4 @@ a list with the Velocity's new causal list and number of operations
 \description{
 Multiply a Velocity by a constant real number
 }
+\keyword{internal}

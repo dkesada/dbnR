@@ -17,3 +17,4 @@ a velocity list with randomized values
 \description{
 Randomize a velocity with the given probabilities
 }
+\keyword{internal}

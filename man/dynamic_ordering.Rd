@@ -16,3 +16,4 @@ the ordered nodes of t_0
 This method gets the structure of a DBN, isolates the nodes of a single
 time slice and then gives a topological ordering of them.
 }
+\keyword{internal}

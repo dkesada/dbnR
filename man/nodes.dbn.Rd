@@ -21,3 +21,4 @@ The nodes function is specifically coded to look for either the "bn"
 or the "bn.fit" method inside bnlearn, so I have to cast the "dbn" class
 into "bn" for it to work.
 }
+\keyword{internal}

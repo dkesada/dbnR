@@ -39,6 +39,7 @@ plot_results <- function(dt, results, obj_vars){
 #' the named vector will be returned.
 #' @param dt a 1 row data.table or a named vector
 #' @return a vector with the values and the variable names
+#' @keywords internal
 as_named_vector <- function(dt){
   if(is.data.frame(dt)){
     initial_onerow_dt_check(dt)
@@ -142,6 +143,7 @@ filtered_fold_dt <- function(dt, size, id_var, clear_id_var = TRUE){
 #' 
 #' @param nat the natural number to convert
 #' @return the converted number
+#' @keywords internal
 one_hot <- function(nat){
   return(2^(nat-1))
 }
@@ -157,6 +159,7 @@ one_hot <- function(nat){
 #' @param max the maximum value allowed to be sampled
 #' @return the sampled value
 #' @importFrom stats runif
+#' @keywords internal
 trunc_geom <- function(p, max){
   return(floor(log(1 - runif(1)*(1 - (1 - p)^max)) / log(1 - p)))
 }
@@ -168,6 +171,7 @@ trunc_geom <- function(p, max){
 #' @param n_arcs the total number of arcs 
 #' @param nodes the name of all the nodes in the network
 #' @return a bn object
+#' @keywords internal
 bn_translate_exp = function(ps, ordering_raw, n_arcs, nodes){
   arc_mat <- nat_cl_to_arc_matrix_cpp(ps, ordering_raw, n_arcs)
   
@@ -181,6 +185,7 @@ bn_translate_exp = function(ps, ordering_raw, n_arcs, nodes){
 #' Experimental function that recounts the number of arcs in the position
 #' @param ps a position vector of natural numbers
 #' @return the number of arcs
+#' @keywords internal
 recount_arcs_exp = function(ps){
   n_arcs <- 0
   
@@ -198,6 +203,7 @@ recount_arcs_exp = function(ps){
 #' @param ordering the names of the variables
 #' @param size the desired size of the dbn
 #' @return a dictionary with the variable names in t_0 and in all other time slices
+#' @keywords internal
 nodes_gen_exp <- function(ordering, size){
   res <- list(ordering_t_0 = NULL, nodes = NULL)
   
@@ -217,6 +223,7 @@ nodes_gen_exp <- function(ordering, size){
 #' vector with variables named "Xi", where i is a number in the interval [0,n-1]
 #' @param n the total number of variables desired
 #' @return a character vector with the variable names
+#' @keywords internal
 ordering_gen_exp <- function(n){
   res <- rep("", n)
   for(i in 1:n)
@@ -225,7 +232,7 @@ ordering_gen_exp <- function(n){
   return(res)
 }
 
-#' Experimental function that generates a random DBN and samples a dataset that defines it
+#' Generate a random DBN and sample a dataset that defines it
 #' 
 #' This function generates both a random DBN and a dataset that can be used to 
 #' learn its structure from data. It's intended for experimental use.
@@ -238,7 +245,7 @@ ordering_gen_exp <- function(n){
 #' @param min_coef minimum coefficient allowed for the parent nodes
 #' @param max_coef maximum coefficient allowed for the parent nodes
 #' @param seed the seed of the experiment
-#' @return a dictionary with the original network structure and the sampled dataset
+#' @return a list with the original network structure and the sampled dataset
 #' @import data.table
 #' @export
 generate_random_network_exp <- function(n_vars, size, min_mu, max_mu,

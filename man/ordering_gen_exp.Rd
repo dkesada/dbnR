@@ -16,3 +16,4 @@ a character vector with the variable names
 Given the total number of variables, this function generates a character
 vector with variables named "Xi", where i is a number in the interval [0,n-1]
 }
+\keyword{internal}

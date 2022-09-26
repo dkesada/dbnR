@@ -19,3 +19,4 @@ a list with the randomly initialized particles
 \description{
 Initialize the particles
 }
+\keyword{internal}
