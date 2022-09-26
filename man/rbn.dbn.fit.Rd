@@ -4,17 +4,17 @@
 \alias{rbn.dbn.fit}
 \title{Simulates random samples from a fitted DBN}
 \usage{
-\method{rbn}{dbn.fit}(object, ..., weights)
+\method{rbn}{dbn.fit}(x, n, ...)
 }
 \arguments{
-\item{object}{the fitted network}
+\item{x}{the fitted network}
+
+\item{n}{number of samples}
 
 \item{...}{additional parameters}
-
-\item{weights}{optional weights}
 }
 \value{
-the averaged parameters
+the sampled dataset
 }
 \description{
 Generic method for "dbn.fit" S3 objects. 

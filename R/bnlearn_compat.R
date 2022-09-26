@@ -411,12 +411,11 @@ print.dbn.fit <- function(x, ...){
 #'
 #' Generic method for "dbn.fit" S3 objects. 
 #' Calls bnlearn underneath.
-#' @param object the fitted network
+#' @param x the fitted network
 #' @param ... additional parameters
-#' @param weights optional weights
 #' @return the averaged parameters
 #' @export
-mean.dbn.fit <- function(object, ..., k){
+mean.dbn.fit <- function(x, ...){
   NextMethod()
 }
 
@@ -424,13 +423,13 @@ mean.dbn.fit <- function(object, ..., k){
 #'
 #' Generic method for "dbn.fit" S3 objects. 
 #' Calls bnlearn's \code{\link{rbn}} underneath.
-#' @param object the fitted network
+#' @param x the fitted network
+#' @param n number of samples
 #' @param ... additional parameters
-#' @param weights optional weights
-#' @return the averaged parameters
+#' @return the sampled dataset
 #' @importFrom bnlearn rbn
 #' @export
-rbn.dbn.fit <- function(object, ..., weights){
+rbn.dbn.fit <- function(x, n, ...){
   NextMethod()
 }
 

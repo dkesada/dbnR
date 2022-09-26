@@ -4,14 +4,12 @@
 \alias{mean.dbn.fit}
 \title{Average the parameters of multiple dbn.fit objects with identical structures}
 \usage{
-\method{mean}{dbn.fit}(object, ..., k)
+\method{mean}{dbn.fit}(x, ...)
 }
 \arguments{
-\item{object}{the fitted network}
+\item{x}{the fitted network}
 
 \item{...}{additional parameters}
-
-\item{weights}{optional weights}
 }
 \value{
 the averaged parameters
