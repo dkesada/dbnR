@@ -12,9 +12,9 @@ sd_error <- function(orig, pred){
 }
 
 print_metrics <- function(metrics, obj_vars){
-  print("The average MAE per execution is:", quote = FALSE)
-  sapply(obj_vars, function(x){print(paste0(x, ": ", round(metrics[x], 4)),
-                                     quote = FALSE)})
+  cat("The average MAE per execution is:", fill = T)
+  sapply(obj_vars, function(x){cat(paste0(x, ": ", round(metrics[x], 4)),
+                                   fill = T)})
 }
 
 plot_single_result <- function(dt, results, var){

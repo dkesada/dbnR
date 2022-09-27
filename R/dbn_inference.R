@@ -91,10 +91,10 @@ predict_dt <- function(fit, dt, obj_nodes, verbose = T, look_ahead = F){
     sapply(obj_nodes,
            function(x){plot(ts(obj_dt[, get(x)]), ylab = x) +
                        lines(ts(res[, get(x)]), col="red")})
-    print("MAE:", quote = FALSE)
-    print(mae)
-    print("SD:", quote = FALSE)
-    print(sd_e)
+    cat("MAE:", fill = T)
+    cat(mae, fill = T)
+    cat("SD:", fill = T)
+    cat(sd_e, fill = T)
   }
 
   return(res)
@@ -311,7 +311,7 @@ forecast_ts <- function(dt, fit, size = NULL, obj_vars, ini = 1, len = dim(dt)[1
   names(metrics) <- obj_vars
 
   if(print_res){
-    print(exec_time)
+    cat(paste0("Time difference of ", round(exec_time, 6), " secs"), fill = T)
     print_metrics(metrics, obj_vars)
   }
     
@@ -418,7 +418,7 @@ smooth_ts <- function(dt, fit, size = NULL, obj_vars, ini = dim(dt)[1], len = in
   names(metrics) <- obj_vars
   
   if(print_res){
-    print(exec_time)
+    cat(exec_time, fill = T)
     print_metrics(metrics, obj_vars)
   }
   
