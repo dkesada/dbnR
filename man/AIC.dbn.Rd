@@ -14,7 +14,7 @@
 \item{k}{the penalty parameter}
 }
 \value{
-the prediction results
+the AIC score of the network
 }
 \description{
 Generic method for calculating the Akaike information criterion (AIC) of a 

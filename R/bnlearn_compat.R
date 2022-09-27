@@ -5,7 +5,7 @@
 #' @param object the structure of the network
 #' @param ... additional parameters for the network scoring
 #' @param k the penalty parameter
-#' @return the prediction results
+#' @return the AIC score of the network
 #' @importFrom stats AIC
 #' @export
 AIC.dbn <- function(object, ..., k){
@@ -19,7 +19,7 @@ AIC.dbn <- function(object, ..., k){
 #' @param object the fitted network
 #' @param ... additional parameters for the network scoring
 #' @param k the penalty parameter
-#' @return the prediction results
+#' @return the AIC score of the network
 #' @export
 AIC.dbn.fit <- function(object, ..., k){
   NextMethod()
@@ -27,11 +27,11 @@ AIC.dbn.fit <- function(object, ..., k){
 
 #' Calculate the BIC of a dynamic Bayesian network
 #'
-#' Generic method for calculating the Akaike information criterion (BIC) of a 
+#' Generic method for calculating the Bayesian information criterion (BIC) of a 
 #' "dbn" S3 object given some data. Calls bnlearn's \code{\link{BIC}} underneath.
 #' @param object the structure of the network
 #' @param ... additional parameters for the network scoring
-#' @return the prediction results
+#' @return the BIC score of the network
 #' @importFrom stats BIC
 #' @export
 BIC.dbn <- function(object, ...){
@@ -40,11 +40,11 @@ BIC.dbn <- function(object, ...){
 
 #' Calculate the BIC of a dynamic Bayesian network
 #'
-#' Generic method for calculating the Akaike information criterion (BIC) of a 
+#' Generic method for calculating the Bayesian information criterion (BIC) of a 
 #' "dbn.fit" S3 object given some data. Calls bnlearn's \code{\link{BIC}} underneath.
 #' @param object the fitted network
 #' @param ... additional parameters for the network scoring
-#' @return the prediction results
+#' @return the BIC score of the network
 #' @export
 BIC.dbn.fit <- function(object, ...){
   NextMethod()
@@ -57,7 +57,7 @@ BIC.dbn.fit <- function(object, ...){
 #' @param object the structure of the network
 #' @param dt the dataset to calculate the score of the network
 #' @param ... additional parameters for the network scoring
-#' @return the prediction results
+#' @return the log-likelihood score of the network
 #' @importFrom stats logLik
 #' @export
 logLik.dbn <- function(object, dt, ...){
@@ -71,7 +71,7 @@ logLik.dbn <- function(object, dt, ...){
 #' @param object the fitted network
 #' @param dt the dataset to calculate the score of the network
 #' @param ... additional parameters for the network scoring
-#' @return the prediction results
+#' @return the log-likelihood score of the network
 #' @export
 logLik.dbn.fit <- function(object, dt, ...){
   NextMethod()
@@ -84,7 +84,7 @@ logLik.dbn.fit <- function(object, dt, ...){
 #' @param target "dbn" object
 #' @param current the other "dbn" object
 #' @param ... additional parameters
-#' @return the prediction results
+#' @return boolean result of the comparison
 #' @export
 all.equal.dbn <- function(target, current, ...){
   NextMethod()
@@ -97,7 +97,7 @@ all.equal.dbn <- function(target, current, ...){
 #' @param target "dbn.fit" object
 #' @param current the other "dbn.fit" object
 #' @param ... additional parameters
-#' @return the prediction results
+#' @return boolean result of the comparison
 #' @export
 all.equal.dbn.fit <- function(target, current, ...){
   NextMethod()
@@ -109,7 +109,7 @@ all.equal.dbn.fit <- function(target, current, ...){
 #' Calls bnlearn's \code{\link{as.character}} underneath.
 #' @param x a "dbn" object
 #' @param ... additional parameters
-#' @return the prediction results
+#' @return string representing the DBN model
 #' @export
 as.character.dbn <- function(x, ...){
   NextMethod()

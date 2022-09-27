@@ -12,9 +12,9 @@
 \item{...}{additional parameters for the network scoring}
 }
 \value{
-the prediction results
+the BIC score of the network
 }
 \description{
-Generic method for calculating the Akaike information criterion (BIC) of a 
+Generic method for calculating the Bayesian information criterion (BIC) of a 
 "dbn.fit" S3 object given some data. Calls bnlearn's \code{\link{BIC}} underneath.
 }
