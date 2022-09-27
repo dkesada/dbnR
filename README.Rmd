@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE,
 
 
 
-# dbnR
+# dbnR <img src='https://raw.githubusercontent.com/dkesada/dbnR/devel/media/dbnR_logo_web.png' align="right" height="139"/>
 
 [![CRAN Status Badge](https://www.r-pkg.org/badges/version/dbnR)](https://CRAN.R-project.org/package=dbnR)
 [![CRAN Downloads Badge](https://cranlogs.r-pkg.org/badges/grand-total/dbnR)](https://CRAN.R-project.org/package=dbnR)

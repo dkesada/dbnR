@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# dbnR
+# dbnR <img src='https://raw.githubusercontent.com/dkesada/dbnR/devel/media/dbnR_logo_web.png' align="right" height="139"/>
 
 [![CRAN Status
 Badge](https://www.r-pkg.org/badges/version/dbnR)](https://CRAN.R-project.org/package=dbnR)
@@ -100,6 +100,12 @@ function *learn_dbn_struc*
 
 ``` r
 library(dbnR)
+#> Loading required package: bnlearn
+#> 
+#> Attaching package: 'dbnR'
+#> The following objects are masked from 'package:bnlearn':
+#> 
+#>     degree, nodes, nodes<-, score
 data(motor)
 
 size <- 3
