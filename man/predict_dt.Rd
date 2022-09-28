@@ -18,7 +18,7 @@ predict_dt(fit, dt, obj_nodes, verbose = T, look_ahead = F)
 \item{look_ahead}{boolean that defines whether or not the values of the variables in t_0 should be used when predicting, even if they are not present in obj_nodes. This decides if look-ahead bias is introduced or not.}
 }
 \value{
-the prediction results
+a data.table with the prediction results for each row
 }
 \description{
 Performs inference over a test data set, plots the results

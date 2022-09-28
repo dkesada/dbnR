@@ -2,9 +2,9 @@
 #'
 #' Performs inference over a multivariate normal distribution given some 
 #' evidence. After converting a Gaussian linear network to its MVN form, this
-#' kind of inference can be performed. It's recommended to use the
-#' \code{\link{predict_bn}} or \code{\link{predict_dt}} functions instead unless
-#' you need the posterior mean vector and covariance matrix.
+#' kind of inference can be performed. It's recommended to use
+#' \code{\link{predict_dt}} functions instead unless you need the posterior
+#' mean vector and covariance matrix.
 #' @param sigma the covariance matrix
 #' @param mu the mean vector
 #' @param evidence a single row data.table or a named vector with the values and names of the variables given as evidence

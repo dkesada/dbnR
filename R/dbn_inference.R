@@ -14,11 +14,9 @@
 #' f_dt_train <- fold_dt(dt_train, size)
 #' f_dt_val <- fold_dt(dt_val, size)
 #' fit <- fit_dbn_params(net, f_dt_train, method = "mle-g")
-#' res <- f_dt_val[, predict_bn(fit, .SD), by = 1:nrow(f_dt_val)]
-#' @return the mean of the particles for each row
-#' @export
+#' res <- f_dt_val[, predict_bn(fit, .SD), .SDcols = c("pm_t_0", "coolant_t_0"), by = 1:nrow(f_dt_val)]
+#' @return a data.table with the predictions
 predict_bn <- function(fit, evidence){
-  
   n <- names(fit)
   obj_nodes <- n[which(!(n %in% names(evidence)))]
   
@@ -39,7 +37,7 @@ predict_bn <- function(fit, evidence){
 #' @param obj_nodes the nodes that are going to be predicted. They are all predicted at the same time
 #' @param verbose if TRUE, displays the metrics and plots the real values against the predictions
 #' @param look_ahead boolean that defines whether or not the values of the variables in t_0 should be used when predicting, even if they are not present in obj_nodes. This decides if look-ahead bias is introduced or not.
-#' @return the prediction results
+#' @return a data.table with the prediction results for each row
 #' @examples
 #' size = 3
 #' data(motor)
@@ -81,6 +79,7 @@ predict_dt <- function(fit, dt, obj_nodes, verbose = T, look_ahead = F){
   ev_dt[, (obj_nodes_full) := NULL]
   
   res <- ev_dt[, predict_bn(fit, .SD), by = 1:nrow(ev_dt)]
+  res[, nrow := NULL]
   
   mae <- sapply(obj_nodes, function(x){mae(obj_dt[, get(x)],
                                            res[, get(x)])})

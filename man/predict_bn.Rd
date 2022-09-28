@@ -12,7 +12,7 @@ predict_bn(fit, evidence)
 \item{evidence}{values of the variables used as evidence for the net}
 }
 \value{
-the mean of the particles for each row
+a data.table with the predictions
 }
 \description{
 Performs inference over a Gaussian BN. It's thought to be used in a map for
@@ -28,5 +28,5 @@ net <- learn_dbn_struc(dt_train, size)
 f_dt_train <- fold_dt(dt_train, size)
 f_dt_val <- fold_dt(dt_val, size)
 fit <- fit_dbn_params(net, f_dt_train, method = "mle-g")
-res <- f_dt_val[, predict_bn(fit, .SD), by = 1:nrow(f_dt_val)]
+res <- f_dt_val[, predict_bn(fit, .SD), .SDcols = c("pm_t_0", "coolant_t_0"), by = 1:nrow(f_dt_val)]
 }
