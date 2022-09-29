@@ -2,7 +2,7 @@
 % Please edit documentation in R/dbn_inference.R
 \name{approximate_inference}
 \alias{approximate_inference}
-\title{Performs approximate inference forecasting with the GDBN over a data set}
+\title{Performs approximate inference forecasting with the GDBN over a dataset}
 \usage{
 approximate_inference(dt, fit, obj_vars, ini, rep, len, num_p)
 }
@@ -22,10 +22,10 @@ approximate_inference(dt, fit, obj_vars, ini, rep, len, num_p)
 \item{num_p}{number of particles to be used by bnlearn}
 }
 \value{
-the results of the forecast
+a list with the mu results of the forecast
 }
 \description{
-Given a bn.fit object, the size of the net and a data set,
+Given a bn.fit object, the size of the net and a dataset,
 performs approximate forecasting with bnlearns cpdist function over the 
 initial evidence taken from the data set.
 }

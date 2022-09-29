@@ -10,7 +10,7 @@ as_named_vector(dt)
 \item{dt}{a 1 row data.table or a named vector}
 }
 \value{
-a vector with the values and the variable names
+a named vector with the values and the variable names
 }
 \description{
 Given a single row data.table, convert it into a named vector. Used in the

@@ -2,7 +2,7 @@
 % Please edit documentation in R/dbn_inference.R
 \name{smooth_ts}
 \alias{smooth_ts}
-\title{Performs smoothing with the GDBN over a data set}
+\title{Performs smoothing with the GDBN over a dataset}
 \usage{
 smooth_ts(
   dt,
@@ -36,10 +36,10 @@ smooth_ts(
 \item{prov_ev}{variables to be provided as evidence in each smoothing step. Should be in the oldest time step}
 }
 \value{
-the results of the smoothing
+a list with the original values and the results of the smoothing
 }
 \description{
-Given a dbn.fit object, the size of the net and a folded data set,
+Given a dbn.fit object, the size of the net and a folded dataset,
 performs a smoothing of a trajectory. Smoothing is the opposite of 
 forecasting: given a starting point, predict backwards in time to obtain
 the time series that generated that point.

@@ -14,7 +14,7 @@ exact_prediction_step(fit, variables, evidence)
 \item{evidence}{a list with the provided evidence}
 }
 \value{
-the inferred particles
+a list with the predicted mu and sigma
 }
 \description{
 Given a bn.fit object and some variables, performs

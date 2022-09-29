@@ -2,7 +2,7 @@
 % Please edit documentation in R/dbn_inference.R
 \name{forecast_ts}
 \alias{forecast_ts}
-\title{Performs forecasting with the GDBN over a data set}
+\title{Performs forecasting with the GDBN over a dataset}
 \usage{
 forecast_ts(
   dt,
@@ -45,11 +45,11 @@ forecast_ts(
 \item{prov_ev}{variables to be provided as evidence in each forecasting step}
 }
 \value{
-the results of the forecast
+a list with the original values and the results of the forecast
 }
 \description{
-Given a dbn.fit object, the size of the net and a folded data set,
-performs a forecast over the initial evidence taken from the data set.
+Given a dbn.fit object, the size of the net and a folded dataset,
+performs a forecast over the initial evidence taken from the dataset.
 }
 \examples{
 size = 3

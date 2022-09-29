@@ -38,7 +38,7 @@ plot_results <- function(dt, results, obj_vars){
 #' named vector is provided instead of a data.table, nothing will be done and
 #' the named vector will be returned.
 #' @param dt a 1 row data.table or a named vector
-#' @return a vector with the values and the variable names
+#' @return a named vector with the values and the variable names
 #' @keywords internal
 as_named_vector <- function(dt){
   if(is.data.frame(dt)){
