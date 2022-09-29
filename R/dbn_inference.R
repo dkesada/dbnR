@@ -28,12 +28,12 @@ predict_bn <- function(fit, evidence){
   return(pred)
 }
 
-#' Performs inference over a test data set with a GBN
+#' Performs inference over a test dataset with a GBN
 #'
-#' Performs inference over a test data set, plots the results
+#' Performs inference over a test dataset, plots the results
 #' and gives metrics of the accuracy of the results.
 #' @param fit the fitted bn
-#' @param dt the test data set
+#' @param dt the test dataset
 #' @param obj_nodes the nodes that are going to be predicted. They are all predicted at the same time
 #' @param verbose if TRUE, displays the metrics and plots the real values against the predictions
 #' @param look_ahead boolean that defines whether or not the values of the variables in t_0 should be used when predicting, even if they are not present in obj_nodes. This decides if look-ahead bias is introduced or not.
@@ -155,11 +155,11 @@ exact_prediction_step <- function(fit, variables, evidence){
 #'
 #' Given a bn.fit object, the size of the net and a dataset,
 #' performs approximate forecasting with bnlearns cpdist function over the 
-#' initial evidence taken from the data set.
+#' initial evidence taken from the dataset.
 #' @param dt data.table object with the TS data
 #' @param fit bn.fit object
 #' @param obj_vars variables to be predicted
-#' @param ini starting point in the data set to forecast.
+#' @param ini starting point in the dataset to forecast.
 #' @param rep number of repetitions to be performed of the approximate inference
 #' @param len length of the forecast
 #' @param num_p number of particles to be used by bnlearn
@@ -204,7 +204,7 @@ approximate_inference <- function(dt, fit, obj_vars, ini, rep, len, num_p){
 #' @param dt data.table object with the TS data
 #' @param fit bn.fit object
 #' @param obj_vars variables to be predicted
-#' @param ini starting point in the data set to forecast.
+#' @param ini starting point in the dataset to forecast.
 #' @param len length of the forecast
 #' @param prov_ev variables to be provided as evidence in each forecasting step
 #' @return a list with the mu results of the forecast
@@ -256,7 +256,7 @@ exact_inference <- function(dt, fit, obj_vars, ini, len, prov_ev){
 #' @param fit dbn.fit object
 #' @param size number of time slices of the net. Deprecated, will be removed in the future
 #' @param obj_vars variables to be predicted
-#' @param ini starting point in the data set to forecast.
+#' @param ini starting point in the dataset to forecast.
 #' @param len length of the forecast
 #' @param rep number of times to repeat the approximate forecasting
 #' @param num_p number of particles in the approximate forecasting
@@ -322,14 +322,14 @@ forecast_ts <- function(dt, fit, size = NULL, obj_vars, ini = 1, len = dim(dt)[1
 
 #' Performs exact inference smoothing with the GDBN over a dataset
 #'
-#' Given a bn.fit object, the size of the net and a data set,
+#' Given a bn.fit object, the size of the net and a dataset,
 #' performs exact smoothing over the initial evidence taken from the dataset.
 #' Take notice that the smoothing is done backwards in time, as opposed to
 #' forecasting.
 #' @param dt data.table object with the TS data
 #' @param fit bn.fit object
 #' @param obj_vars variables to be predicted. Should be in the oldest time step
-#' @param ini starting point in the data set to smooth
+#' @param ini starting point in the dataset to smooth
 #' @param len length of the smoothing
 #' @param prov_ev variables to be provided as evidence in each forecasting step. Should be in the oldest time step
 #' @return a list with the results of the inference backwards
@@ -383,7 +383,7 @@ exact_inference_backwards <- function(dt, fit, obj_vars, ini, len, prov_ev){
 #' @param fit dbn.fit object
 #' @param size number of time slices of the net. Deprecated, will be removed in the future
 #' @param obj_vars variables to be predicted. Should be in the oldest time step
-#' @param ini starting point in the data set to smooth
+#' @param ini starting point in the dataset to smooth
 #' @param len length of the smoothing
 #' @param print_res if TRUE prints the mae and sd metrics of the smoothing
 #' @param plot_res if TRUE plots the results of the smoothing

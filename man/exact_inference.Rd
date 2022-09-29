@@ -13,7 +13,7 @@ exact_inference(dt, fit, obj_vars, ini, len, prov_ev)
 
 \item{obj_vars}{variables to be predicted}
 
-\item{ini}{starting point in the data set to forecast.}
+\item{ini}{starting point in the dataset to forecast.}
 
 \item{len}{length of the forecast}
 

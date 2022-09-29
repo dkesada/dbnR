@@ -25,7 +25,7 @@ smooth_ts(
 
 \item{obj_vars}{variables to be predicted. Should be in the oldest time step}
 
-\item{ini}{starting point in the data set to smooth}
+\item{ini}{starting point in the dataset to smooth}
 
 \item{len}{length of the smoothing}
 

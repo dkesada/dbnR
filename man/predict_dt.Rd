@@ -2,14 +2,14 @@
 % Please edit documentation in R/dbn_inference.R
 \name{predict_dt}
 \alias{predict_dt}
-\title{Performs inference over a test data set with a GBN}
+\title{Performs inference over a test dataset with a GBN}
 \usage{
 predict_dt(fit, dt, obj_nodes, verbose = T, look_ahead = F)
 }
 \arguments{
 \item{fit}{the fitted bn}
 
-\item{dt}{the test data set}
+\item{dt}{the test dataset}
 
 \item{obj_nodes}{the nodes that are going to be predicted. They are all predicted at the same time}
 
@@ -21,7 +21,7 @@ predict_dt(fit, dt, obj_nodes, verbose = T, look_ahead = F)
 a data.table with the prediction results for each row
 }
 \description{
-Performs inference over a test data set, plots the results
+Performs inference over a test dataset, plots the results
 and gives metrics of the accuracy of the results.
 }
 \examples{

@@ -13,7 +13,7 @@ exact_inference_backwards(dt, fit, obj_vars, ini, len, prov_ev)
 
 \item{obj_vars}{variables to be predicted. Should be in the oldest time step}
 
-\item{ini}{starting point in the data set to smooth}
+\item{ini}{starting point in the dataset to smooth}
 
 \item{len}{length of the smoothing}
 
@@ -23,7 +23,7 @@ exact_inference_backwards(dt, fit, obj_vars, ini, len, prov_ev)
 a list with the results of the inference backwards
 }
 \description{
-Given a bn.fit object, the size of the net and a data set,
+Given a bn.fit object, the size of the net and a dataset,
 performs exact smoothing over the initial evidence taken from the dataset.
 Take notice that the smoothing is done backwards in time, as opposed to
 forecasting.
