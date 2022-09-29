@@ -181,3 +181,8 @@ GPL(≥ 2) license.
     Particle Swarm Optimization with Order Invariant Encoding*. In
     International Conference on Hybrid Artificial Intelligence Systems
     (pp. 158-171). Springer, Cham.
+
+-   Quesada, D., Bielza, C., Fontán, P., & Larrañaga, P. (2022).
+    *Piecewise forecasting of nonlinear time series with model tree
+    dynamic Bayesian networks*. International Journal of Intelligent
+    Systems, 37, 9108-9137.
