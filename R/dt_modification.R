@@ -3,7 +3,9 @@
 #' This will rename the columns in a data.table so that
 #' they end in '_t_0', which will be needed when folding the data.table. If
 #' any of the columns already ends in '_t_0', a warning will be issued and
-#' no further operation will be done.
+#' no further operation will be done. There is no need to use this function
+#' to learn a DBN unless some operation with the variable names wants to be 
+#' done prior to folding a dataset.
 #' @param dt the data.table to be treated
 #' @return the renamed data.table
 #' @examples 
@@ -52,14 +54,21 @@ fold_dt_rec <- function(dt, n_prev, size, slice = 1){
   return (dt)
 }
 
-#' Filter the instances in a data.table that have values of different ids in each row
+#' Filter the instances in a data.table with different ids in each row
 #' 
 #' Given an id variable that labels the different instances of a time series
 #' inside a dataset, discard the rows that have values from more than 1 id.
 #' @param f_dt folded data.table
 #' @param size the size of the data.table
 #' @param id_var the variable that labels each individual instance of the time series
-#' @return the filtered dataset
+#' @return the filtered data.table
+#' @examples
+#' dt <- dbnR::motor[201:2500]
+#' dt[, n_sec := rep(seq(46), each = 50)] # I'll create secuences of 50 instances each
+#' f_dt <- dbnR::fold_dt(dt, size = 2)
+#' f_dt[50, .SD, .SDcols = c("n_sec_t_0", "n_sec_t_1")]
+#' f_dt <- dbnR::filter_same_cycle(f_dt, size = 2, id_var = "n_sec")
+#' f_dt[50, .SD, .SDcols = c("n_sec_t_0", "n_sec_t_1")]
 #' @export
 filter_same_cycle <- function(f_dt, size, id_var){
   initial_folded_dt_check(f_dt)
@@ -72,18 +81,25 @@ filter_same_cycle <- function(f_dt, size, id_var){
   return(f_dt[eval(parse(text=cond))])
 }
 
-#' Fold a dataset to a certain size and avoid overlapping of different time-series
+#' Fold a dataset avoiding overlapping of different time series
 #' 
-#' If the dataset that is going to be folded contains several different time-series 
+#' If the dataset that is going to be folded contains several different time series 
 #' instances of the same process, folding it could introduce false rows with data
-#' from different time-series. Given an id variable that labels the different 
+#' from different time series. Given an id variable that labels the different 
 #' instances of a time series inside a dataset and a desired size, this function 
 #' folds the dataset and avoids mixing data from different origins in the same instance.
 #' @param dt data.table to be folded
 #' @param size the size of the data.table
-#' @param id_var the variable that labels each individual instance of the time-series
+#' @param id_var the variable that labels each individual instance of the time series
 #' @param clear_id_var boolean that decides whether or not the id_var column is deleted 
-#' @return the filtered dataset
+#' @return the filtered data.table
+#' @examples 
+#' dt <- dbnR::motor[201:2500]
+#' dt[, n_sec := rep(seq(46), each = 50)] # I'll create secuences of 50 instances each
+#' f_dt <- dbnR::fold_dt(dt, size = 2)
+#' dim(f_dt)
+#' f_dt <- dbnR::filtered_fold_dt(dt, size = 2, id_var = "n_sec")
+#' dim(f_dt)  # The filtered folded dt has a row less for each independent secuence
 #' @export
 filtered_fold_dt <- function(dt, size, id_var, clear_id_var = TRUE){
   logical_arg_check(clear_id_var)
@@ -104,7 +120,7 @@ filtered_fold_dt <- function(dt, size, id_var, clear_id_var = TRUE){
 
 #' Widens the dataset to take into account the t previous time slices
 #'
-#' This will widen the dataset to put the t previous time slices
+#' This function will widen the dataset to put the t previous time slices
 #' in each row, so that it can be used to learn temporal arcs in the second
 #' phase of the dmmhc.
 #' @param dt the data.table to be treated
@@ -113,7 +129,7 @@ filtered_fold_dt <- function(dt, size, id_var, clear_id_var = TRUE){
 #' @examples 
 #' data(motor)
 #' size <-  3
-#' dt <- fold_dt(motor, size)
+#' f_dt <- fold_dt(motor, size)
 #' @export
 fold_dt <- function(dt, size){
   initial_df_check(dt)
@@ -132,13 +148,20 @@ fold_dt <- function(dt, size){
 #' 
 #' In a time series dataset, there is a time difference between one row and the 
 #' next one. This function reduces the number of rows from its current frequency
-#' to the desired one. Instead of the frequency in Hz, the number of seconds
-#' between rows is asked (Hz = 1/s).
+#' to the desired one by averaging batches of rows. Instead of the frequency in Hz, the 
+#' number of seconds between rows is asked (Hz = 1/s).
 #' @param dt the original data.table
 #' @param obj_freq the desired number of seconds between rows
 #' @param curr_freq the number of seconds between rows in the original dataset
 #' @param id_var optional variable that labels different time series in a dataset, to avoid averaging values from different processes
 #' @return the data.table with the desired frequency
+#' @examples 
+#' # Let's assume that the dataset has a frequency of 4Hz, 0.25 seconds between rows
+#' dt <- dbnR::motor
+#' dim(dt)
+#' # Let's change the frequency to 2Hz, 0.5 seconds between rows
+#' dt <- reduce_freq(dt, obj_freq = 0.5, curr_freq = 0.2)
+#' dim(dt)
 #' @import data.table
 #' @export
 reduce_freq <- function(dt, obj_freq, curr_freq, id_var = NULL){
@@ -159,3 +182,33 @@ reduce_freq <- function(dt, obj_freq, curr_freq, id_var = NULL){
   
   return(dt_res)
 }
+
+#' Move the window of values backwards in a folded dataset row
+#' 
+#' This function moves the values in t_0, t_1, ..., t_n-1 in a folded dataset row to
+#' t_1, t_2, ..., t_n. All the variables in t_0 will be inputed with NAs and the
+#' obtained row can be used to forecast up to any desired point.
+#' @param f_dt a folded dataset
+#' @param row the index of the row that is going to be processed
+#' @return a one row data.table the shifted values
+#' @examples 
+#' dt <- dbnR::motor
+#' f_dt <- dbnR::fold_dt(dt, size = 2)
+#' s_row <- dbnR::shift_values(f_dt, row = 500)
+#' @export
+shift_values <- function(f_dt, row){
+  var_names <- names(f_dt)
+  max_size <- max(simplify2array(strsplit(var_names, "^.*_t_")))
+  vars_first_idx <- grep("t_0", var_names)
+  vars_last_idx <- grep(paste0("t_", max_size), var_names)
+  vars_t0 <- var_names[vars_first_idx]
+  vars_first <- var_names[-vars_last_idx]
+  vars_last <- var_names[-vars_first_idx]
+  res = copy(f_dt[row])
+  
+  res[, (vars_last) := .SD, .SDcols = vars_first]
+  res[, (vars_t0) := NA]
+  
+  return(res)
+}
+

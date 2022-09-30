@@ -18,6 +18,7 @@ a data.table with the predictions
 Performs inference over a Gaussian BN. It's thought to be used in a map for
 a data.table, to use as evidence each separate row. If not specifically
 needed, it's recommended to use the function \code{\link{predict_dt}} instead.
+This function is deprecated and will be removed in a future version.
 }
 \examples{
 size = 3

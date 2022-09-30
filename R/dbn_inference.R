@@ -3,8 +3,10 @@
 #' Performs inference over a Gaussian BN. It's thought to be used in a map for
 #' a data.table, to use as evidence each separate row. If not specifically
 #' needed, it's recommended to use the function \code{\link{predict_dt}} instead.
+#' This function is deprecated and will be removed in a future version.
 #' @param fit the fitted bn
 #' @param evidence values of the variables used as evidence for the net
+#' @return a data.table with the predictions
 #' @examples
 #' size = 3
 #' data(motor)
@@ -15,7 +17,7 @@
 #' f_dt_val <- fold_dt(dt_val, size)
 #' fit <- fit_dbn_params(net, f_dt_train, method = "mle-g")
 #' res <- f_dt_val[, predict_bn(fit, .SD), .SDcols = c("pm_t_0", "coolant_t_0"), by = 1:nrow(f_dt_val)]
-#' @return a data.table with the predictions
+#' @export
 predict_bn <- function(fit, evidence){
   n <- names(fit)
   obj_nodes <- n[which(!(n %in% names(evidence)))]
@@ -30,8 +32,12 @@ predict_bn <- function(fit, evidence){
 
 #' Performs inference over a test dataset with a GBN
 #'
-#' Performs inference over a test dataset, plots the results
-#' and gives metrics of the accuracy of the results.
+#' This function performs inference over each row of a folded data.table, 
+#' plots the results and gives metrics of the accuracy of the predictions. Given
+#' that only a single row is predicted, the horizon of the prediction is at most 1.
+#' This function is also called by the generic predict method for "dbn.fit" 
+#' objects. For long term forecasting, please refer to the 
+#' \code{\link{forecast_ts}} function.
 #' @param fit the fitted bn
 #' @param dt the test dataset
 #' @param obj_nodes the nodes that are going to be predicted. They are all predicted at the same time
@@ -264,7 +270,7 @@ exact_inference <- function(dt, fit, obj_vars, ini, len, prov_ev){
 #' @param plot_res if TRUE plots the results of the forecast
 #' @param mode "exact" for exact inference, "approx" for approximate
 #' @param prov_ev variables to be provided as evidence in each forecasting step
-#' @return a list with the original values and the results of the forecast
+#' @return a list with the original time series values and the results of the forecast
 #' @examples
 #' size = 3
 #' data(motor)
@@ -389,6 +395,18 @@ exact_inference_backwards <- function(dt, fit, obj_vars, ini, len, prov_ev){
 #' @param plot_res if TRUE plots the results of the smoothing
 #' @param prov_ev variables to be provided as evidence in each smoothing step. Should be in the oldest time step
 #' @return a list with the original values and the results of the smoothing
+#' @examples
+#' size = 3
+#' data(motor)
+#' dt_train <- motor[200:2500]
+#' dt_val <- motor[2501:3000]
+#' obj <- c("pm_t_2")
+#' net <- learn_dbn_struc(dt_train, size)
+#' f_dt_train <- fold_dt(dt_train, size)
+#' f_dt_val <- fold_dt(dt_val, size)
+#' fit <- fit_dbn_params(net, f_dt_train, method = "mle-g")
+#' res <- suppressWarnings(smooth_ts(f_dt_val, fit, 
+#'         obj_vars = obj, print_res = FALSE, plot_res = FALSE))
 #' @export
 smooth_ts <- function(dt, fit, size = NULL, obj_vars, ini = dim(dt)[1], len = ini-1,
                       print_res = TRUE, plot_res = TRUE, prov_ev = NULL){

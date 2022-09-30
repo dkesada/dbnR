@@ -24,10 +24,11 @@ node_levels <- function(net, order, lvl = 1, acc = NULL){
   return(ret)
 }
 
-#' Plots a Bayesian networks in a hierarchical way
+#' Plots a Bayesian network in a hierarchical way
 #'
-#' Calculates the levels of each node and then plots them in a hierarchical
-#' layout in visNetwork.
+#' This function calculates the levels of each node and then plots them in a hierarchical
+#' layout in visNetwork. Can be used in place of the generic plot function 
+#' offered by bnlearn for "bn" and "bn.fit" S3 objects.
 #' @param structure the structure or fit of the network.
 #' @importFrom magrittr "%>%"
 #' @examples 
@@ -138,7 +139,8 @@ expand_time_nodes <- function(name, acc, max, i){
 #' relative position of each node with respect to his equivalent in the first
 #' slice. The result is a net where each time slice is ordered and separated
 #' from one another, where the leftmost slice is the oldest and the rightmost
-#' represents the present time.
+#' represents the present time. This function is also called by the generic
+#' plot function of "dbn" and "dbn.fit" S3 objects.
 #' @param structure the structure or fit of the network.
 #' @param offset the blank space between time slices
 #' @param subset_nodes a vector containing the names of the subset of nodes to plot

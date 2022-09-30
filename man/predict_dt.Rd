@@ -21,8 +21,12 @@ predict_dt(fit, dt, obj_nodes, verbose = T, look_ahead = F)
 a data.table with the prediction results for each row
 }
 \description{
-Performs inference over a test dataset, plots the results
-and gives metrics of the accuracy of the results.
+This function performs inference over each row of a folded data.table, 
+plots the results and gives metrics of the accuracy of the predictions. Given
+that only a single row is predicted, the horizon of the prediction is at most 1.
+This function is also called by the generic predict method for "dbn.fit" 
+objects. For long term forecasting, please refer to the 
+\code{\link{forecast_ts}} function.
 }
 \examples{
 size = 3

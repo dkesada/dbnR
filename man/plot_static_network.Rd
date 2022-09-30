@@ -2,7 +2,7 @@
 % Please edit documentation in R/dbn_visualization.R
 \name{plot_static_network}
 \alias{plot_static_network}
-\title{Plots a Bayesian networks in a hierarchical way}
+\title{Plots a Bayesian network in a hierarchical way}
 \usage{
 plot_static_network(structure)
 }
@@ -10,8 +10,9 @@ plot_static_network(structure)
 \item{structure}{the structure or fit of the network.}
 }
 \description{
-Calculates the levels of each node and then plots them in a hierarchical
-layout in visNetwork.
+This function calculates the levels of each node and then plots them in a hierarchical
+layout in visNetwork. Can be used in place of the generic plot function 
+offered by bnlearn for "bn" and "bn.fit" S3 objects.
 }
 \examples{
 \donttest{

@@ -32,7 +32,8 @@ for a time slice and replicates it for each slice. Then, it calculates the
 relative position of each node with respect to his equivalent in the first
 slice. The result is a net where each time slice is ordered and separated
 from one another, where the leftmost slice is the oldest and the rightmost
-represents the present time.
+represents the present time. This function is also called by the generic
+plot function of "dbn" and "dbn.fit" S3 objects.
 }
 \examples{
 \donttest{

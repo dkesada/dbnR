@@ -16,7 +16,9 @@ the renamed data.table
 This will rename the columns in a data.table so that
 they end in '_t_0', which will be needed when folding the data.table. If
 any of the columns already ends in '_t_0', a warning will be issued and
-no further operation will be done.
+no further operation will be done. There is no need to use this function
+to learn a DBN unless some operation with the variable names wants to be 
+done prior to folding a dataset.
 }
 \examples{
 data("motor")

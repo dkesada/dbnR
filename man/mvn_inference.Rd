@@ -14,14 +14,14 @@ mvn_inference(mu, sigma, evidence)
 \item{evidence}{a single row data.table or a named vector with the values and names of the variables given as evidence}
 }
 \value{
-the posterior mean and covariance matrix
+a list with the posterior mean and covariance matrix
 }
 \description{
-Performs inference over a multivariate normal distribution given some 
-evidence. After converting a Gaussian linear network to its MVN form, this
+Given some evidence, this function performs inference over a multivariate normal 
+distribution. After converting a Gaussian linear network to its MVN form, this
 kind of inference can be performed. It's recommended to use
-\code{\link{predict_dt}} functions instead unless you need the posterior
-mean vector and covariance matrix.
+\code{\link{predict_dt}} functions instead unless you need a more flexible 
+inference method.
 }
 \examples{
 size = 3

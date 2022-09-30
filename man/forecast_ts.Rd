@@ -45,7 +45,7 @@ forecast_ts(
 \item{prov_ev}{variables to be provided as evidence in each forecasting step}
 }
 \value{
-a list with the original values and the results of the forecast
+a list with the original time series values and the results of the forecast
 }
 \description{
 Given a dbn.fit object, the size of the net and a folded dataset,

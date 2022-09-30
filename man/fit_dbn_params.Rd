@@ -14,7 +14,7 @@ fit_dbn_params(net, f_dt, ...)
 \item{...}{additional parameters for the \code{\link{bn.fit}} function}
 }
 \value{
-the fitted net
+a "dbn.fit" S3 object with the fitted net
 }
 \description{
 Fits the parameters of the DBN via MLE. The "mu" vector of means 

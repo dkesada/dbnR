@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{generate_random_network_exp}
 \alias{generate_random_network_exp}
-\title{Generate a random DBN and sample a dataset that defines it}
+\title{Generate a random DBN and a sampled dataset}
 \usage{
 generate_random_network_exp(
   n_vars,
