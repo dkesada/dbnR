@@ -31,8 +31,8 @@ objects. For long term forecasting, please refer to the
 \examples{
 size = 3
 data(motor)
-dt_train <- motor[200:2500]
-dt_val <- motor[2501:3000]
+dt_train <- motor[200:900]
+dt_val <- motor[901:1000]
 
 # With a DBN
 obj <- c("pm_t_0")

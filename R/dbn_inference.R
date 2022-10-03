@@ -47,8 +47,8 @@ predict_bn <- function(fit, evidence){
 #' @examples
 #' size = 3
 #' data(motor)
-#' dt_train <- motor[200:2500]
-#' dt_val <- motor[2501:3000]
+#' dt_train <- motor[200:900]
+#' dt_val <- motor[901:1000]
 #' 
 #' # With a DBN
 #' obj <- c("pm_t_0")
@@ -274,15 +274,15 @@ exact_inference <- function(dt, fit, obj_vars, ini, len, prov_ev){
 #' @examples
 #' size = 3
 #' data(motor)
-#' dt_train <- motor[200:2500]
-#' dt_val <- motor[2501:3000]
+#' dt_train <- motor[200:900]
+#' dt_val <- motor[901:1000]
 #' obj <- c("pm_t_0")
 #' net <- learn_dbn_struc(dt_train, size)
 #' f_dt_train <- fold_dt(dt_train, size)
 #' f_dt_val <- fold_dt(dt_val, size)
 #' fit <- fit_dbn_params(net, f_dt_train, method = "mle-g")
 #' res <- suppressWarnings(forecast_ts(f_dt_val, fit, 
-#'         obj_vars = obj, print_res = FALSE, plot_res = FALSE))
+#'         obj_vars = obj, len = 10, print_res = FALSE, plot_res = FALSE))
 #' @export
 forecast_ts <- function(dt, fit, size = NULL, obj_vars, ini = 1, len = dim(dt)[1]-ini,
                         rep = 1, num_p = 50, print_res = TRUE, plot_res = TRUE,
@@ -398,15 +398,15 @@ exact_inference_backwards <- function(dt, fit, obj_vars, ini, len, prov_ev){
 #' @examples
 #' size = 3
 #' data(motor)
-#' dt_train <- motor[200:2500]
-#' dt_val <- motor[2501:3000]
+#' dt_train <- motor[200:900]
+#' dt_val <- motor[901:1000]
 #' obj <- c("pm_t_2")
 #' net <- learn_dbn_struc(dt_train, size)
 #' f_dt_train <- fold_dt(dt_train, size)
 #' f_dt_val <- fold_dt(dt_val, size)
 #' fit <- fit_dbn_params(net, f_dt_train, method = "mle-g")
 #' res <- suppressWarnings(smooth_ts(f_dt_val, fit, 
-#'         obj_vars = obj, print_res = FALSE, plot_res = FALSE))
+#'         obj_vars = obj, len = 10, print_res = FALSE, plot_res = FALSE))
 #' @export
 smooth_ts <- function(dt, fit, size = NULL, obj_vars, ini = dim(dt)[1], len = ini-1,
                       print_res = TRUE, plot_res = TRUE, prov_ev = NULL){

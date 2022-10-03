@@ -54,13 +54,13 @@ performs a forecast over the initial evidence taken from the dataset.
 \examples{
 size = 3
 data(motor)
-dt_train <- motor[200:2500]
-dt_val <- motor[2501:3000]
+dt_train <- motor[200:900]
+dt_val <- motor[901:1000]
 obj <- c("pm_t_0")
 net <- learn_dbn_struc(dt_train, size)
 f_dt_train <- fold_dt(dt_train, size)
 f_dt_val <- fold_dt(dt_val, size)
 fit <- fit_dbn_params(net, f_dt_train, method = "mle-g")
 res <- suppressWarnings(forecast_ts(f_dt_val, fit, 
-        obj_vars = obj, print_res = FALSE, plot_res = FALSE))
+        obj_vars = obj, len = 10, print_res = FALSE, plot_res = FALSE))
 }
