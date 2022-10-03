@@ -10,7 +10,7 @@ Apart from this, in this update I added generic methods for my S3 objects "dbn" 
 * win-builder (devel, release and oldrelease)
 
 ## R CMD check results
-0 ERRORs | 0 WARNINGs | 4 NOTEs
+0 ERRORs | 0 WARNINGs | 3 NOTEs
 
 checking CRAN incoming feasibility ... NOTE
 Maintainer: ‘David Quesada <dkesada@gmail.com>’
@@ -42,33 +42,6 @@ checking installed package size ... NOTE
     libs   4.5Mb
     
 * My package uses C++ code with Rcpp, and in linux systems this seems to cause the 'libs' folder to get bloated.
-
-(On my local Windows 10 machine)
-  Note: information on .o files for i386 is not available
-  Warning in read_symbols_from_dll(so, rarch) :
-    this requires 'objdump.exe' to be on the PATH
-  Warning in read_symbols_from_dll(so, rarch) :
-    this requires 'objdump.exe' to be on the PATH
-  Warning in read_symbols_from_dll(so, rarch) :
-    this requires 'objdump.exe' to be on the PATH
-  Note: information on .o files for x64 is not available
-  Warning in read_symbols_from_dll(so, rarch) :
-    this requires 'objdump.exe' to be on the PATH
-  Warning in read_symbols_from_dll(so, rarch) :
-    this requires 'objdump.exe' to be on the PATH
-  Warning in read_symbols_from_dll(so, rarch) :
-    this requires 'objdump.exe' to be on the PATH
-  File 'dbnR/libs/i386/dbnR.dll':
-    Found no calls to: 'R_registerRoutines', 'R_useDynamicSymbols'
-  File 'dbnR/libs/x64/dbnR.dll':
-    Found no calls to: 'R_registerRoutines', 'R_useDynamicSymbols'
-  
-  It is good practice to register native routines and to disable symbol
-  search.
-  
-  See 'Writing portable packages' in the 'Writing R Extensions' manual.
-
-* I only get this note on my local win10 machine with R versions >4.1.1. I have not changed anything related to the C++ code and I did not get this note before. After looking for solutions to this, it seems like it has to do with some kind of interaction between devtools and Rstudio on Windows machines.
 
 ## Downstream dependencies
 There are no downstream dependencies
