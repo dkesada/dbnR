@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# dbnR
+# dbnR <img src='https://raw.githubusercontent.com/dkesada/dbnR/devel/media/dbnR_logo_hex.png' align="right" height="139"/>
 
 [![CRAN Status
 Badge](https://www.r-pkg.org/badges/version/dbnR)](https://CRAN.R-project.org/package=dbnR)
@@ -100,6 +100,12 @@ function *learn_dbn_struc*
 
 ``` r
 library(dbnR)
+#> Loading required package: bnlearn
+#> 
+#> Attaching package: 'dbnR'
+#> The following objects are masked from 'package:bnlearn':
+#> 
+#>     degree, nodes, nodes<-, score
 data(motor)
 
 size <- 3
@@ -132,7 +138,7 @@ text](https://raw.githubusercontent.com/dkesada/dbnR/master/media/dbn_plot.png)
 
 ``` r
 f_dt_train <- fold_dt(dt_train, size)
-fit <- fit_dbn_params(net, f_dt_train, method = "mle")
+fit <- fit_dbn_params(net, f_dt_train, method = "mle-g")
 ```
 
 After learning the net, two different types of inference can be
@@ -175,3 +181,8 @@ GPL(≥ 2) license.
     Particle Swarm Optimization with Order Invariant Encoding*. In
     International Conference on Hybrid Artificial Intelligence Systems
     (pp. 158-171). Springer, Cham.
+
+-   Quesada, D., Bielza, C., Fontán, P., & Larrañaga, P. (2022).
+    *Piecewise forecasting of nonlinear time series with model tree
+    dynamic Bayesian networks*. International Journal of Intelligent
+    Systems, 37, 9108-9137.

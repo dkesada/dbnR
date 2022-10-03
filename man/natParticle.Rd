@@ -69,3 +69,4 @@ A particle has a Position, a Velocity and a local best
 \item{\code{score}}{bnlearn score function used}
 }}
 
+\keyword{internal}

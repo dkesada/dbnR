@@ -12,7 +12,7 @@
 \item{...}{additional parameters}
 }
 \value{
-the prediction results
+string representing the DBN model
 }
 \description{
 Generic method for converting a "dbn" S3 object into a string.

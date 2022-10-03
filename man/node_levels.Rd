@@ -26,3 +26,4 @@ the structure. This level is defined by their parent nodes: a node with no
 parents will always be in the level 0. Subsequently, the level of a node
 will be one more of the maximum level of his parents.
 }
+\keyword{internal}

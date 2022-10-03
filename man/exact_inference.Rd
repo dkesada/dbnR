@@ -2,7 +2,7 @@
 % Please edit documentation in R/dbn_inference.R
 \name{exact_inference}
 \alias{exact_inference}
-\title{Performs exact inference forecasting with the GDBN over a data set}
+\title{Performs exact inference forecasting with the GDBN over a dataset}
 \usage{
 exact_inference(dt, fit, obj_vars, ini, len, prov_ev)
 }
@@ -13,16 +13,17 @@ exact_inference(dt, fit, obj_vars, ini, len, prov_ev)
 
 \item{obj_vars}{variables to be predicted}
 
-\item{ini}{starting point in the data set to forecast.}
+\item{ini}{starting point in the dataset to forecast.}
 
 \item{len}{length of the forecast}
 
 \item{prov_ev}{variables to be provided as evidence in each forecasting step}
 }
 \value{
-the results of the forecast
+a list with the mu results of the forecast
 }
 \description{
 Given a bn.fit object, the size of the net and a data.set,
-performs exact forecasting over the initial evidence taken from the data set.
+performs exact forecasting over the initial evidence taken from the dataset.
 }
+\keyword{internal}

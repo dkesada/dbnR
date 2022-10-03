@@ -2,7 +2,7 @@
 % Please edit documentation in R/security_checks.R
 \name{check_time0_formatted}
 \alias{check_time0_formatted}
-\title{Checks if the vector of names are time formatted to t0}
+\title{Checks if the vector of names are time formatted to t_0}
 \usage{
 check_time0_formatted(obj)
 }
@@ -17,3 +17,4 @@ This will check if the names are properly time formatted in t_0
 to be folded into more time slices. A vector is well formatted
 in t_0 when all of its column names end in '_t_0'.
 }
+\keyword{internal}

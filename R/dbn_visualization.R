@@ -11,6 +11,7 @@
 #' @param acc accumulator of the nodes already processed
 #' @return a matrix with the names of the nodes in the first row and their
 #' level on the second
+#' @keywords internal
 node_levels <- function(net, order, lvl = 1, acc = NULL){
   ret <- acc
   if(length(order) > 0){
@@ -23,10 +24,11 @@ node_levels <- function(net, order, lvl = 1, acc = NULL){
   return(ret)
 }
 
-#' Plots a Bayesian networks in a hierarchical way
+#' Plots a Bayesian network in a hierarchical way
 #'
-#' Calculates the levels of each node and then plots them in a hierarchical
-#' layout in visNetwork.
+#' This function calculates the levels of each node and then plots them in a hierarchical
+#' layout in visNetwork. Can be used in place of the generic plot function 
+#' offered by bnlearn for "bn" and "bn.fit" S3 objects.
 #' @param structure the structure or fit of the network.
 #' @importFrom magrittr "%>%"
 #' @examples 
@@ -34,7 +36,7 @@ node_levels <- function(net, order, lvl = 1, acc = NULL){
 #' dt_train <- dbnR::motor[200:2500]
 #' net <- bnlearn::mmhc(dt_train)
 #' plot_static_network(net)
-#' fit <- bnlearn::bn.fit(net, dt_train, method = "mle")
+#' fit <- bnlearn::bn.fit(net, dt_train, method = "mle-g")
 #' plot_static_network(fit) # Works for both the structure and the fitted net
 #' }
 #' @export
@@ -80,6 +82,7 @@ plot_static_network <- function(structure){
 #' @param prev the level of the previous node processed
 #' @param acc the accumulator of the index in the current sub successions
 #' @return the vector of sub successions in each level
+#' @keywords internal
 acc_successions <- function(nodes, res = NULL, prev = 0, acc = 0){
   if(length(nodes) == 0)
     return(res)
@@ -95,6 +98,7 @@ acc_successions <- function(nodes, res = NULL, prev = 0, acc = 0){
 #' time slice and then gives a topological ordering of them.
 #' @param structure the structure of the network.
 #' @return the ordered nodes of t_0
+#' @keywords internal
 dynamic_ordering <- function(structure){
 
   nodes_0 <- grep("t_0", bnlearn::node.ordering(structure), value = T)
@@ -118,6 +122,7 @@ dynamic_ordering <- function(structure){
 #' @param max number of time slices in the net
 #' @param i current slice being processed
 #' @return the extended names
+#' @keywords internal
 expand_time_nodes <- function(name, acc, max, i){
   if(i == max)
     return(acc)
@@ -134,7 +139,8 @@ expand_time_nodes <- function(name, acc, max, i){
 #' relative position of each node with respect to his equivalent in the first
 #' slice. The result is a net where each time slice is ordered and separated
 #' from one another, where the leftmost slice is the oldest and the rightmost
-#' represents the present time.
+#' represents the present time. This function is also called by the generic
+#' plot function of "dbn" and "dbn.fit" S3 objects.
 #' @param structure the structure or fit of the network.
 #' @param offset the blank space between time slices
 #' @param subset_nodes a vector containing the names of the subset of nodes to plot

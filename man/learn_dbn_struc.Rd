@@ -18,11 +18,11 @@ learn_dbn_struc(dt, size = 2, method = "dmmhc", f_dt = NULL, ...)
 \item{...}{additional parameters for \code{\link{rsmax2}} function}
 }
 \value{
-the structure of the net
+a "dbn" S3 object with the structure of the network
 }
 \description{
-Learns a gaussian dynamic Bayesian network from a
-dataset. It allows the creation of markovian n nets rather than only markov 1.
+Learns a gaussian dynamic Bayesian network from a dataset. 
+It allows the creation of markovian n nets rather than only markov 1.
 }
 \examples{
 data("motor")

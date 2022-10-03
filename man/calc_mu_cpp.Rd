@@ -19,3 +19,4 @@ the map with the nodes and their mu. Returns as a named numeric vector
 Calculate the mu vector of means of a Gaussian linear network. This is 
 the C++ backend of the function.
 }
+\keyword{internal}

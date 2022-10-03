@@ -14,7 +14,7 @@
 \item{...}{additional parameters}
 }
 \value{
-the prediction results
+boolean result of the comparison
 }
 \description{
 Generic method for checking the equality of two

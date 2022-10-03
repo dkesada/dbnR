@@ -22,3 +22,4 @@ the inferred particles
 Given a bn.fit object and some variables, performs
 particle inference over such variables in the net for a given time slice.
 }
+\keyword{internal}

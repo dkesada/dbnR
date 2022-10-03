@@ -14,7 +14,7 @@
 \item{...}{additional parameters for the network scoring}
 }
 \value{
-the prediction results
+the log-likelihood score of the network
 }
 \description{
 Generic method for calculating the log-likelihood of a 

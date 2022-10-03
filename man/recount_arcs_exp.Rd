@@ -15,3 +15,4 @@ the number of arcs
 \description{
 Experimental function that recounts the number of arcs in the position
 }
+\keyword{internal}

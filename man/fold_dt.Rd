@@ -15,12 +15,12 @@ fold_dt(dt, size)
 the extended data.table
 }
 \description{
-This will widen the dataset to put the t previous time slices
+This function will widen the dataset to put the t previous time slices
 in each row, so that it can be used to learn temporal arcs in the second
 phase of the dmmhc.
 }
 \examples{
 data(motor)
 size <-  3
-dt <- fold_dt(motor, size)
+f_dt <- fold_dt(motor, size)
 }

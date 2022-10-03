@@ -1,12 +1,12 @@
-#' This file contains all the classes needed for the natPSOHO structure learning 
-#' algorithm. It was implemented as an independent package in
-#' https://github.com/dkesada/natPSOHO and then merged into dbnR. All the original
-#' source files are merged into one to avoid bloating the R/ folder of the
-#' package.
-#' 
-#' The classes are now not exported because the whole algorithm is 
-#' encapsulated inside the package and only the resulting dbn structure is
-#' wanted. As a result, many security checks have been omitted.
+# This file contains all the classes needed for the natPSOHO structure learning 
+# algorithm. It was implemented as an independent package in
+# https://github.com/dkesada/natPSOHO and then merged into dbnR. All the original
+# source files are merged into one to avoid bloating the R/ folder of the
+# package.
+# 
+# The classes are now not exported because the whole algorithm is 
+# encapsulated inside the package and only the resulting dbn structure is
+# wanted. As a result, many security checks have been omitted.
 
 # -----------------------------------------------------------------------------
 
@@ -16,6 +16,7 @@
 #' in the pso part of the algorithm. They will not have the same structure
 #' as their binary counterparts, but their class skeleton will serve as a
 #' base.
+#' @keywords internal
 natCauslist <- R6::R6Class("natCauslist",
    public = list(
       #' @description 
@@ -53,6 +54,7 @@ natCauslist <- R6::R6Class("natCauslist",
 #' them represents the arcs from a temporal family of nodes to a receiving
 #' node. 1-bits in the binary representation of this number represent arc 
 #' additions/deletions 
+#' @keywords internal
 natVelocity <- R6::R6Class("natVelocity",
    inherit = natCauslist,
    public = list(
@@ -178,6 +180,7 @@ natVelocity <- R6::R6Class("natVelocity",
 #' A natPosition represents a single HO-DBN structure with a vector. Its function
 #' is to encode the solutions in the PSO framework. Each particle will have a 
 #' position.
+#' @keywords internal
 natPosition <- R6::R6Class("natPosition", 
    inherit = natCauslist,
    public = list(
@@ -304,6 +307,7 @@ natPosition <- R6::R6Class("natPosition",
 #' R6 class that defines a Particle in the PSO algorithm
 #' 
 #' A particle has a Position, a Velocity and a local best
+#' @keywords internal
 natParticle <- R6::R6Class("natParticle",
    public = list(
       #' @description 
@@ -412,6 +416,7 @@ natParticle <- R6::R6Class("natParticle",
 #' time, it extends the class "PsoCtrl" in the "structure_learning_psoho.R"
 #' file, because both controllers are practically the same. The particles,
 #' positions and velocities are too different to extend one another though.
+#' @keywords internal
 natPsoCtrl <- R6::R6Class("natPsoCtrl",
    inherit = PsoCtrl,
    public = list(
@@ -496,6 +501,7 @@ natPsoCtrl <- R6::R6Class("natPsoCtrl",
 #' @param p parameter of the truncated geometric distribution for sampling edges
 #' @param cte a boolean that determines whether the inertia, global best and local best parameters remain constant or vary as the algorithm progresses. Inertia and local best values decrease as the global best increases, to favor exploration at first and exploitation at the end
 #' @return A 'dbn' object with the structure of the best network found
+#' @keywords internal
 natPsoho <- function(dt, size, f_dt = NULL, n_inds = 50, n_it = 50,
                   in_cte = 1, gb_cte = 0.5, lb_cte = 0.5,
                   v_probs = c(10, 65, 25), r_probs = c(-0.5, 1.5), 

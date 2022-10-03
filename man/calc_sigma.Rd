@@ -2,8 +2,7 @@
 % Please edit documentation in R/gauss_transform.R
 \name{calc_sigma}
 \alias{calc_sigma}
-\title{Calculate the sigma covariance matrix of a Gaussian linear network. 
-Front end of a C++ function.}
+\title{Calculate the sigma covariance matrix from a fitted BN or DBN}
 \usage{
 calc_sigma(fit)
 }
@@ -11,15 +10,21 @@ calc_sigma(fit)
 \item{fit}{a bn.fit or dbn.fit object}
 }
 \value{
-a numeric covariance matrix of the nodes
+a named numeric covariance matrix of the nodes
 }
 \description{
-Calculate the sigma covariance matrix of a Gaussian linear network. 
+Given a "bn.fit" or a "dbn.fit" object, calculate the sigma covariance 
+matrix of the equivalent multivariate Gaussian distribution. 
 Front end of a C++ function.
 }
 \examples{
 dt_train <- dbnR::motor[200:2500]
 net <- bnlearn::mmhc(dt_train)
-fit <- bnlearn::bn.fit(net, dt_train, method = "mle")
-sigma <- calc_sigma(fit)
+fit <- bnlearn::bn.fit(net, dt_train, method = "mle-g")
+sigma <- dbnR::calc_sigma(fit)
+
+f_dt_train <- dbnR::fold_dt(dt_train, size = 2)
+net <- dbnR::learn_dbn_struc(dt_train, size = 2)
+fit <- dbnR::fit_dbn_params(net, f_dt_train)
+sigma <- dbnR::calc_sigma(fit)
 }

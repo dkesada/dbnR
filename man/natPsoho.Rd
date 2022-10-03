@@ -55,3 +55,4 @@ Given a dataset and the desired Markovian order, this function returns a DBN
 structure ready to be fitted.
 Original algorithm at https://link.springer.com/chapter/10.1007/978-3-030-86271-8_14
 }
+\keyword{internal}

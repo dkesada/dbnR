@@ -2,14 +2,14 @@
 % Please edit documentation in R/dbn_inference.R
 \name{predict_dt}
 \alias{predict_dt}
-\title{Performs inference over a test data set with a GBN}
+\title{Performs inference over a test dataset with a GBN}
 \usage{
 predict_dt(fit, dt, obj_nodes, verbose = T, look_ahead = F)
 }
 \arguments{
 \item{fit}{the fitted bn}
 
-\item{dt}{the test data set}
+\item{dt}{the test dataset}
 
 \item{obj_nodes}{the nodes that are going to be predicted. They are all predicted at the same time}
 
@@ -18,29 +18,33 @@ predict_dt(fit, dt, obj_nodes, verbose = T, look_ahead = F)
 \item{look_ahead}{boolean that defines whether or not the values of the variables in t_0 should be used when predicting, even if they are not present in obj_nodes. This decides if look-ahead bias is introduced or not.}
 }
 \value{
-the prediction results
+a data.table with the prediction results for each row
 }
 \description{
-Performs inference over a test data set, plots the results
-and gives metrics of the accuracy of the results.
+This function performs inference over each row of a folded data.table, 
+plots the results and gives metrics of the accuracy of the predictions. Given
+that only a single row is predicted, the horizon of the prediction is at most 1.
+This function is also called by the generic predict method for "dbn.fit" 
+objects. For long term forecasting, please refer to the 
+\code{\link{forecast_ts}} function.
 }
 \examples{
 size = 3
 data(motor)
-dt_train <- motor[200:2500]
-dt_val <- motor[2501:3000]
+dt_train <- motor[200:900]
+dt_val <- motor[901:1000]
 
 # With a DBN
 obj <- c("pm_t_0")
 net <- learn_dbn_struc(dt_train, size)
 f_dt_train <- fold_dt(dt_train, size)
 f_dt_val <- fold_dt(dt_val, size)
-fit <- fit_dbn_params(net, f_dt_train, method = "mle")
+fit <- fit_dbn_params(net, f_dt_train, method = "mle-g")
 res <- suppressWarnings(predict_dt(fit, f_dt_val, obj_nodes = obj, verbose = FALSE))
 
 # With a Gaussian BN directly from bnlearn
 obj <- c("pm")
 net <- bnlearn::mmhc(dt_train)
-fit <- bnlearn::bn.fit(net, dt_train, method = "mle")
+fit <- bnlearn::bn.fit(net, dt_train, method = "mle-g")
 res <- suppressWarnings(predict_dt(fit, dt_val, obj_nodes = obj, verbose = FALSE))
 }

@@ -19,3 +19,4 @@ a list with the Velocity's causal list and the number of operations
 \description{
 Add two Velocities
 }
+\keyword{internal}

@@ -19,3 +19,4 @@ Given the names of the desired variables, this function generates the names
 of the variables in a DBN without needing a previous dataset. It's just a 
 wrapper around the 'fold_dt' function.
 }
+\keyword{internal}

@@ -21,3 +21,4 @@ the new position by reference and the new number of arcs by return
 \description{
 Add a velocity to a position
 }
+\keyword{internal}

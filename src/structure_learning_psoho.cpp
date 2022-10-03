@@ -13,6 +13,7 @@
 //' @param ordering a list with the order of the variables in t_0
 //' @param size the size of the DBN
 //' @return a causality list
+//' @keywords internal
 // [[Rcpp::export]]
 Rcpp::List initialize_cl_cpp(StringVector &ordering, unsigned int size) {
   Rcpp::List res (size - 1);
@@ -72,6 +73,7 @@ void insert_node_cl(Rcpp::List &cl, std::string node, unsigned int i){
 //' @param size the size of the DBN
 //' @param ordering a list with the order of the variables in t_0
 //' @return a list with a CharacterVector and a NumericVector
+//' @keywords internal
 // [[Rcpp::export]]
 Rcpp::List create_causlist_cpp(Rcpp::List &cl, Rcpp::List &net, unsigned int size, StringVector &ordering) {
   Rcpp::List aux;
@@ -99,6 +101,7 @@ Rcpp::List create_causlist_cpp(Rcpp::List &cl, Rcpp::List &net, unsigned int siz
 //' @param ordering a list with the order of the variables in t_0
 //' @param rows number of arcs in the network
 //' @return a list with a CharacterVector and a NumericVector
+//' @keywords internal
 // [[Rcpp::export]]
 Rcpp::CharacterMatrix cl_to_arc_matrix_cpp(Rcpp::List &cl, Rcpp::CharacterVector &ordering,
                                            unsigned int rows){
@@ -133,6 +136,7 @@ Rcpp::CharacterMatrix cl_to_arc_matrix_cpp(Rcpp::List &cl, Rcpp::CharacterVector
 //' @param vl the velocity's causal list
 //' @param n_arcs number of arcs present in the position
 //' @return a list with the modified position and the new number of arcs
+//' @keywords internal
 // [[Rcpp::export]]
 Rcpp::List pos_plus_vel_cpp(Rcpp::List &cl, Rcpp::List &vl, int n_arcs){
   Rcpp::List slice_cl, slice_vl, cu_cl, cu_vl, pair_cl, pair_vl;
@@ -169,6 +173,7 @@ Rcpp::List pos_plus_vel_cpp(Rcpp::List &cl, Rcpp::List &vl, int n_arcs){
 //' @param size the size of the DBN
 //' @param n_inds the number of particles
 //' @return a list with the randomly initialized particles
+//' @keywords internal
 // [[Rcpp::export]]
 Rcpp::List init_list_cpp(Rcpp::StringVector nodes, unsigned int size, unsigned int n_inds){
   Rcpp::List res (n_inds);
@@ -195,6 +200,7 @@ Rcpp::List init_list_cpp(Rcpp::StringVector nodes, unsigned int size, unsigned i
 //' @param vl a velocity list
 //' @param probs the probabilities of each value in the set {-1,0,1}
 //' @return a velocity list with randomized values
+//' @keywords internal
 // [[Rcpp::export]]
 Rcpp::List randomize_vl_cpp(Rcpp::List &vl, NumericVector &probs) {
   Rcpp::List slice, velocity, directions, cu, pair;
@@ -225,6 +231,7 @@ Rcpp::List randomize_vl_cpp(Rcpp::List &vl, NumericVector &probs) {
 //' @param ps the second position's causal list
 //' @param vl the Velocity's causal list
 //' @return a list with the Velocity's causal list and the number of operations
+//' @keywords internal
 // [[Rcpp::export]]
 Rcpp::List pos_minus_pos_cpp(Rcpp::List &cl, Rcpp::List &ps, Rcpp::List &vl){
   Rcpp::List slice_cl, slice_ps, slice_vl, cu_cl, cu_ps, cu_vl, pair_cl, pair_ps, pair_vl;
@@ -264,6 +271,7 @@ Rcpp::List pos_minus_pos_cpp(Rcpp::List &cl, Rcpp::List &ps, Rcpp::List &vl){
 //' @param vl2 the second Velocity's causal list
 //' @param abs_op the final number of {1,-1} operations
 //' @return a list with the Velocity's causal list and the number of operations
+//' @keywords internal
 // [[Rcpp::export]]
 Rcpp::List vel_plus_vel_cpp(Rcpp::List &vl1, Rcpp::List &vl2, int abs_op){
   Rcpp::List slice_vl1, slice_vl2, cu_vl1, cu_vl2, pair_vl1, pair_vl2;
@@ -301,6 +309,7 @@ Rcpp::List vel_plus_vel_cpp(Rcpp::List &vl1, Rcpp::List &vl2, int abs_op){
 //' @param abs_op the final number of {1,-1} operations
 //' @param max_op the maximum number of directions in the causal list
 //' @return a list with the Velocity's new causal list and number of operations
+//' @keywords internal
 // [[Rcpp::export]]
 Rcpp::List cte_times_vel_cpp(float k, Rcpp::List &vl, unsigned int abs_op, int max_op){
   Rcpp::List res (2);
@@ -378,6 +387,7 @@ Rcpp::List cte_times_vel_cpp(float k, Rcpp::List &vl, unsigned int abs_op, int m
 //' @param nodes a list with the names of the nodes in the network
 //' @param size the size of the DBN
 //' @return a list with the renamed nodes in each timeslice
+//' @keywords internal
 // [[Rcpp::export]]
 Rcpp::StringVector rename_nodes_cpp(const Rcpp::StringVector &nodes, unsigned int size){
   Rcpp::StringVector res (nodes.size() * size);

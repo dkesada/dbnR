@@ -23,3 +23,4 @@ the new total number of operations
 \description{
 Multiply a Velocity by a constant real number
 }
+\keyword{internal}

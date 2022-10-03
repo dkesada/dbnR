@@ -16,7 +16,7 @@ test_that("exact dt_inference works with bn.fit", {
   
   expect_equal(res_ev_x4$X4, dt_ev_x4$X4)
   
-  dt_ev_x2_x4 <- data.table(nrow = c(1,2,3), X2 = c(-3, -2.5, -1),
+  dt_ev_x2_x4 <- data.table(X2 = c(-3, -2.5, -1),
                             X4 = c(-8, -5, -5))
   res_ev_x2_x4 <- predict_dt(cfit, dt_ev_x4, c("X2","X4"), verbose = F)
                         
@@ -54,8 +54,7 @@ test_that("exact dt_inference works with dbn.fit", {
                            X1_t_0 = c(NA,NA,NA), X2_t_0 = c(NA,NA,NA),
                            X3_t_0 = c(NA,NA,NA), X4_t_0 = c(NA,NA,NA))
 
-  res_ev <- data.table(nrow = c(1,2,3),
-                       X1_t_0 = c(3.8, 4.6, 7.0),
+  res_ev <- data.table(X1_t_0 = c(3.8, 4.6, 7.0),
                        X3_t_0 = c(3.30, 2.1, 3.9),
                        X2_t_0 = c(-1.74, -0.58, 1.40),
                        X4_t_0 = c(-2.58, 2.74, 3.70))

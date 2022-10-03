@@ -3,8 +3,10 @@
 #' Performs inference over a Gaussian BN. It's thought to be used in a map for
 #' a data.table, to use as evidence each separate row. If not specifically
 #' needed, it's recommended to use the function \code{\link{predict_dt}} instead.
+#' This function is deprecated and will be removed in a future version.
 #' @param fit the fitted bn
 #' @param evidence values of the variables used as evidence for the net
+#' @return a data.table with the predictions
 #' @examples
 #' size = 3
 #' data(motor)
@@ -13,12 +15,10 @@
 #' net <- learn_dbn_struc(dt_train, size)
 #' f_dt_train <- fold_dt(dt_train, size)
 #' f_dt_val <- fold_dt(dt_val, size)
-#' fit <- fit_dbn_params(net, f_dt_train, method = "mle")
-#' res <- f_dt_val[, predict_bn(fit, .SD), by = 1:nrow(f_dt_val)]
-#' @return the mean of the particles for each row
+#' fit <- fit_dbn_params(net, f_dt_train, method = "mle-g")
+#' res <- f_dt_val[, predict_bn(fit, .SD), .SDcols = c("pm_t_0", "coolant_t_0"), by = 1:nrow(f_dt_val)]
 #' @export
 predict_bn <- function(fit, evidence){
-  
   n <- names(fit)
   obj_nodes <- n[which(!(n %in% names(evidence)))]
   
@@ -30,34 +30,38 @@ predict_bn <- function(fit, evidence){
   return(pred)
 }
 
-#' Performs inference over a test data set with a GBN
+#' Performs inference over a test dataset with a GBN
 #'
-#' Performs inference over a test data set, plots the results
-#' and gives metrics of the accuracy of the results.
+#' This function performs inference over each row of a folded data.table, 
+#' plots the results and gives metrics of the accuracy of the predictions. Given
+#' that only a single row is predicted, the horizon of the prediction is at most 1.
+#' This function is also called by the generic predict method for "dbn.fit" 
+#' objects. For long term forecasting, please refer to the 
+#' \code{\link{forecast_ts}} function.
 #' @param fit the fitted bn
-#' @param dt the test data set
+#' @param dt the test dataset
 #' @param obj_nodes the nodes that are going to be predicted. They are all predicted at the same time
 #' @param verbose if TRUE, displays the metrics and plots the real values against the predictions
 #' @param look_ahead boolean that defines whether or not the values of the variables in t_0 should be used when predicting, even if they are not present in obj_nodes. This decides if look-ahead bias is introduced or not.
-#' @return the prediction results
+#' @return a data.table with the prediction results for each row
 #' @examples
 #' size = 3
 #' data(motor)
-#' dt_train <- motor[200:2500]
-#' dt_val <- motor[2501:3000]
+#' dt_train <- motor[200:900]
+#' dt_val <- motor[901:1000]
 #' 
 #' # With a DBN
 #' obj <- c("pm_t_0")
 #' net <- learn_dbn_struc(dt_train, size)
 #' f_dt_train <- fold_dt(dt_train, size)
 #' f_dt_val <- fold_dt(dt_val, size)
-#' fit <- fit_dbn_params(net, f_dt_train, method = "mle")
+#' fit <- fit_dbn_params(net, f_dt_train, method = "mle-g")
 #' res <- suppressWarnings(predict_dt(fit, f_dt_val, obj_nodes = obj, verbose = FALSE))
 #' 
 #' # With a Gaussian BN directly from bnlearn
 #' obj <- c("pm")
 #' net <- bnlearn::mmhc(dt_train)
-#' fit <- bnlearn::bn.fit(net, dt_train, method = "mle")
+#' fit <- bnlearn::bn.fit(net, dt_train, method = "mle-g")
 #' res <- suppressWarnings(predict_dt(fit, dt_val, obj_nodes = obj, verbose = FALSE))
 #' @importFrom graphics "plot" "lines" 
 #' @importFrom stats "ts"
@@ -81,6 +85,7 @@ predict_dt <- function(fit, dt, obj_nodes, verbose = T, look_ahead = F){
   ev_dt[, (obj_nodes_full) := NULL]
   
   res <- ev_dt[, predict_bn(fit, .SD), by = 1:nrow(ev_dt)]
+  res[, nrow := NULL]
   
   mae <- sapply(obj_nodes, function(x){mae(obj_dt[, get(x)],
                                            res[, get(x)])})
@@ -91,22 +96,22 @@ predict_dt <- function(fit, dt, obj_nodes, verbose = T, look_ahead = F){
     sapply(obj_nodes,
            function(x){plot(ts(obj_dt[, get(x)]), ylab = x) +
                        lines(ts(res[, get(x)]), col="red")})
-    print("MAE:", quote = FALSE)
-    print(mae)
-    print("SD:", quote = FALSE)
-    print(sd_e)
+    cat("MAE:", fill = T)
+    cat(mae, fill = T)
+    cat("SD:", fill = T)
+    cat(sd_e, fill = T)
   }
 
   return(res)
 }
 
-#' Predicts the values in t_0 of every row in a dataset with a dynamic Bayesian network
+#' Performs inference in every row of a dataset with a DBN
 #'
 #' Generic method for predicting a dataset with a "dbn.fit" S3 objects. Calls 
 #' \code{\link{predict_dt}} underneath.
 #' @param object a "dbn.fit" object
 #' @param ... additional parameters for the inference process
-#' @return the prediction results
+#' @return a data.table with the prediction results
 #' @export
 predict.dbn.fit <- function(object, ...){
    predict_dt(object, ...)
@@ -121,6 +126,7 @@ predict.dbn.fit <- function(object, ...){
 #' @param particles a list with the provided evidence
 #' @param n the number of particles to be used by bnlearn
 #' @return the inferred particles
+#' @keywords internal
 approx_prediction_step <- function(fit, variables, particles, n = 50){
   if(length(particles) == 0)
     particles <- TRUE
@@ -139,7 +145,8 @@ approx_prediction_step <- function(fit, variables, particles, n = 50){
 #' @param fit list with the mu and sigma of the MVN model
 #' @param variables variables to be predicted
 #' @param evidence a list with the provided evidence
-#' @return the inferred particles
+#' @return a list with the predicted mu and sigma
+#' @keywords internal
 exact_prediction_step <- function(fit, variables, evidence){
   if(length(evidence) == 0)
     evidence <- attr(fit,"mu")[bnlearn::root.nodes(fit)]
@@ -150,19 +157,20 @@ exact_prediction_step <- function(fit, variables, evidence){
   return(res)
 }
 
-#' Performs approximate inference forecasting with the GDBN over a data set
+#' Performs approximate inference forecasting with the GDBN over a dataset
 #'
-#' Given a bn.fit object, the size of the net and a data.set,
+#' Given a bn.fit object, the size of the net and a dataset,
 #' performs approximate forecasting with bnlearns cpdist function over the 
-#' initial evidence taken from the data set.
+#' initial evidence taken from the dataset.
 #' @param dt data.table object with the TS data
 #' @param fit bn.fit object
 #' @param obj_vars variables to be predicted
-#' @param ini starting point in the data set to forecast.
+#' @param ini starting point in the dataset to forecast.
 #' @param rep number of repetitions to be performed of the approximate inference
 #' @param len length of the forecast
 #' @param num_p number of particles to be used by bnlearn
-#' @return the results of the forecast
+#' @return a list with the mu results of the forecast
+#' @keywords internal
 approximate_inference <- function(dt, fit, obj_vars, ini, rep, len, num_p){
   var_names <- names(dt)
   vars_pred_idx <- grep("t_0", var_names)
@@ -195,17 +203,18 @@ approximate_inference <- function(dt, fit, obj_vars, ini, rep, len, num_p){
   return(test)
 }
 
-#' Performs exact inference forecasting with the GDBN over a data set
+#' Performs exact inference forecasting with the GDBN over a dataset
 #'
 #' Given a bn.fit object, the size of the net and a data.set,
-#' performs exact forecasting over the initial evidence taken from the data set.
+#' performs exact forecasting over the initial evidence taken from the dataset.
 #' @param dt data.table object with the TS data
 #' @param fit bn.fit object
 #' @param obj_vars variables to be predicted
-#' @param ini starting point in the data set to forecast.
+#' @param ini starting point in the dataset to forecast.
 #' @param len length of the forecast
 #' @param prov_ev variables to be provided as evidence in each forecasting step
-#' @return the results of the forecast
+#' @return a list with the mu results of the forecast
+#' @keywords internal
 exact_inference <- function(dt, fit, obj_vars, ini, len, prov_ev){
   fit <- initial_attr_check(fit)
 
@@ -245,15 +254,15 @@ exact_inference <- function(dt, fit, obj_vars, ini, len, prov_ev){
   return(test)
 }
 
-#' Performs forecasting with the GDBN over a data set
+#' Performs forecasting with the GDBN over a dataset
 #'
-#' Given a dbn.fit object, the size of the net and a folded data.set,
-#' performs a forecast over the initial evidence taken from the data set.
+#' Given a dbn.fit object, the size of the net and a folded dataset,
+#' performs a forecast over the initial evidence taken from the dataset.
 #' @param dt data.table object with the TS data
 #' @param fit dbn.fit object
 #' @param size number of time slices of the net. Deprecated, will be removed in the future
 #' @param obj_vars variables to be predicted
-#' @param ini starting point in the data set to forecast.
+#' @param ini starting point in the dataset to forecast.
 #' @param len length of the forecast
 #' @param rep number of times to repeat the approximate forecasting
 #' @param num_p number of particles in the approximate forecasting
@@ -261,19 +270,19 @@ exact_inference <- function(dt, fit, obj_vars, ini, len, prov_ev){
 #' @param plot_res if TRUE plots the results of the forecast
 #' @param mode "exact" for exact inference, "approx" for approximate
 #' @param prov_ev variables to be provided as evidence in each forecasting step
-#' @return the results of the forecast
+#' @return a list with the original time series values and the results of the forecast
 #' @examples
 #' size = 3
 #' data(motor)
-#' dt_train <- motor[200:2500]
-#' dt_val <- motor[2501:3000]
+#' dt_train <- motor[200:900]
+#' dt_val <- motor[901:1000]
 #' obj <- c("pm_t_0")
 #' net <- learn_dbn_struc(dt_train, size)
 #' f_dt_train <- fold_dt(dt_train, size)
 #' f_dt_val <- fold_dt(dt_val, size)
-#' fit <- fit_dbn_params(net, f_dt_train, method = "mle")
+#' fit <- fit_dbn_params(net, f_dt_train, method = "mle-g")
 #' res <- suppressWarnings(forecast_ts(f_dt_val, fit, 
-#'         obj_vars = obj, print_res = FALSE, plot_res = FALSE))
+#'         obj_vars = obj, len = 10, print_res = FALSE, plot_res = FALSE))
 #' @export
 forecast_ts <- function(dt, fit, size = NULL, obj_vars, ini = 1, len = dim(dt)[1]-ini,
                         rep = 1, num_p = 50, print_res = TRUE, plot_res = TRUE,
@@ -307,29 +316,30 @@ forecast_ts <- function(dt, fit, size = NULL, obj_vars, ini = 1, len = dim(dt)[1
   names(metrics) <- obj_vars
 
   if(print_res){
-    print(exec_time)
+    cat(paste0("Time difference of ", round(exec_time, 6), " secs"), fill = T)
     print_metrics(metrics, obj_vars)
   }
-    
+  
   if(plot_res)
     plot_results(dt[ini:(ini+len-1)], test, obj_vars)
 
   return(list(orig = dt[ini:(ini+len-1)], pred = test))
 }
 
-#' Performs exact inference smoothing with the GDBN over a data set
+#' Performs exact inference smoothing with the GDBN over a dataset
 #'
-#' Given a bn.fit object, the size of the net and a data.set,
-#' performs exact smoothing over the initial evidence taken from the data set.
+#' Given a bn.fit object, the size of the net and a dataset,
+#' performs exact smoothing over the initial evidence taken from the dataset.
 #' Take notice that the smoothing is done backwards in time, as opposed to
 #' forecasting.
 #' @param dt data.table object with the TS data
 #' @param fit bn.fit object
 #' @param obj_vars variables to be predicted. Should be in the oldest time step
-#' @param ini starting point in the data set to smooth
+#' @param ini starting point in the dataset to smooth
 #' @param len length of the smoothing
 #' @param prov_ev variables to be provided as evidence in each forecasting step. Should be in the oldest time step
-#' @return the results of the smoothing
+#' @return a list with the results of the inference backwards
+#' @keywords internal
 exact_inference_backwards <- function(dt, fit, obj_vars, ini, len, prov_ev){
   fit <- initial_attr_check(fit)
   
@@ -369,9 +379,9 @@ exact_inference_backwards <- function(dt, fit, obj_vars, ini, len, prov_ev){
   return(test)
 }
 
-#' Performs smoothing with the GDBN over a data set
+#' Performs smoothing with the GDBN over a dataset
 #'
-#' Given a dbn.fit object, the size of the net and a folded data.set,
+#' Given a dbn.fit object, the size of the net and a folded dataset,
 #' performs a smoothing of a trajectory. Smoothing is the opposite of 
 #' forecasting: given a starting point, predict backwards in time to obtain
 #' the time series that generated that point. 
@@ -379,12 +389,24 @@ exact_inference_backwards <- function(dt, fit, obj_vars, ini, len, prov_ev){
 #' @param fit dbn.fit object
 #' @param size number of time slices of the net. Deprecated, will be removed in the future
 #' @param obj_vars variables to be predicted. Should be in the oldest time step
-#' @param ini starting point in the data set to smooth
+#' @param ini starting point in the dataset to smooth
 #' @param len length of the smoothing
 #' @param print_res if TRUE prints the mae and sd metrics of the smoothing
 #' @param plot_res if TRUE plots the results of the smoothing
 #' @param prov_ev variables to be provided as evidence in each smoothing step. Should be in the oldest time step
-#' @return the results of the smoothing
+#' @return a list with the original values and the results of the smoothing
+#' @examples
+#' size = 3
+#' data(motor)
+#' dt_train <- motor[200:900]
+#' dt_val <- motor[901:1000]
+#' obj <- c("pm_t_2")
+#' net <- learn_dbn_struc(dt_train, size)
+#' f_dt_train <- fold_dt(dt_train, size)
+#' f_dt_val <- fold_dt(dt_val, size)
+#' fit <- fit_dbn_params(net, f_dt_train, method = "mle-g")
+#' res <- suppressWarnings(smooth_ts(f_dt_val, fit, 
+#'         obj_vars = obj, len = 10, print_res = FALSE, plot_res = FALSE))
 #' @export
 smooth_ts <- function(dt, fit, size = NULL, obj_vars, ini = dim(dt)[1], len = ini-1,
                       print_res = TRUE, plot_res = TRUE, prov_ev = NULL){
@@ -413,7 +435,7 @@ smooth_ts <- function(dt, fit, size = NULL, obj_vars, ini = dim(dt)[1], len = in
   names(metrics) <- obj_vars
   
   if(print_res){
-    print(exec_time)
+    cat(exec_time, fill = T)
     print_metrics(metrics, obj_vars)
   }
   

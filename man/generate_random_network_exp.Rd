@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{generate_random_network_exp}
 \alias{generate_random_network_exp}
-\title{Experimental function that generates a random DBN and samples a dataset that defines it}
+\title{Generate a random DBN and a sampled dataset}
 \usage{
 generate_random_network_exp(
   n_vars,
@@ -36,7 +36,7 @@ generate_random_network_exp(
 \item{seed}{the seed of the experiment}
 }
 \value{
-a dictionary with the original network structure and the sampled dataset
+a list with the original network structure and the sampled dataset
 }
 \description{
 This function generates both a random DBN and a dataset that can be used to 

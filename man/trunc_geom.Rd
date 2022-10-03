@@ -20,3 +20,4 @@ inside [1, max]. Because of this restriction, very low values of 'p'
 coupled with low 'max' return increasingly uniform populations in 
 the interval [1, max].
 }
+\keyword{internal}

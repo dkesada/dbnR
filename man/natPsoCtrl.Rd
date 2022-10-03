@@ -48,3 +48,4 @@ time, it extends the class "PsoCtrl" in the "structure_learning_psoho.R"
 file, because both controllers are practically the same. The particles,
 positions and velocities are too different to extend one another though.
 }
+\keyword{internal}

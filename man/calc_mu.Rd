@@ -2,8 +2,7 @@
 % Please edit documentation in R/gauss_transform.R
 \name{calc_mu}
 \alias{calc_mu}
-\title{Calculate the mu vector of means of a Gaussian linear network. Front end
-of a C++ function.}
+\title{Calculate the mu vector from a fitted BN or DBN}
 \usage{
 calc_mu(fit)
 }
@@ -14,12 +13,18 @@ calc_mu(fit)
 a named numeric vector of the means of each variable
 }
 \description{
-Calculate the mu vector of means of a Gaussian linear network. Front end
-of a C++ function.
+Given a "bn.fit" or a "dbn.fit" object, calculate the mu vector of 
+the equivalent multivariate Gaussian distribution. 
+Front end of a C++ function.
 }
 \examples{
 dt_train <- dbnR::motor[200:2500]
 net <- bnlearn::mmhc(dt_train)
-fit <- bnlearn::bn.fit(net, dt_train, method = "mle")
-mu <- calc_mu(fit)
+fit <- bnlearn::bn.fit(net, dt_train, method = "mle-g")
+mu <- dbnR::calc_mu(fit)
+
+f_dt_train <- dbnR::fold_dt(dt_train, size = 2)
+net <- dbnR::learn_dbn_struc(dt_train, size = 2)
+fit <- dbnR::fit_dbn_params(net, f_dt_train)
+mu <- dbnR::calc_mu(fit)
 }

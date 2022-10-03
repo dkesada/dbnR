@@ -19,3 +19,4 @@ a StringMatrix with the parent nodes and the children nodes
 \description{
 Create a matrix with the arcs defined in a causlist object
 }
+\keyword{internal}

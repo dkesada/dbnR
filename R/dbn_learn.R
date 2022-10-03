@@ -1,13 +1,13 @@
 #' Learns the structure of a markovian n DBN model from data
 #'
-#' Learns a gaussian dynamic Bayesian network from a
-#' dataset. It allows the creation of markovian n nets rather than only markov 1.
+#' Learns a gaussian dynamic Bayesian network from a dataset. 
+#' It allows the creation of markovian n nets rather than only markov 1.
 #' @param dt the data.frame or data.table to be used
 #' @param size number of time slices of the net. Markovian 1 would be size 2
 #' @param method the structure learning method of choice to use
 #' @param f_dt previously folded dataset, in case some specific rows have to be removed after the folding
 #' @param ... additional parameters for \code{\link{rsmax2}} function
-#' @return the structure of the net
+#' @return a "dbn" S3 object with the structure of the network
 #' @import data.table
 #' @examples
 #' data("motor")
@@ -39,6 +39,7 @@ learn_dbn_struc <- function(dt, size = 2, method = "dmmhc", f_dt = NULL, ...){
 #' @param fit a fitted bn or dbn
 #' @param size number of time slices of the net
 #' @return the fitted net with attributes
+#' @keywords internal
 add_attr_to_fit <- function(fit, size){
   initial_fit_check(fit)
   
@@ -57,13 +58,13 @@ add_attr_to_fit <- function(fit, size){
 #' @param net the structure of the DBN
 #' @param f_dt a folded data.table
 #' @param ... additional parameters for the \code{\link{bn.fit}} function
-#' @return the fitted net
+#' @return a "dbn.fit" S3 object with the fitted net
 #' @examples
 #' size = 3
 #' dt_train <- dbnR::motor[200:2500]
 #' net <- learn_dbn_struc(dt_train, size)
 #' f_dt_train <- fold_dt(dt_train, size)
-#' fit <- fit_dbn_params(net, f_dt_train, method = "mle")
+#' fit <- fit_dbn_params(net, f_dt_train, method = "mle-g")
 #' @export
 fit_dbn_params <- function(net, f_dt, ...){
   initial_folded_dt_check(f_dt)

@@ -15,3 +15,4 @@ a list with the randomly initialized particles
 \description{
 Initialize the vector in C++
 }
+\keyword{internal}

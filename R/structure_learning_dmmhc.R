@@ -8,6 +8,7 @@
 #' @param acc accumulator of the results in the recursion
 #' @param slice current time slice that is being processed
 #' @return the two column matrix with the blacklisted arcs
+#' @keywords internal
 create_blacklist <- function(name, size, acc = NULL, slice = 1){
   # Create the blacklist so that there are no arcs from t to t-1 and within t
   if(size >= slice){
@@ -45,6 +46,7 @@ create_blacklist <- function(name, size, acc = NULL, slice = 1){
 #' @param acc accumulator of the results in the recursion
 #' @param slice current time slice that is being processed
 #' @return the merged nets
+#' @keywords internal
 merge_nets <- function(net0, netCP1, size, acc = NULL, slice = 1){
   if(size > slice){
     within_t = bnlearn::arcs(net0)
@@ -73,7 +75,7 @@ merge_nets <- function(net0, netCP1, size, acc = NULL, slice = 1){
 #' @param ... additional parameters for \code{\link{rsmax2}} function
 #' @return the structure of the net
 #' @import data.table
-#' @importFrom methods "hasArg"
+#' @keywords internal
 dmmhc <- function(dt, size = 2, f_dt = NULL, blacklist = NULL, intra = TRUE,
                   blacklist_tr = NULL, ...){
   dt_null_check(dt, intra)

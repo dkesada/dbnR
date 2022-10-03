@@ -83,3 +83,4 @@ The controller will encapsulate the particles and run the algorithm
 \item{\code{lb_var}}{increment of the local best parameter each iteration}
 }}
 
+\keyword{internal}

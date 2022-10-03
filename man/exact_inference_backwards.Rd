@@ -2,7 +2,7 @@
 % Please edit documentation in R/dbn_inference.R
 \name{exact_inference_backwards}
 \alias{exact_inference_backwards}
-\title{Performs exact inference smoothing with the GDBN over a data set}
+\title{Performs exact inference smoothing with the GDBN over a dataset}
 \usage{
 exact_inference_backwards(dt, fit, obj_vars, ini, len, prov_ev)
 }
@@ -13,18 +13,19 @@ exact_inference_backwards(dt, fit, obj_vars, ini, len, prov_ev)
 
 \item{obj_vars}{variables to be predicted. Should be in the oldest time step}
 
-\item{ini}{starting point in the data set to smooth}
+\item{ini}{starting point in the dataset to smooth}
 
 \item{len}{length of the smoothing}
 
 \item{prov_ev}{variables to be provided as evidence in each forecasting step. Should be in the oldest time step}
 }
 \value{
-the results of the smoothing
+a list with the results of the inference backwards
 }
 \description{
-Given a bn.fit object, the size of the net and a data.set,
-performs exact smoothing over the initial evidence taken from the data set.
+Given a bn.fit object, the size of the net and a dataset,
+performs exact smoothing over the initial evidence taken from the dataset.
 Take notice that the smoothing is done backwards in time, as opposed to
 forecasting.
 }
+\keyword{internal}

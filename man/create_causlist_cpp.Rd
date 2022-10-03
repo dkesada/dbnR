@@ -21,3 +21,4 @@ a list with a CharacterVector and a NumericVector
 \description{
 Create a causal list from a DBN. This is the C++ backend of the function.
 }
+\keyword{internal}

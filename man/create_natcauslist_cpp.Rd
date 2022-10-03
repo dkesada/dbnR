@@ -19,3 +19,4 @@ the natCauslist equivalent to the DBN
 \description{
 Create a natural causal list from a DBN. This is the C++ backend of the function.
 }
+\keyword{internal}

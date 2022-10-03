@@ -14,7 +14,7 @@ fit_dbn_params(net, f_dt, ...)
 \item{...}{additional parameters for the \code{\link{bn.fit}} function}
 }
 \value{
-the fitted net
+a "dbn.fit" S3 object with the fitted net
 }
 \description{
 Fits the parameters of the DBN via MLE. The "mu" vector of means 
@@ -26,5 +26,5 @@ size = 3
 dt_train <- dbnR::motor[200:2500]
 net <- learn_dbn_struc(dt_train, size)
 f_dt_train <- fold_dt(dt_train, size)
-fit <- fit_dbn_params(net, f_dt_train, method = "mle")
+fit <- fit_dbn_params(net, f_dt_train, method = "mle-g")
 }

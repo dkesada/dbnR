@@ -19,3 +19,4 @@ a list with the Velocity's causal list and the number of operations
 \description{
 Subtracts two Positions to obtain the Velocity that transforms one into the other
 }
+\keyword{internal}

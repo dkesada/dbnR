@@ -16,3 +16,4 @@ the converted number
 Given a natural number, return the natural number equivalent to its
 one-hot encoding. Examples: 3 -> 100 -> 4, 5 -> 10000 -> 16
 }
+\keyword{internal}

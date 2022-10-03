@@ -2,7 +2,7 @@
 % Please edit documentation in R/dbn_inference.R
 \name{forecast_ts}
 \alias{forecast_ts}
-\title{Performs forecasting with the GDBN over a data set}
+\title{Performs forecasting with the GDBN over a dataset}
 \usage{
 forecast_ts(
   dt,
@@ -28,7 +28,7 @@ forecast_ts(
 
 \item{obj_vars}{variables to be predicted}
 
-\item{ini}{starting point in the data set to forecast.}
+\item{ini}{starting point in the dataset to forecast.}
 
 \item{len}{length of the forecast}
 
@@ -45,22 +45,22 @@ forecast_ts(
 \item{prov_ev}{variables to be provided as evidence in each forecasting step}
 }
 \value{
-the results of the forecast
+a list with the original time series values and the results of the forecast
 }
 \description{
-Given a dbn.fit object, the size of the net and a folded data.set,
-performs a forecast over the initial evidence taken from the data set.
+Given a dbn.fit object, the size of the net and a folded dataset,
+performs a forecast over the initial evidence taken from the dataset.
 }
 \examples{
 size = 3
 data(motor)
-dt_train <- motor[200:2500]
-dt_val <- motor[2501:3000]
+dt_train <- motor[200:900]
+dt_val <- motor[901:1000]
 obj <- c("pm_t_0")
 net <- learn_dbn_struc(dt_train, size)
 f_dt_train <- fold_dt(dt_train, size)
 f_dt_val <- fold_dt(dt_val, size)
-fit <- fit_dbn_params(net, f_dt_train, method = "mle")
+fit <- fit_dbn_params(net, f_dt_train, method = "mle-g")
 res <- suppressWarnings(forecast_ts(f_dt_val, fit, 
-        obj_vars = obj, print_res = FALSE, plot_res = FALSE))
+        obj_vars = obj, len = 10, print_res = FALSE, plot_res = FALSE))
 }

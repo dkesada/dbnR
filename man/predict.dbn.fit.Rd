@@ -2,7 +2,7 @@
 % Please edit documentation in R/dbn_inference.R
 \name{predict.dbn.fit}
 \alias{predict.dbn.fit}
-\title{Predicts the values in t_0 of every row in a dataset with a dynamic Bayesian network}
+\title{Performs inference in every row of a dataset with a DBN}
 \usage{
 \method{predict}{dbn.fit}(object, ...)
 }
@@ -12,7 +12,7 @@
 \item{...}{additional parameters for the inference process}
 }
 \value{
-the prediction results
+a data.table with the prediction results
 }
 \description{
 Generic method for predicting a dataset with a "dbn.fit" S3 objects. Calls 

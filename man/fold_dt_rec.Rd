@@ -25,3 +25,4 @@ in each row, so that it can be used to learn temporal arcs in the second
 phase of the dmmhc. Recursive version not exported, the user calls from the
 handler 'fold_dt'
 }
+\keyword{internal}
