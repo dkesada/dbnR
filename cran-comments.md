@@ -8,6 +8,7 @@ Apart from this, in this update I added generic methods for my S3 objects "dbn" 
 * Ubuntu 18.04 (x64), R 4.2.1 (local)
 * Rhub
 * win-builder (devel, release and oldrelease)
+* macOS builder
 
 ## R CMD check results
 0 ERRORs | 0 WARNINGs | 3 NOTEs
@@ -30,6 +31,7 @@ Possibly mis-spelled words in DESCRIPTION:
   Bielza (13:49)
   Larrañaga (13:63)
   Maciel (12:76)
+  Markovian (9:5)
   Quesada (13:37)
   Trabelsi (12:5)
   
