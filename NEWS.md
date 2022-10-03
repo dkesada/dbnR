@@ -2,6 +2,8 @@
 
 * Bringing the package overall status up to scratch for publication on a journal.
 
+* Fixed incompatibility with bnlearn "mle-g" parameter.
+
 * Generic methods have been added for the "dbn" and "dbn.fit" S3 classes.
 
 * Documentation of the exported functions is now more accurate and follows a more stricter standard.

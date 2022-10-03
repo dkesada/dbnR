@@ -1,5 +1,6 @@
 ## Update
-Update from version 0.7.1 to 0.7.5. In this update, I added more flexibility for structure learning with the dmmhc algorithm, added new network visualization options, improved security checks to be more informative when exceptions are thrown, deprecated the 'size' parameter for inference and added the names and doi of the algorithms included in the package. This version maintains backwards compatibility with older versions.
+Update from version 0.7.5 to 0.7.8. This update was initially motivated by an incompatibility issue introduced in a recent update of the dependency package "bnlearn". This incompatibility has been fixed and no further errors are present.
+Appart from this, in this update I added generic methods for my S3 objects "dbn" and "dbn.fit". I also extended the generic methods for bnlearn's S3 objects "bn" and "bn.fit" to work with "dbn" and "dbn.fit" objects. All available generic methods are now shown with methods(class="dbn") and methods(class="dbn.fit"). The documentation has been improved for exported functions and hidden for internal functions when calling help(package="dbnR"). Additionally, regular prints for low-level functions have been exchanged with cats and inverse matrix calculation is now performed with MASS::ginv(). This version maintains backwards compatibility with older versions.
 
 ## Test environments
 * Windows 10 (x64), R 4.1.3 (local)
