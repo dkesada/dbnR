@@ -23,7 +23,7 @@ plot_single_result <- function(dt, results, var){
   plot(ts(dt[, get(var)]), ylim = c(min_val, max_val), ylab = var)
   idx <- "exec"
   for(i in results[, unique(get(idx))])
-    lines(results[eval(idx) == i, get(var)], col = "red")
+    lines(results[get(idx) == i, get(var)], col = "red")
 }
 
 plot_results <- function(dt, results, obj_vars){

@@ -319,7 +319,7 @@ forecast_ts <- function(dt, fit, size = NULL, obj_vars, ini = 1, len = dim(dt)[1
     cat(paste0("Time difference of ", round(exec_time, 6), " secs"), fill = T)
     print_metrics(metrics, obj_vars)
   }
-    
+  
   if(plot_res)
     plot_results(dt[ini:(ini+len-1)], test, obj_vars)
 

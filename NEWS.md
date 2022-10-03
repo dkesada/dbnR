@@ -10,7 +10,9 @@
 
 * Regular 'print' in low-level, internal functions has been swapped with 'cat'.
 
-* All of bnlearn mothods for the classes "bn" and "bn.fit" have been extended to the "dbn" and "dbn.fit" classes in independent functions to ensure compatibility. All these methods are contained in the "bnlearn_compat.R" file.
+* All of bnlearn methods for the classes "bn" and "bn.fit" have been extended to the "dbn" and "dbn.fit" classes in independent functions to ensure compatibility. All these methods are contained in the "bnlearn_compat.R" file.
+
+* Generalized matrix calculation now done with MASS::ginv
 
 # dbnR 0.7.7
 

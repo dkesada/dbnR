@@ -77,7 +77,7 @@ After fitting the model, we can perform inference over it. One of the particular
 
 ```{r one_inference_step}
 obj_var <- c("stator_winding_t_0")
-res <- (dbnR::predict_dt(fit, f_dt_val, obj_var))
+res <- dbnR::predict_dt(fit, f_dt_val, obj_var)
 ```
 
 One should be careful when performing point-wise prediction on time-series models, because a very good prediction of the future time step is the previous value. This means that sometimes a time-series model can be just passing forward the values of the variables from the previous step, resulting in very good accuracy when the forecasting horizon is 1 instant, but performing very poorly as the horizon increases. I've seen this behaviour with multiple time-series models, so one should be weary of this. In our example, the predictions look deceptively good, but in reality the model does not forecast properly because we extracted only a minimal part of the original dataset for testing purposes, not forecasting accuracy.
