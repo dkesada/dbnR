@@ -1,3 +1,7 @@
+# dbnR 0.7.9
+
+* Fixed unstable behaviour of regex in C++ on both the psoho and natPsoho algorithms.
+
 # dbnR 0.7.8
 
 * Bringing the package overall status up to scratch for publication on a journal.
