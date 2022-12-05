@@ -8,7 +8,7 @@ using namespace Rcpp;
 #ifndef psoho_op
 #define psoho_op
 
-#include <regex>
+const Function R_SUB("sub"); // Using R regex motor instead of C++11 regex due to unstable behaviour
 
 Rcpp::List initialize_cl_cpp(StringVector &ordering, unsigned int size);
 void insert_node_cl(Rcpp::List &cl, std::string node, unsigned int i);
