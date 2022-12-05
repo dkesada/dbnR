@@ -8,7 +8,6 @@ using namespace Rcpp;
 #ifndef natPsoho_op
 #define natPsoho_op
 
-#include <regex>
 #include <random>
 #include <vector>
 #include <string>

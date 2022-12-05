@@ -161,7 +161,6 @@ Position <- R6::R6Class("Position",
     #' @return A new 'causlist' object
     initialize = function(net, size, nodes = NULL){
       #initial_size_check(size) --ICO-Merge
-      
       if(!is.null(nodes)){
         #initial_nodes_check(nodes)
         net <- private$generate_random_network(nodes, size)
