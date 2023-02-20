@@ -72,19 +72,21 @@ merge_nets <- function(net0, netCP1, size, acc = NULL, slice = 1){
 #' @param blacklist an optional matrix indicating forbidden arcs between nodes
 #' @param intra if TRUE, the intra-slice arcs of the network will be learnt. If FALSE, they will be ignored
 #' @param blacklist_tr an optional matrix indicating forbidden intra-slice arcs between nodes 
+#' @param white an optional matrix indicating obligatory arcs between nodes
+#' @param whitelist_tr an optional matrix indicating obligatory intra-slice arcs between nodes 
 #' @param ... additional parameters for \code{\link{rsmax2}} function
 #' @return the structure of the net
 #' @import data.table
 #' @keywords internal
 dmmhc <- function(dt, size = 2, f_dt = NULL, blacklist = NULL, intra = TRUE,
-                  blacklist_tr = NULL, ...){
+                  blacklist_tr = NULL, whitelist = NULL, whitelist_tr = NULL, ...){
   dt_null_check(dt, intra)
   
   if(!is.null(dt)){
     dt <- time_rename(dt)
     if(intra){
       dt_copy <- data.table::copy(dt)
-      net0 <- bnlearn::rsmax2(x = dt_copy, blacklist = blacklist, ...) # Static network
+      net0 <- bnlearn::rsmax2(x = dt_copy, blacklist = blacklist, whitelist = whitelist, ...) # Static network
     }
   }
   
@@ -94,7 +96,7 @@ dmmhc <- function(dt, size = 2, f_dt = NULL, blacklist = NULL, intra = TRUE,
   blacklist <- create_blacklist(names(f_dt), size)
   blacklist <- rbind(blacklist, blacklist_tr)
   
-  net <- bnlearn::rsmax2(x = f_dt, blacklist = blacklist, ...) # Transition network
+  net <- bnlearn::rsmax2(x = f_dt, blacklist = blacklist, whitelist = whitelist_tr, ...) # Transition network
   check_empty_net(net)
   
   if(intra && !warn_empty_net(net0))
