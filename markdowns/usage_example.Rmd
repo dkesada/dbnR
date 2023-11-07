@@ -26,7 +26,7 @@ summary(motor)
 
 ## Net stucture learning
 
-To learn the structure of a DBN, first we have to fix its size and set some parameters for the learning algorithm. If the 'dmmhc' method is selected, further parameters can be given to the algorithm that will be passed down to the rsmax2 function from the bnlearn package. Two specially usefull parameters are 'maxp' inside 'maximize.args', which sets the maximum number of parents that a node can have, and 'blacklist', which allows us to forbid arcs in the static structure of the network. 
+To learn the structure of a DBN, first we have to fix its size and set some parameters for the learning algorithm. If the 'dmmhc' method is selected, further parameters can be given to the algorithm that will be passed down to the rsmax2 function from the bnlearn package. Three specially useful parameters are 'maxp' inside 'maximize.args', which sets the maximum number of parents that a node can have, 'blacklist', which allows us to forbid arcs in the static structure of the network and 'whitelist', which allows us to force specific arcs in the static structure of the network. Two additional parameters, 'blacklist_tr' and 'whitelist_tr' allow us to forbid or force specific arcs to the transition structure of the inter-slice arcs. 
 
 ```{r structure}
 size = 3
@@ -36,8 +36,10 @@ blacklist <- c("motor_speed_t_0", "i_d_t_0")
 blacklist <- rbind(blacklist, c("motor_speed_t_0", "i_q_t_0"))
 blacklist_tr <- c("stator_tooth_t_1", "coolant_t_0")
 blacklist_tr <- rbind(blacklist_tr, c("stator_tooth_t_2", "coolant_t_1"))
+whitelist_tr <- c("coolant_t_2", "stator_yoke_t_0")
 net <- dbnR::learn_dbn_struc(dt_train, size, method = "dmmhc", blacklist = blacklist,
-                             blacklist_tr = blacklist_tr, restrict = "mmpc", maximize = "hc",
+                             blacklist_tr = blacklist_tr, whitelist_tr = whitelist_tr,
+                             restrict = "mmpc", maximize = "hc",
                              restrict.args = list(test = "cor"),
                              maximize.args = list(score = "bic-g", maxp = 10))
 
