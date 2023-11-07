@@ -4,6 +4,8 @@
 
 * Added a whitelist_tr argument to the DMMHC algorithm to allow forcing arcs in the transition network.
 
+* Fixed the 'forecast_ts' so that when forecasting future values not present in the dataset having 'plot_res = T' doesn't throw an error
+
 # dbnR 0.7.8
 
 * Bringing the package overall status up to scratch for publication on a journal.

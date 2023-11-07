@@ -18,8 +18,8 @@ print_metrics <- function(metrics, obj_vars){
 }
 
 plot_single_result <- function(dt, results, var){
-  min_val <- min(c(dt[, get(var)], results[, get(var)]))
-  max_val <- max(c(dt[, get(var)], results[, get(var)]))
+  min_val <- min(c(dt[, get(var)], results[, get(var)]), na.rm = T)
+  max_val <- max(c(dt[, get(var)], results[, get(var)]), na.rm = T)
   plot(ts(dt[, get(var)]), ylim = c(min_val, max_val), ylab = var)
   idx <- "exec"
   for(i in results[, unique(get(idx))])
