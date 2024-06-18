@@ -18,13 +18,13 @@ Marco Scutari’s package bnlearn (<https://www.bnlearn.com/>). It also
 allows the construction of higher-order DBNs. Three structure learning
 algorithms are implemented:
 
--   A variation on Ghada Trabelsi’s dynamic max-min hill climbing
-    (<https://tel.archives-ouvertes.fr/tel-00996061/document>).
--   A particle swarm optimization algorithm for higher-order DBNs
-    (<https://doi.org/10.1109/BRC.2014.6880957>)  
--   A scalable, order invariant particle swarm optimization algorithm
-    for higher-order DBNs
-    (<https://link.springer.com/chapter/10.1007/978-3-030-86271-8_14>)
+- A variation on Ghada Trabelsi’s dynamic max-min hill climbing
+  (<https://theses.hal.science/tel-00996061/document>).
+- A particle swarm optimization algorithm for higher-order DBNs
+  (<https://doi.org/10.1109/BRC.2014.6880957>)  
+- A scalable, order invariant particle swarm optimization algorithm for
+  higher-order DBNs
+  (<https://link.springer.com/chapter/10.1007/978-3-030-86271-8_14>)
 
 Inference is performed either via the particle filtering offered by
 bnlearn or by doing exact inference over the multivariate Gaussian
@@ -37,11 +37,11 @@ package (<https://github.com/datastorm-open/visNetwork>).
 The main functionality of the package is running and working. In order
 of importance, the next objectives are:
 
--   To refractor the DMMHC algorithm into R6 for consistency with the
-    PSOHO algorithm and with any new structure learning algorithms.
--   To add an automatically generated shiny interface of the net. This
-    makes interacting with the network easier and allows for simulation
-    prototypes.
+- To refractor the DMMHC algorithm into R6 for consistency with the
+  PSOHO algorithm and with any new structure learning algorithms.
+- To add an automatically generated shiny interface of the net. This
+  makes interacting with the network easier and allows for simulation
+  prototypes.
 
 For now, the dbn.fit object as an extension of bnlearn’s bn.fit object
 will stay the same except for the “mu” and “sigma” attributes added to
@@ -100,12 +100,15 @@ function *learn_dbn_struc*
 
 ``` r
 library(dbnR)
-#> Loading required package: bnlearn
+#> Cargando paquete requerido: bnlearn
 #> 
-#> Attaching package: 'dbnR'
+#> Adjuntando el paquete: 'dbnR'
 #> The following objects are masked from 'package:bnlearn':
 #> 
 #>     degree, nodes, nodes<-, score
+```
+
+``` r
 data(motor)
 
 size <- 3
@@ -133,8 +136,12 @@ parameters
 plot_dynamic_network(net)
 ```
 
-![alt
-text](https://raw.githubusercontent.com/dkesada/dbnR/master/media/dbn_plot.png)
+<figure>
+<img
+src="https://raw.githubusercontent.com/dkesada/dbnR/master/media/dbn_plot.png"
+alt="alt text" />
+<figcaption aria-hidden="true">alt text</figcaption>
+</figure>
 
 ``` r
 f_dt_train <- fold_dt(dt_train, size)
@@ -159,30 +166,30 @@ GPL(≥ 2) license.
 
 ## References
 
--   The bnlearn package (<https://www.bnlearn.com/>).
--   The visNetwork package
-    (<https://datastorm-open.github.io/visNetwork/>)
--   Kaggle’s dataset repository, where the sample dataset is from
-    (<https://www.kaggle.com/wkirgsn/electric-motor-temperature>)
--   Koller, D., & Friedman, N. (2009). *Probabilistic graphical models:
-    principles and techniques*. MIT press.
--   Murphy, K. P. (2012). *Machine learning: a probabilistic
-    perspective*. MIT press.
+- The bnlearn package (<https://www.bnlearn.com/>).
+- The visNetwork package
+  (<https://datastorm-open.github.io/visNetwork/>)
+- Kaggle’s dataset repository, where the sample dataset is from
+  (<https://kaggle.com/datasets/wkirgsn/electric-motor-temperature>)
+- Koller, D., & Friedman, N. (2009). *Probabilistic graphical models:
+  principles and techniques*. MIT press.
+- Murphy, K. P. (2012). *Machine learning: a probabilistic perspective*.
+  MIT press.
 
 ## Applications of dbnR
 
--   Quesada, D., Valverde, G., Larrañaga, P., & Bielza, C. (2021).
-    *Long-term forecasting of multivariate time series in industrial
-    furnaces with dynamic Gaussian Bayesian networks*. Engineering
-    Applications of Artificial Intelligence, 103, 104301.
+- Quesada, D., Valverde, G., Larrañaga, P., & Bielza, C. (2021).
+  *Long-term forecasting of multivariate time series in industrial
+  furnaces with dynamic Gaussian Bayesian networks*. Engineering
+  Applications of Artificial Intelligence, 103, 104301.
 
--   Quesada, D., Bielza, C., & Larrañaga, P. (2021, September).
-    *Structure Learning of High-Order Dynamic Bayesian Networks via
-    Particle Swarm Optimization with Order Invariant Encoding*. In
-    International Conference on Hybrid Artificial Intelligence Systems
-    (pp. 158-171). Springer, Cham.
+- Quesada, D., Bielza, C., & Larrañaga, P. (2021, September). *Structure
+  Learning of High-Order Dynamic Bayesian Networks via Particle Swarm
+  Optimization with Order Invariant Encoding*. In International
+  Conference on Hybrid Artificial Intelligence Systems (pp. 158-171).
+  Springer, Cham.
 
--   Quesada, D., Bielza, C., Fontán, P., & Larrañaga, P. (2022).
-    *Piecewise forecasting of nonlinear time series with model tree
-    dynamic Bayesian networks*. International Journal of Intelligent
-    Systems, 37, 9108-9137.
+- Quesada, D., Bielza, C., Fontán, P., & Larrañaga, P. (2022).
+  *Piecewise forecasting of nonlinear time series with model tree
+  dynamic Bayesian networks*. International Journal of Intelligent
+  Systems, 37, 9108-9137.

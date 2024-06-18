@@ -11,7 +11,7 @@ vel_plus_vel_cpp(vl1, vl2, abs_op)
 
 \item{vl2}{the second Velocity's causal list}
 
-\item{abs_op}{the final number of {1,-1} operations}
+\item{abs_op}{the final number of \{1,-1\} operations}
 }
 \value{
 a list with the Velocity's causal list and the number of operations

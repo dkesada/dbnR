@@ -92,7 +92,7 @@ natVelocity <- R6::R6Class("natVelocity",
       #' @description 
       #' Randomizes the Velocity's directions.
       #' 
-      #' @param probs the weight of each value {-1,0,1}. They define the probability that each of them will be picked 
+      #' @param probs the weight of each value \{-1,0,1\}. They define the probability that each of them will be picked 
       #' @param p the parameter of the geometric distribution
       randomize_velocity = function(probs = c(10, 65, 25), p = 0.06){
          numeric_prob_vector_check(probs, 3)

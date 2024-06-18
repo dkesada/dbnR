@@ -23,7 +23,7 @@ knitr::opts_chunk$set(echo = TRUE,
 
 This package offers an implementation of Gaussian dynamic Bayesian networks (GDBN) structure learning and inference based partially on Marco Scutari's package bnlearn (https://www.bnlearn.com/). It also allows the construction of higher-order DBNs. Three structure learning algorithms are implemented: 
 
-  * A variation on Ghada Trabelsi's dynamic max-min hill climbing (https://tel.archives-ouvertes.fr/tel-00996061/document). 
+  * A variation on Ghada Trabelsi's dynamic max-min hill climbing (https://theses.hal.science/tel-00996061/document). 
   * A particle swarm optimization algorithm for higher-order DBNs (https://doi.org/10.1109/BRC.2014.6880957)  
   * A scalable, order invariant particle swarm optimization algorithm for higher-order DBNs (https://link.springer.com/chapter/10.1007/978-3-030-86271-8_14)
   
@@ -107,7 +107,7 @@ This project is licensed under the GPL-3 License, following on bnlearn's GPL(≥
 
 * The bnlearn package (https://www.bnlearn.com/).
 * The visNetwork package (https://datastorm-open.github.io/visNetwork/)
-* Kaggle's dataset repository, where the sample dataset is from (https://www.kaggle.com/wkirgsn/electric-motor-temperature)
+* Kaggle's dataset repository, where the sample dataset is from (https://www.kaggle.com/datasets/wkirgsn/electric-motor-temperature)
 * Koller, D., & Friedman, N. (2009). _Probabilistic graphical models: principles and techniques_. MIT press.
 * Murphy, K. P. (2012). _Machine learning: a probabilistic perspective_. MIT press.
 

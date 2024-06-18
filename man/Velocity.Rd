@@ -6,7 +6,7 @@
 \arguments{
 \item{n}{the new number of operations that the velocity performs}
 
-\item{probs}{the weight of each value {-1,0,1}. They define the probability that each of them will be picked}
+\item{probs}{the weight of each value \{-1,0,1\}. They define the probability that each of them will be picked}
 
 \item{seed}{the seed provided to the random number generation}
 

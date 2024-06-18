@@ -4,7 +4,7 @@
 \alias{rbn.dbn.fit}
 \title{Simulates random samples from a fitted DBN}
 \usage{
-\method{rbn}{dbn.fit}(x, n, ...)
+rbn.dbn.fit(x, n, ...)
 }
 \arguments{
 \item{x}{the fitted network}

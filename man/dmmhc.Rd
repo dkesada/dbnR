@@ -29,11 +29,11 @@ dmmhc(
 
 \item{blacklist_tr}{an optional matrix indicating forbidden intra-slice arcs between nodes}
 
+\item{whitelist}{an optional matrix indicating obligatory arcs between nodes}
+
 \item{whitelist_tr}{an optional matrix indicating obligatory intra-slice arcs between nodes}
 
 \item{...}{additional parameters for \code{\link{rsmax2}} function}
-
-\item{white}{an optional matrix indicating obligatory arcs between nodes}
 }
 \value{
 the structure of the net
