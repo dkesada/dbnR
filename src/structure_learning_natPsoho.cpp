@@ -169,8 +169,8 @@ int nat_pos_minus_pos_cpp(const Rcpp::NumericVector &ps1, const Rcpp::NumericVec
 //' @param vl1_neg the first Velocity's negative part 
 //' @param vl2 the second Velocity's positive part
 //' @param vl2_neg the first Velocity's negative part 
-//' @param abs_op1 the number of {1,-1} operations in the first velocity
-//' @param abs_op2 the number of {1,-1} operations in the second velocity
+//' @param abs_op1 the number of \{1,-1\} operations in the first velocity
+//' @param abs_op2 the number of \{1,-1\} operations in the second velocity
 //' @return the total number of resulting operations
 //' @keywords internal
 // [[Rcpp::export]]
@@ -218,7 +218,7 @@ void add_nat_vel(int &num1, int num2, int &abs_op){
 //' @param k the constant real number
 //' @param vl the Velocity's positive causal list
 //' @param vl_neg the Velocity's negative causal list
-//' @param abs_op the final number of {1,-1} operations
+//' @param abs_op the final number of \{1,-1\} operations
 //' @param max_size the maximum size of the network
 //' @return the new total number of operations 
 //' @keywords internal

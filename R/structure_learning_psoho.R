@@ -77,7 +77,7 @@ Velocity <- R6::R6Class("Velocity",
     #' Randomizes the Velocity's directions. If the seed provided is NULL, no
     #' seed will be used.
     #' 
-    #' @param probs the weight of each value {-1,0,1}. They define the probability that each of them will be picked 
+    #' @param probs the weight of each value \{-1,0,1\}. They define the probability that each of them will be picked 
     #' @param seed the seed provided to the random number generation
     randomize_velocity = function(probs = c(10, 65, 25)){
       numeric_prob_vector_check(probs, 3)

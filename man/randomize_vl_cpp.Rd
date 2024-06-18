@@ -9,7 +9,7 @@ randomize_vl_cpp(vl, probs)
 \arguments{
 \item{vl}{a velocity list}
 
-\item{probs}{the probabilities of each value in the set {-1,0,1}}
+\item{probs}{the probabilities of each value in the set \{-1,0,1\}}
 }
 \value{
 a velocity list with randomized values

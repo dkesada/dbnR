@@ -15,9 +15,9 @@ nat_vel_plus_vel_cpp(vl1, vl1_neg, vl2, vl2_neg, abs_op1, abs_op2)
 
 \item{vl2_neg}{the first Velocity's negative part}
 
-\item{abs_op1}{the number of {1,-1} operations in the first velocity}
+\item{abs_op1}{the number of \{1,-1\} operations in the first velocity}
 
-\item{abs_op2}{the number of {1,-1} operations in the second velocity}
+\item{abs_op2}{the number of \{1,-1\} operations in the second velocity}
 }
 \value{
 the total number of resulting operations

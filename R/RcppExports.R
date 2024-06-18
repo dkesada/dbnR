@@ -85,8 +85,8 @@ nat_pos_minus_pos_cpp <- function(ps1, ps2, vl, vl_neg) {
 #' @param vl1_neg the first Velocity's negative part 
 #' @param vl2 the second Velocity's positive part
 #' @param vl2_neg the first Velocity's negative part 
-#' @param abs_op1 the number of {1,-1} operations in the first velocity
-#' @param abs_op2 the number of {1,-1} operations in the second velocity
+#' @param abs_op1 the number of \{1,-1\} operations in the first velocity
+#' @param abs_op2 the number of \{1,-1\} operations in the second velocity
 #' @return the total number of resulting operations
 #' @keywords internal
 nat_vel_plus_vel_cpp <- function(vl1, vl1_neg, vl2, vl2_neg, abs_op1, abs_op2) {
@@ -98,7 +98,7 @@ nat_vel_plus_vel_cpp <- function(vl1, vl1_neg, vl2, vl2_neg, abs_op1, abs_op2) {
 #' @param k the constant real number
 #' @param vl the Velocity's positive causal list
 #' @param vl_neg the Velocity's negative causal list
-#' @param abs_op the final number of {1,-1} operations
+#' @param abs_op the final number of \{1,-1\} operations
 #' @param max_size the maximum size of the network
 #' @return the new total number of operations 
 #' @keywords internal
@@ -198,7 +198,7 @@ init_list_cpp <- function(nodes, size, n_inds) {
 #' Randomize a velocity with the given probabilities
 #' 
 #' @param vl a velocity list
-#' @param probs the probabilities of each value in the set {-1,0,1}
+#' @param probs the probabilities of each value in the set \{-1,0,1\}
 #' @return a velocity list with randomized values
 #' @keywords internal
 randomize_vl_cpp <- function(vl, probs) {
@@ -220,7 +220,7 @@ pos_minus_pos_cpp <- function(cl, ps, vl) {
 #' 
 #' @param vl1 the first Velocity's causal list
 #' @param vl2 the second Velocity's causal list
-#' @param abs_op the final number of {1,-1} operations
+#' @param abs_op the final number of \{1,-1\} operations
 #' @return a list with the Velocity's causal list and the number of operations
 #' @keywords internal
 vel_plus_vel_cpp <- function(vl1, vl2, abs_op) {
@@ -231,7 +231,7 @@ vel_plus_vel_cpp <- function(vl1, vl2, abs_op) {
 #' 
 #' @param k the constant real number
 #' @param vl the Velocity's causal list
-#' @param abs_op the final number of {1,-1} operations
+#' @param abs_op the final number of \{1,-1\} operations
 #' @param max_op the maximum number of directions in the causal list
 #' @return a list with the Velocity's new causal list and number of operations
 #' @keywords internal

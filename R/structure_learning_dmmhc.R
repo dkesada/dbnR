@@ -72,7 +72,7 @@ merge_nets <- function(net0, netCP1, size, acc = NULL, slice = 1){
 #' @param blacklist an optional matrix indicating forbidden arcs between nodes
 #' @param intra if TRUE, the intra-slice arcs of the network will be learnt. If FALSE, they will be ignored
 #' @param blacklist_tr an optional matrix indicating forbidden intra-slice arcs between nodes 
-#' @param white an optional matrix indicating obligatory arcs between nodes
+#' @param whitelist an optional matrix indicating obligatory arcs between nodes
 #' @param whitelist_tr an optional matrix indicating obligatory intra-slice arcs between nodes 
 #' @param ... additional parameters for \code{\link{rsmax2}} function
 #' @return the structure of the net

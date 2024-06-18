@@ -13,7 +13,7 @@ nat_cte_times_vel_cpp(k, vl, vl_neg, abs_op, max_size)
 
 \item{vl_neg}{the Velocity's negative causal list}
 
-\item{abs_op}{the final number of {1,-1} operations}
+\item{abs_op}{the final number of \{1,-1\} operations}
 
 \item{max_size}{the maximum size of the network}
 }

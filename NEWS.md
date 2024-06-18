@@ -6,6 +6,8 @@
 
 * Fixed the 'forecast_ts' function so that when forecasting future values not present in the dataset having 'plot_res = T' doesn't throw an error
 
+* Removed gcc11 specification
+
 # dbnR 0.7.8
 
 * Bringing the package overall status up to scratch for publication on a journal.

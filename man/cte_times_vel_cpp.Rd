@@ -11,7 +11,7 @@ cte_times_vel_cpp(k, vl, abs_op, max_op)
 
 \item{vl}{the Velocity's causal list}
 
-\item{abs_op}{the final number of {1,-1} operations}
+\item{abs_op}{the final number of \{1,-1\} operations}
 
 \item{max_op}{the maximum number of directions in the causal list}
 }
