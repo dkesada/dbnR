@@ -6,7 +6,7 @@
 
 * Fixed the 'forecast_ts' function so that when forecasting future values not present in the dataset having 'plot_res = T' doesn't throw an error
 
-* Removed gcc11 specification
+* Removed C++11 specification
 
 # dbnR 0.7.8
 
