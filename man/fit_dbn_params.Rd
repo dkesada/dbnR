@@ -11,7 +11,7 @@ fit_dbn_params(net, f_dt, ...)
 
 \item{f_dt}{a folded data.table}
 
-\item{...}{additional parameters for the \code{\link{bn.fit}} function}
+\item{...}{additional parameters for the \code{\link[bnlearn]{bn.fit}} function}
 }
 \value{
 a "dbn.fit" S3 object with the fitted net

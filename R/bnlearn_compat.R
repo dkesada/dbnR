@@ -422,7 +422,7 @@ mean.dbn.fit <- function(x, ...){
 #' Simulates random samples from a fitted DBN
 #'
 #' Generic method for "dbn.fit" S3 objects. 
-#' Calls bnlearn's \code{\link{rbn}} underneath.
+#' Calls bnlearn's \code{\link[bnlearn]{rbn}} underneath.
 #' @param x the fitted network
 #' @param n number of samples
 #' @param ... additional parameters

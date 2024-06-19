@@ -6,7 +6,7 @@
 #' @param size number of time slices of the net. Markovian 1 would be size 2
 #' @param method the structure learning method of choice to use
 #' @param f_dt previously folded dataset, in case some specific rows have to be removed after the folding
-#' @param ... additional parameters for \code{\link{rsmax2}} function
+#' @param ... additional parameters for \code{\link[bnlearn]{rsmax2}} function
 #' @return a "dbn" S3 object with the structure of the network
 #' @import data.table
 #' @examples
@@ -57,7 +57,7 @@ add_attr_to_fit <- function(fit, size){
 #' object for future exact inference. 
 #' @param net the structure of the DBN
 #' @param f_dt a folded data.table
-#' @param ... additional parameters for the \code{\link{bn.fit}} function
+#' @param ... additional parameters for the \code{\link[bnlearn]{bn.fit}} function
 #' @return a "dbn.fit" S3 object with the fitted net
 #' @examples
 #' size = 3

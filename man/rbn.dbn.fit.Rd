@@ -18,5 +18,5 @@ the sampled dataset
 }
 \description{
 Generic method for "dbn.fit" S3 objects. 
-Calls bnlearn's \code{\link{rbn}} underneath.
+Calls bnlearn's \code{\link[bnlearn]{rbn}} underneath.
 }

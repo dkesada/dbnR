@@ -33,7 +33,7 @@ dmmhc(
 
 \item{whitelist_tr}{an optional matrix indicating obligatory intra-slice arcs between nodes}
 
-\item{...}{additional parameters for \code{\link{rsmax2}} function}
+\item{...}{additional parameters for \code{\link[bnlearn]{rsmax2}} function}
 }
 \value{
 the structure of the net

@@ -15,7 +15,7 @@ learn_dbn_struc(dt, size = 2, method = "dmmhc", f_dt = NULL, ...)
 
 \item{f_dt}{previously folded dataset, in case some specific rows have to be removed after the folding}
 
-\item{...}{additional parameters for \code{\link{rsmax2}} function}
+\item{...}{additional parameters for \code{\link[bnlearn]{rsmax2}} function}
 }
 \value{
 a "dbn" S3 object with the structure of the network

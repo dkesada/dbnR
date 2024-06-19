@@ -10,7 +10,7 @@ node_levels(net, order, lvl = 1, acc = NULL)
 \item{net}{the structure of the network.}
 
 \item{order}{a topological order of the nodes, with the orphan nodes
-in the first place. See \code{\link{node.ordering}}}
+in the first place. See \code{\link[bnlearn]{node.ordering}}}
 
 \item{lvl}{current level being processed}
 

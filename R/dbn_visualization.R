@@ -6,7 +6,7 @@
 #' will be one more of the maximum level of his parents.
 #' @param net the structure of the network.
 #' @param order a topological order of the nodes, with the orphan nodes
-#' in the first place. See \code{\link{node.ordering}}
+#' in the first place. See \code{\link[bnlearn]{node.ordering}}
 #' @param lvl current level being processed
 #' @param acc accumulator of the nodes already processed
 #' @return a matrix with the names of the nodes in the first row and their
