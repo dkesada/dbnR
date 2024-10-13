@@ -85,7 +85,9 @@ logLik.dbn.fit <- function(object, dt, ...){
 #' @param current the other "dbn" object
 #' @param ... additional parameters
 #' @return boolean result of the comparison
-#' @export
+#' @name all.equal.dbn
+#' @method all.equal dbn
+#' @exportS3Method all.equal dbn
 all.equal.dbn <- function(target, current, ...){
   NextMethod()
 }
@@ -98,7 +100,9 @@ all.equal.dbn <- function(target, current, ...){
 #' @param current the other "dbn.fit" object
 #' @param ... additional parameters
 #' @return boolean result of the comparison
-#' @export
+#' @name all.equal.dbn.fit
+#' @method all.equal dbn.fit
+#' @exportS3Method all.equal dbn.fit
 all.equal.dbn.fit <- function(target, current, ...){
   NextMethod()
 }
