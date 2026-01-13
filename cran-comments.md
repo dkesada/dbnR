@@ -19,14 +19,5 @@ Found the following (possibly) invalid DOIs:
       
 * The DOI in the CITATION is for a new JSS publication that will be registered after publication on CRAN.
 
-(On win-builder)
-Found the following (possibly) invalid URLs:
-  URL: https://kaggle.com/datasets/wkirgsn/electric-motor-temperature
-    From: README.md
-    Status: 404
-    Message: Not Found
-  
-* The URL is not invalid, it redirects to the dataset source correctly.
-
 ## Downstream dependencies
 There are no downstream dependencies
