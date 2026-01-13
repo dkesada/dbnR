@@ -1,7 +1,7 @@
 Package: dbnR
 Type: Package
 Title: Dynamic Bayesian Network Learning and Inference
-Version: 0.7.9
+Version: 0.8.0
 Authors@R: c(
     person("David", "Quesada", email = "dkesada@gmail.com", role = c("aut", "cre")),
     person("Gabriel", "Valverde", email = "gabrielvalverdecastilla@gmail.com", role = "ctb"))
@@ -13,7 +13,9 @@ Description: Learning and inference over dynamic Bayesian networks of arbitrary
     <doi:10.1109/BRC.2014.6880957>, Quesada D., Bielza C. and Larrañaga P. (2021)
     <doi:10.1007/978-3-030-86271-8_14>. It also offers the possibility to perform 
     forecasts of arbitrary length. A tool for visualizing the structure of the 
-    net is also provided via the 'visNetwork' package.
+    net is also provided via the 'visNetwork' package. Further detailed information 
+    and examples can be found in our JSS paper Quesada D., Larrañaga P. and 
+    Bielza C. (2025) <doi:10.18637/jss.v115.i06>.
 Depends: 
     R (>= 3.5.0), 
     bnlearn (>= 4.5)

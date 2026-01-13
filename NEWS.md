@@ -1,3 +1,9 @@
+# dbnR 0.8.0
+
+* Package published on the Journal of Statistical Software, added a CITATION file
+
+* Added new DOI to the DESCRIPTION
+
 # dbnR 0.7.9
 
 * Fixed unstable behaviour of regex in C++ on both the psoho and natPsoho algorithms.

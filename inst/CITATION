@@ -1,0 +1,18 @@
+bibentry(bibtype = "Article",
+  title        = "{dbnR}: {G}aussian Dynamic {B}ayesian Network Learning and Inference in {R}",
+  author       = c(person(given = "David",
+                          family = "Quesada",
+                          email = "dquesada@fi.upm.es"),
+                   person(given = "Pedro",
+                          family = "Larra\\~naga"),
+                   person(given = "Concha",
+                          family = "Bielza",
+                          email = "mcbielza@fi.upm.es")),
+  journal      = "Journal of Statistical Software",
+  year         = "2025",
+  volume       = "115",
+  number       = "6",
+  pages        = "1--35",
+  doi          = "10.18637/jss.v115.i06",
+  header       = "To cite dbnR in publications use:"
+)
