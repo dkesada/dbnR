@@ -30,6 +30,8 @@ node_levels <- function(net, order, lvl = 1, acc = NULL){
 #' layout in visNetwork. Can be used in place of the generic plot function 
 #' offered by bnlearn for "bn" and "bn.fit" S3 objects.
 #' @param structure the structure or fit of the network.
+#' @param subset_nodes a vector containing the names of the subset of nodes to plot
+#' @param hierarchical whether to use hierarchical layout for the plot
 #' @importFrom magrittr "%>%"
 #' @examples 
 #' \donttest{
@@ -40,7 +42,7 @@ node_levels <- function(net, order, lvl = 1, acc = NULL){
 #' plot_static_network(fit) # Works for both the structure and the fitted net
 #' }
 #' @export
-plot_static_network <- function(structure){
+plot_static_network <- function(structure, subset_nodes = NULL, hierarchical = TRUE){
   check_opt_pkgs_available()
   initial_bn_check(structure)
   if(is_dbn_or_dbnfit(structure))
@@ -64,10 +66,21 @@ plot_static_network <- function(structure){
                       #smooth = TRUE, # visNetwork's bug
                       shadow = FALSE,
                       color = "black")
+  
+  if(!is.null(subset_nodes)){
+    nodes <- nodes[sapply(nodes["id"], function(x){x %in% subset_nodes}),]
+    edges <- edges[sapply(edges["to"], function(x){x %in% subset_nodes}) & 
+                     sapply(edges["from"], function(x){x %in% subset_nodes}),]
+  }
 
   ret <- visNetwork::visNetwork(nodes, edges) %>%
     visNetwork::visHierarchicalLayout(levelSeparation = 100) %>%
     visNetwork::visOptions(nodesIdSelection = T)
+  
+  if(!hierarchical){
+    ret <- visNetwork::visNetwork(nodes, edges) %>%
+      visNetwork::visOptions(nodesIdSelection = T)
+  }
 
   eval(ret)
 }

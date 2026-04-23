@@ -1,3 +1,9 @@
+# dbnR 0.8.1
+
+* Allow plotting a subset of nodes in static networks
+
+* Allow not using hierarchical layout while plotting static networks
+
 # dbnR 0.8.0
 
 * Package published on the Journal of Statistical Software, added a CITATION file

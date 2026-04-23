@@ -4,10 +4,14 @@
 \alias{plot_static_network}
 \title{Plots a Bayesian network in a hierarchical way}
 \usage{
-plot_static_network(structure)
+plot_static_network(structure, subset_nodes = NULL, hierarchical = TRUE)
 }
 \arguments{
 \item{structure}{the structure or fit of the network.}
+
+\item{subset_nodes}{a vector containing the names of the subset of nodes to plot}
+
+\item{hierarchical}{whether to use hierarchical layout for the plot}
 }
 \description{
 This function calculates the levels of each node and then plots them in a hierarchical
